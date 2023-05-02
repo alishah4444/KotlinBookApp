@@ -1,5 +1,3 @@
-package com.iaminca;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theokanning.openai.OpenAiApi;
 import com.theokanning.openai.completion.CompletionRequest;
@@ -12,7 +10,7 @@ import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-//import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ class OpenAiApiExample {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://localhost:8080/")
                 .client(client)
-//                .addConverterFactory(JacksonConverterFactory.create(mapper))
+                .addConverterFactory(JacksonConverterFactory.create(mapper))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         OpenAiService service = new OpenAiService(
