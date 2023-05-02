@@ -14,7 +14,7 @@ public class OpenAiConfiguration {
         this.token = token;
     }
 
-    @Bean
+    @Bean(destroyMethod = "shutdownExecutor")
     public OpenAiService openAiService() {
         return new OpenAiService(token);
     }
