@@ -1,4 +1,4 @@
-package com.example;
+package com.iaminca;
 
 import com.theokanning.openai.service.OpenAiService;
 import org.springframework.beans.factory.annotation.Value;

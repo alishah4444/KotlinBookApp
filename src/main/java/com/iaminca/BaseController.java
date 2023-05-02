@@ -1,4 +1,4 @@
-package com.example;
+package com.iaminca;
 
 import com.theokanning.openai.DeleteResult;
 import com.theokanning.openai.OpenAiResponse;
