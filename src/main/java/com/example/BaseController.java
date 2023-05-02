@@ -3,9 +3,7 @@ package com.example;
 import com.theokanning.openai.DeleteResult;
 import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.completion.CompletionRequest;
-import com.theokanning.openai.completion.CompletionResult;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
-import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import com.theokanning.openai.edit.EditRequest;
 import com.theokanning.openai.edit.EditResult;
 import com.theokanning.openai.embedding.EmbeddingRequest;
@@ -20,10 +18,16 @@ import com.theokanning.openai.model.Model;
 import com.theokanning.openai.moderation.ModerationRequest;
 import com.theokanning.openai.moderation.ModerationResult;
 import com.theokanning.openai.service.OpenAiService;
+import io.reactivex.Flowable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.function.Function;
+
+import static org.springframework.http.MediaType.ALL_VALUE;
 
 @RestController
 public class BaseController {
@@ -52,25 +56,26 @@ public class BaseController {
         return openAiService.getModel(modelId);
     }
 
-    @PostMapping("/v1/completions")
-    public CompletionResult createCompletion(@RequestBody CompletionRequest request) {
-        return openAiService.createCompletion(request);
+    private <Req, Chunk, B> ResponseEntity<?> selectStream(
+            Boolean stream,
+            Function<? super Req, ? extends Flowable<Chunk>> ifStream,
+            Function<? super Req, B> notStream,
+            Req request) {
+        if (Boolean.TRUE.equals(stream)) {
+            return ResponseEntity.ok().contentType(MediaType.TEXT_EVENT_STREAM).body(ifStream.apply(request));
+        }
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(notStream.apply(request));
     }
 
-//    @Streaming
-//    @PostMapping("/v1/completions")
-//    public Call<ResponseBody> createCompletionStream(@RequestBody CompletionRequest request) {
-//    }
-
-    @PostMapping("/v1/chat/completions")
-    public ChatCompletionResult createChatCompletion(@RequestBody ChatCompletionRequest request) {
-        return openAiService.createChatCompletion(request);
+    @PostMapping(value = "/v1/completions", produces = ALL_VALUE)
+    public ResponseEntity<?> createCompletion(@RequestBody CompletionRequest request) {
+        return selectStream(request.getStream(), openAiService::streamCompletion, openAiService::createCompletion, request);
     }
 
-//    @Streaming
-//    @PostMapping("/v1/chat/completions")
-//    public Flowable<ResponseBody> createChatCompletionStream(@RequestBody ChatCompletionRequest request) {
-//    }
+    @PostMapping(value = "/v1/chat/completions", produces = ALL_VALUE)
+    public ResponseEntity<?> createChatCompletion(@RequestBody ChatCompletionRequest request) {
+        return selectStream(request.getStream(), openAiService::streamChatCompletion, openAiService::createChatCompletion, request);
+    }
 
 //    @Deprecated
 //    @PostMapping("/v1/engines/{engine_id}/completions")
