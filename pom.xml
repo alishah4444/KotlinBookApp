@@ -8,15 +8,27 @@
         <version>2.7.11</version>
         <relativePath/>
     </parent>
-    <groupId>com.example.openai</groupId>
+    <groupId>com.iaminca.openai</groupId>
     <artifactId>openai-server</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
         <openai.version>0.12.0</openai.version>
+        <mysql.version>8.0.30</mysql.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
+        </dependency>
         <dependency>
             <groupId>com.theokanning.openai-gpt3-java</groupId>
             <artifactId>service</artifactId>

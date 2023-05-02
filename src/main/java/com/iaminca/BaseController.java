@@ -1,5 +1,6 @@
 package com.iaminca;
 
+import com.iaminca.client.ChatClient;
 import com.theokanning.openai.DeleteResult;
 import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.completion.CompletionRequest;
@@ -31,6 +32,7 @@ import static org.springframework.http.MediaType.ALL_VALUE;
 
 @RestController
 public class BaseController {
+    private ChatClient chatClient;
 
     private final OpenAiService openAiService;
 
@@ -74,7 +76,7 @@ public class BaseController {
 
     @PostMapping(value = "/v1/chat/completions", produces = ALL_VALUE)
     public ResponseEntity<?> createChatCompletion(@RequestBody ChatCompletionRequest request) {
-        return selectStream(request.getStream(), openAiService::streamChatCompletion, openAiService::createChatCompletion, request);
+        return selectStream(request.getStream(), chatClient::streamChatCompletion, chatClient::createChatCompletion, request);
     }
 
 //    @Deprecated
