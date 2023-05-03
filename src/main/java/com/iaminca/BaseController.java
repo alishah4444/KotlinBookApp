@@ -20,7 +20,7 @@ import com.theokanning.openai.moderation.ModerationRequest;
 import com.theokanning.openai.moderation.ModerationResult;
 import com.theokanning.openai.service.OpenAiService;
 import io.reactivex.Flowable;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,15 +31,11 @@ import java.util.function.Function;
 import static org.springframework.http.MediaType.ALL_VALUE;
 
 @RestController
+@RequiredArgsConstructor
 public class BaseController {
-    private ChatClient chatClient;
 
+    private final ChatClient chatClient;
     private final OpenAiService openAiService;
-
-    @Autowired
-    public BaseController(OpenAiService openAiService) {
-        this.openAiService = openAiService;
-    }
 
     private <Tp> OpenAiResponse<Tp> makeResponse(List<Tp> list) {
         OpenAiResponse<Tp> response = new OpenAiResponse<>();
