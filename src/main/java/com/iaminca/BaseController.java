@@ -71,12 +71,12 @@ public class BaseController {
     }
 
     @PostMapping(value = "/v1/completions", produces = ALL_VALUE)
-    public ResponseEntity<?> createCompletion(@RequestBody CompletionRequest request) {
+    public ResponseEntity<?> completion(@RequestBody CompletionRequest request) {
         return selectStream(request.getStream(), openAiService::streamCompletion, openAiService::createCompletion, request);
     }
 
     @PostMapping(value = "/v1/chat/completions", produces = ALL_VALUE)
-    public ResponseEntity<?> createChatCompletion(@RequestBody ChatCompletionRequest request) {
+    public ResponseEntity<?> chatCompletion(@RequestBody ChatCompletionRequest request) {
         return selectStream(request.getStream(), chatClient::streamChatCompletion, chatClient::createChatCompletion, request);
     }
 
