@@ -21,9 +21,12 @@ import com.theokanning.openai.moderation.ModerationResult;
 import com.theokanning.openai.service.OpenAiService;
 import io.reactivex.Flowable;
 import lombok.RequiredArgsConstructor;
+import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.function.Function;
@@ -54,15 +57,17 @@ public class BaseController {
         return openAiService.getModel(modelId);
     }
 
-    private <Req, Chunk, B> ResponseEntity<?> selectStream(
+    private <Req, Chunk, Body> ResponseEntity<? extends Publisher<?>> selectStream(
             Boolean stream,
             Function<? super Req, ? extends Flowable<Chunk>> ifStream,
-            Function<? super Req, B> notStream,
+            Function<? super Req, Body> notStream,
             Req request) {
         if (Boolean.TRUE.equals(stream)) {
-            return ResponseEntity.ok().contentType(MediaType.TEXT_EVENT_STREAM).body(ifStream.apply(request));
+            // https://platform.openai.com/docs/api-reference/completions/create#completions/create-stream
+            Flux<Object> result = Flux.<Object>from(ifStream.apply(request)).concatWithValues("[DONE]");
+            return ResponseEntity.ok().contentType(MediaType.TEXT_EVENT_STREAM).body(result);
         }
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(notStream.apply(request));
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(Mono.fromCallable(() -> notStream.apply(request)));
     }
 
     @PostMapping(value = "/v1/completions", produces = ALL_VALUE)
