@@ -12,26 +12,26 @@ import java.util.Date;
  * 
  * @author xw
  * @email xw
- * @date 2023-05-04 16:59:37
+ * @date 2023-05-04 17:34:01
  */
 @Data
-@Table(name = "chat_response_choices")
-public class ChatResponseChoicesDO {
+@Table(name = "user_key")
+public class UserKeyDO {
 	private static final long serialVersionUID = 1L;
 
 	/***/
 	@Id
 	private Long id;
 	/***/
-	private Long responseId;
+	private Long userId;
 	/***/
-	private Integer chatIndex;
+	private String userKey;
 	/***/
-	private String messageRole;
+	private Integer userChatLimitation;
 	/***/
-	private String messageContent;
-	/***/
-	private String messageFinishReason;
+	private Integer userLengthLimitation;
+	/**delete flag: 0 false, 1 true*/
+	private Integer delFlag;
 	/***/
 	private Date createTime;
 	/***/

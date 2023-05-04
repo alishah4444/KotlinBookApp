@@ -1,35 +1,31 @@
-package com.iaminca.dal.dataobject;
+package com.iaminca.query;
 
 import lombok.Data;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.Date;
 
 
 /**
- * 
+ * 实体的查询对象
  * 
  * @author xw
  * @email xw
- * @date 2023-05-02 16:58:22
+ * @date 2023-05-04 17:34:01
  */
 @Data
-@Table(name = "user")
-public class UserDO {
+public class UserKeyQuery{
 	private static final long serialVersionUID = 1L;
-	@Id
+
+	/***/
 	private Long id;
 	/***/
-	private String userName;
+	private Long userId;
 	/***/
-	private String userPhone;
+	private String userKey;
 	/***/
 	private Integer userChatLimitation;
 	/***/
 	private Integer userLengthLimitation;
-	/**vistor,user,vip,svip*/
-	private String userType;
 	/**delete flag: 0 false, 1 true*/
 	private Integer delFlag;
 	/***/

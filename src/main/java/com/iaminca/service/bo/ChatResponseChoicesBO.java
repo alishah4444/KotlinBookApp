@@ -2,6 +2,8 @@ package com.iaminca.service.bo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 
 /**
  * 
@@ -13,15 +15,21 @@ import lombok.Data;
 @Data
 public class ChatResponseChoicesBO{
 	private static final long serialVersionUID = 1L;
-	private Long Id;
+
+	/***/
+	private Long id;
 	/***/
 	private Long responseId;
 	/***/
-	private Integer choicesIndex;
+	private Integer chatIndex;
 	/***/
-	private String choicesMessageRole;
+	private String messageRole;
 	/***/
-	private String choicesMessageContent;
+	private String messageContent;
 	/***/
-	private String choicesMessageFinishReason;
+	private String messageFinishReason;
+	/***/
+	private Date createTime;
+	/***/
+	private Date updateTime;
 }

@@ -2,26 +2,34 @@ package com.iaminca.query;
 
 import lombok.Data;
 
+import java.util.Date;
+
 
 /**
  * 实体的查询对象
  * 
  * @author xw
  * @email xw
- * @date 2023-05-02 16:58:23
+ * @date 2023-05-04 16:59:37
  */
 @Data
-public class ChatResponseChoicesQuery{
+public class ChatResponseChoicesQuery {
 	private static final long serialVersionUID = 1L;
-	private Long Id;
+
+	/***/
+	private Long id;
 	/***/
 	private Long responseId;
 	/***/
-	private Integer choicesIndex;
+	private Integer index;
 	/***/
-	private String choicesMessageRole;
+	private String messageRole;
 	/***/
-	private String choicesMessageContent;
+	private String messageContent;
 	/***/
-	private String choicesMessageFinishReason;
+	private String messageFinishReason;
+	/***/
+	private Date createTime;
+	/***/
+	private Date updateTime;
 }

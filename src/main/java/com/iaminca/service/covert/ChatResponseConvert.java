@@ -25,13 +25,17 @@ public class ChatResponseConvert {
 		ChatResponseBO chatResponseBO = new ChatResponseBO();
 		chatResponseBO.setId(chatResponseDO.getId());
 		chatResponseBO.setUserId(chatResponseDO.getUserId());
+		chatResponseBO.setKeyId(chatResponseDO.getKeyId());
 		chatResponseBO.setChatResponseId(chatResponseDO.getChatResponseId());
-		chatResponseBO.setChatModel(chatResponseDO.getChatModel());
-		chatResponseBO.setChatObject(chatResponseDO.getChatObject());
-		chatResponseBO.setChatCreated(chatResponseDO.getChatCreated());
-		chatResponseBO.setChatUsagePromptTokens(chatResponseDO.getChatUsagePromptTokens());
-		chatResponseBO.setChatUsageCompletionTokens(chatResponseDO.getChatUsageCompletionTokens());
-		chatResponseBO.setChatUsageTotalTokens(chatResponseDO.getChatUsageTotalTokens());
+		chatResponseBO.setModel(chatResponseDO.getModel());
+		chatResponseBO.setObject(chatResponseDO.getObject());
+		chatResponseBO.setCreated(chatResponseDO.getCreated());
+		chatResponseBO.setUsagePromptTokens(chatResponseDO.getUsagePromptTokens());
+		chatResponseBO.setUsageCompletionTokens(chatResponseDO.getUsageCompletionTokens());
+		chatResponseBO.setUsageTotalTokens(chatResponseDO.getUsageTotalTokens());
+		chatResponseBO.setDelFlag(chatResponseDO.getDelFlag());
+		chatResponseBO.setCreateTime(chatResponseDO.getCreateTime());
+		chatResponseBO.setUpdateTime(chatResponseDO.getUpdateTime());
 		return chatResponseBO;
 	}
 
@@ -42,13 +46,17 @@ public class ChatResponseConvert {
 		ChatResponseDO chatResponseDO = new ChatResponseDO();
 		chatResponseDO.setId(chatResponseBO.getId());
 		chatResponseDO.setUserId(chatResponseBO.getUserId());
+		chatResponseDO.setKeyId(chatResponseBO.getKeyId());
 		chatResponseDO.setChatResponseId(chatResponseBO.getChatResponseId());
-		chatResponseDO.setChatModel(chatResponseBO.getChatModel());
-		chatResponseDO.setChatObject(chatResponseBO.getChatObject());
-		chatResponseDO.setChatCreated(chatResponseBO.getChatCreated());
-		chatResponseDO.setChatUsagePromptTokens(chatResponseBO.getChatUsagePromptTokens());
-		chatResponseDO.setChatUsageCompletionTokens(chatResponseBO.getChatUsageCompletionTokens());
-		chatResponseDO.setChatUsageTotalTokens(chatResponseBO.getChatUsageTotalTokens());
+		chatResponseDO.setModel(chatResponseBO.getModel());
+		chatResponseDO.setObject(chatResponseBO.getObject());
+		chatResponseDO.setCreated(chatResponseBO.getCreated());
+		chatResponseDO.setUsagePromptTokens(chatResponseBO.getUsagePromptTokens());
+		chatResponseDO.setUsageCompletionTokens(chatResponseBO.getUsageCompletionTokens());
+		chatResponseDO.setUsageTotalTokens(chatResponseBO.getUsageTotalTokens());
+		chatResponseDO.setDelFlag(chatResponseBO.getDelFlag());
+		chatResponseDO.setCreateTime(chatResponseBO.getCreateTime());
+		chatResponseDO.setUpdateTime(chatResponseBO.getUpdateTime());
 		return chatResponseDO;
 	}
 

@@ -25,10 +25,12 @@ public class ChatResponseChoicesConvert {
 		ChatResponseChoicesBO chatResponseChoicesBO = new ChatResponseChoicesBO();
 		chatResponseChoicesBO.setId(chatResponseChoicesDO.getId());
 		chatResponseChoicesBO.setResponseId(chatResponseChoicesDO.getResponseId());
-		chatResponseChoicesBO.setChoicesIndex(chatResponseChoicesDO.getChoicesIndex());
-		chatResponseChoicesBO.setChoicesMessageRole(chatResponseChoicesDO.getChoicesMessageRole());
-		chatResponseChoicesBO.setChoicesMessageContent(chatResponseChoicesDO.getChoicesMessageContent());
-		chatResponseChoicesBO.setChoicesMessageFinishReason(chatResponseChoicesDO.getChoicesMessageFinishReason());
+		chatResponseChoicesBO.setChatIndex(chatResponseChoicesDO.getChatIndex());
+		chatResponseChoicesBO.setMessageRole(chatResponseChoicesDO.getMessageRole());
+		chatResponseChoicesBO.setMessageContent(chatResponseChoicesDO.getMessageContent());
+		chatResponseChoicesBO.setMessageFinishReason(chatResponseChoicesDO.getMessageFinishReason());
+		chatResponseChoicesBO.setCreateTime(chatResponseChoicesDO.getCreateTime());
+		chatResponseChoicesBO.setUpdateTime(chatResponseChoicesDO.getUpdateTime());
 		return chatResponseChoicesBO;
 	}
 
@@ -39,10 +41,12 @@ public class ChatResponseChoicesConvert {
 		ChatResponseChoicesDO chatResponseChoicesDO = new ChatResponseChoicesDO();
 		chatResponseChoicesDO.setId(chatResponseChoicesBO.getId());
 		chatResponseChoicesDO.setResponseId(chatResponseChoicesBO.getResponseId());
-		chatResponseChoicesDO.setChoicesIndex(chatResponseChoicesBO.getChoicesIndex());
-		chatResponseChoicesDO.setChoicesMessageRole(chatResponseChoicesBO.getChoicesMessageRole());
-		chatResponseChoicesDO.setChoicesMessageContent(chatResponseChoicesBO.getChoicesMessageContent());
-		chatResponseChoicesDO.setChoicesMessageFinishReason(chatResponseChoicesBO.getChoicesMessageFinishReason());
+		chatResponseChoicesDO.setChatIndex(chatResponseChoicesBO.getChatIndex());
+		chatResponseChoicesDO.setMessageRole(chatResponseChoicesBO.getMessageRole());
+		chatResponseChoicesDO.setMessageContent(chatResponseChoicesBO.getMessageContent());
+		chatResponseChoicesDO.setMessageFinishReason(chatResponseChoicesBO.getMessageFinishReason());
+		chatResponseChoicesDO.setCreateTime(chatResponseChoicesBO.getCreateTime());
+		chatResponseChoicesDO.setUpdateTime(chatResponseChoicesBO.getUpdateTime());
 		return chatResponseChoicesDO;
 	}
 

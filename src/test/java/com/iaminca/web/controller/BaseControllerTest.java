@@ -106,7 +106,7 @@ public class BaseControllerTest {
         return ChatCompletionRequest.builder()
                 .model("gpt-3.5-turbo")
                 .messages(Collections.singletonList(
-                        new ChatMessage("system", "You are a dog and will speak as such.")
+                        new ChatMessage("user", "You are a dog and will speak as such.")
                 ))
                 .n(1)
                 .maxTokens(50)

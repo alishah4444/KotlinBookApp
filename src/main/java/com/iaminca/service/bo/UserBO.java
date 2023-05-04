@@ -2,6 +2,8 @@ package com.iaminca.service.bo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 
 /**
  * 
@@ -24,4 +26,10 @@ public class UserBO{
 	private Integer userLengthLimitation;
 	/**vistor,user,vip,svip*/
 	private String userType;
+	/**delete flag: 0 false, 1 true*/
+	private Integer delFlag;
+	/***/
+	private Date createTime;
+	/***/
+	private Date updateTime;
 }

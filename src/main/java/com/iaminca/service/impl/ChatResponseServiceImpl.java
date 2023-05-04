@@ -1,5 +1,6 @@
 package com.iaminca.service.impl;
 
+import com.iaminca.common.DelFlagEnum;
 import com.iaminca.dal.dao.ChatResponseDAO;
 import com.iaminca.dal.dataobject.ChatResponseDO;
 import com.iaminca.query.ChatResponseQuery;
@@ -11,6 +12,7 @@ import org.springframework.util.ObjectUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,6 +33,9 @@ public class ChatResponseServiceImpl implements ChatResponseService {
     @Override
     public ChatResponseBO add(ChatResponseBO chatResponseBO){
         chatResponseBO.setId(null);
+        chatResponseBO.setDelFlag(DelFlagEnum.NOT_DEL.getCode());
+        chatResponseBO.setCreateTime(new Date());
+        chatResponseBO.setUpdateTime(chatResponseBO.getCreateTime());
         ChatResponseDO chatResponseDO = ChatResponseConvert.toDO(chatResponseBO);
         chatResponseDAO.insert(chatResponseDO);
 		return ChatResponseConvert.toBO(chatResponseDO);

@@ -29,6 +29,9 @@ public class UserConvert {
 		userBO.setUserChatLimitation(userDO.getUserChatLimitation());
 		userBO.setUserLengthLimitation(userDO.getUserLengthLimitation());
 		userBO.setUserType(userDO.getUserType());
+		userBO.setDelFlag(userDO.getDelFlag());
+		userBO.setCreateTime(userDO.getCreateTime());
+		userBO.setUpdateTime(userDO.getUpdateTime());
 		return userBO;
 	}
 
@@ -43,6 +46,9 @@ public class UserConvert {
 		userDO.setUserChatLimitation(userBO.getUserChatLimitation());
 		userDO.setUserLengthLimitation(userBO.getUserLengthLimitation());
 		userDO.setUserType(userBO.getUserType());
+		userDO.setDelFlag(userBO.getDelFlag());
+		userDO.setCreateTime(userBO.getCreateTime());
+		userDO.setUpdateTime(userBO.getUpdateTime());
 		return userDO;
 	}
 

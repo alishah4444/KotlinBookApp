@@ -26,7 +26,7 @@ public class ChatHandler {
 
     /**
      * Stream chat
-     * @param request
+     * @param chatRequestBO
      * @return
      */
     public Flowable<ChatCompletionChunk> streamChatCompletion(ChatRequestBO chatRequestBO){
@@ -54,21 +54,22 @@ public class ChatHandler {
 
         ChatResponseBO chatResponseBO = new ChatResponseBO();
         chatResponseBO.setUserId(5000L);
+        chatResponseBO.setKeyId(1L);
         chatResponseBO.setChatResponseId(chatCompletion.getId());
-        chatResponseBO.setChatModel(chatCompletion.getModel());
-        chatResponseBO.setChatCreated(chatCompletion.getCreated());
-        chatResponseBO.setChatObject(chatCompletion.getObject());
-        chatResponseBO.setChatUsageCompletionTokens(new Long(chatCompletion.getUsage().getCompletionTokens()).intValue());
-        chatResponseBO.setChatUsagePromptTokens(new Long(chatCompletion.getUsage().getPromptTokens()).intValue());
-        chatResponseBO.setChatUsageTotalTokens(new Long(chatCompletion.getUsage().getTotalTokens()).intValue());
+        chatResponseBO.setModel(chatCompletion.getModel());
+        chatResponseBO.setCreated(chatCompletion.getCreated());
+        chatResponseBO.setObject(chatCompletion.getObject());
+        chatResponseBO.setUsageCompletionTokens(new Long(chatCompletion.getUsage().getCompletionTokens()).intValue());
+        chatResponseBO.setUsagePromptTokens(new Long(chatCompletion.getUsage().getPromptTokens()).intValue());
+        chatResponseBO.setUsageTotalTokens(new Long(chatCompletion.getUsage().getTotalTokens()).intValue());
 
         List<ChatResponseChoicesBO> chatResponseChoicesList =new ArrayList();
         for(ChatCompletionChoice choices : chatCompletion.getChoices()){
             ChatResponseChoicesBO chatResponseChoicesBO = new ChatResponseChoicesBO();
-            chatResponseChoicesBO.setChoicesIndex(choices.getIndex());
-            chatResponseChoicesBO.setChoicesMessageContent(choices.getMessage().getContent());
-            chatResponseChoicesBO.setChoicesMessageFinishReason(choices.getFinishReason());
-            chatResponseChoicesBO.setChoicesMessageRole(choices.getMessage().getRole());
+            chatResponseChoicesBO.setChatIndex(choices.getIndex());
+            chatResponseChoicesBO.setMessageContent(choices.getMessage().getContent());
+            chatResponseChoicesBO.setMessageFinishReason(choices.getFinishReason());
+            chatResponseChoicesBO.setMessageRole(choices.getMessage().getRole());
             chatResponseChoicesList.add(chatResponseChoicesBO);
         }
 

@@ -24,12 +24,12 @@ public class ChatResponseServiceTest extends OpenaiApplicationTests {
         ChatResponseBO chatResponseBO = new ChatResponseBO();
         chatResponseBO.setUserId(5000L);
         chatResponseBO.setChatResponseId("completion-"+System.currentTimeMillis());
-        chatResponseBO.setChatModel("model-test");
-        chatResponseBO.setChatCreated(System.currentTimeMillis());
-        chatResponseBO.setChatObject("Object-test");
-        chatResponseBO.setChatUsageCompletionTokens(1);
-        chatResponseBO.setChatUsagePromptTokens(2);
-        chatResponseBO.setChatUsageTotalTokens(3);
+        chatResponseBO.setModel("model-test");
+        chatResponseBO.setCreated(System.currentTimeMillis());
+        chatResponseBO.setObject("Object-test");
+        chatResponseBO.setUsageCompletionTokens(1);
+        chatResponseBO.setUsagePromptTokens(2);
+        chatResponseBO.setUsageTotalTokens(3);
 
         ChatResponseBO responseBO = chatResponseService.add(chatResponseBO);
 

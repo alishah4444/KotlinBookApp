@@ -2,6 +2,11 @@ package com.iaminca.service.bo;
 
 import lombok.Data;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.Date;
+
 
 /**
  * 
@@ -13,21 +18,30 @@ import lombok.Data;
 @Data
 public class ChatResponseBO{
 	private static final long serialVersionUID = 1L;
-	private Long Id;
+
+	/***/
+	private Long id;
 	/***/
 	private Long userId;
+	private Long keyId;
 	/***/
 	private String chatResponseId;
 	/***/
-	private String chatModel;
+	private String model;
 	/***/
-	private String chatObject;
+	private String object;
 	/***/
-	private Long chatCreated;
+	private Long created;
 	/***/
-	private Integer chatUsagePromptTokens;
+	private Integer usagePromptTokens;
 	/***/
-	private Integer chatUsageCompletionTokens;
+	private Integer usageCompletionTokens;
 	/***/
-	private Integer chatUsageTotalTokens;
+	private Integer usageTotalTokens;
+	/**delete flag: 0 false, 1 true*/
+	private Integer delFlag;
+	/***/
+	private Date createTime;
+	/***/
+	private Date updateTime;
 }

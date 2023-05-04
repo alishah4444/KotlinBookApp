@@ -1,5 +1,6 @@
 package com.iaminca.service.impl;
 
+import com.iaminca.common.DelFlagEnum;
 import com.iaminca.dal.dao.ChatRequestDAO;
 import com.iaminca.dal.dataobject.ChatRequestDO;
 import com.iaminca.query.ChatRequestQuery;
@@ -11,6 +12,7 @@ import org.springframework.util.ObjectUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,6 +33,9 @@ public class ChatRequestServiceImpl implements ChatRequestService {
     @Override
     public ChatRequestBO add(ChatRequestBO chatRequestBO){
         chatRequestBO.setId(null);
+        chatRequestBO.setDelFlag(DelFlagEnum.NOT_DEL.getCode());
+        chatRequestBO.setCreateTime(new Date());
+        chatRequestBO.setUpdateTime(chatRequestBO.getCreateTime());
         ChatRequestDO chatRequestDO = ChatRequestConvert.toDO(chatRequestBO);
         chatRequestDAO.insert(chatRequestDO);
 		return ChatRequestConvert.toBO(chatRequestDO);
