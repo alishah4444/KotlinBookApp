@@ -3,8 +3,8 @@ package com.iaminca.handler;
 import com.iaminca.common.Constants;
 import com.iaminca.service.UserService;
 import com.iaminca.service.bo.UserBO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class UserHandler {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     public void addUser(UserBO userBO){
         log.info("Add UserBO: {}", Constants.GSON.toJson(userBO));

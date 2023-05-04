@@ -3,8 +3,8 @@ package com.iaminca.handler;
 import com.iaminca.common.Constants;
 import com.iaminca.service.ChatResponseChoicesService;
 import com.iaminca.service.bo.ChatResponseChoicesBO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -19,10 +19,10 @@ import java.util.List;
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class ChatResponseChoicesHandler {
 
-    @Autowired
-    private ChatResponseChoicesService chatResponseChoicesService;
+    private final ChatResponseChoicesService chatResponseChoicesService;
 
     public void addChatRequestChoicesList(List<ChatResponseChoicesBO> chatResponseChoicesList){
         log.info("Add Chat response choices: {}", Constants.GSON.toJson(chatResponseChoicesList));

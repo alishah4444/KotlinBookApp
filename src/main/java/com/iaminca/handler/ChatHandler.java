@@ -9,21 +9,19 @@ import com.theokanning.openai.completion.chat.ChatCompletionChunk;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import io.reactivex.Flowable;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ChatHandler {
 
-    @Autowired
-    private ChatClient chatClient;
-    @Autowired
-    private ChatRequestHandler chatRequestHandler;
-    @Autowired
-    private ChatResponseHandler chatResponseHandler;
+    private final ChatClient chatClient;
+    private final ChatRequestHandler chatRequestHandler;
+    private final ChatResponseHandler chatResponseHandler;
 
     /**
      * Stream chat

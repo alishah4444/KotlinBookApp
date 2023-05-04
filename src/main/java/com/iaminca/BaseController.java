@@ -23,7 +23,6 @@ import com.theokanning.openai.service.OpenAiService;
 import io.reactivex.Flowable;
 import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Publisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +38,7 @@ import static org.springframework.http.MediaType.ALL_VALUE;
 @RequiredArgsConstructor
 public class BaseController {
 
-    @Autowired
-    private ChatHandler chatHandler;
+    private final ChatHandler chatHandler;
     private final ChatClient chatClient;
     private final OpenAiService openAiService;
 
