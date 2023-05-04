@@ -7,7 +7,6 @@ import com.iaminca.service.bo.ChatRequestBO;
 import com.iaminca.service.bo.ChatRequestMessageBO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,11 +21,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ChatRequestHandler {
 
-    @Autowired
-    private ChatRequestService chatRequestService;
-
-    @Autowired
-    private ChatRequestMessagesHandler chatRequestMessagesHandler;
+    private final ChatRequestService chatRequestService;
+    private final ChatRequestMessagesHandler chatRequestMessagesHandler;
 
     public void addChatRequest(ChatRequestBO chatRequestBO){
         log.info("Add Chat request: {}", Constants.GSON.toJson(chatRequestBO));
