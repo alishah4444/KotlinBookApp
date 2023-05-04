@@ -1,8 +1,8 @@
 package com.iaminca.web.controller;
 
-import com.iaminca.OpenAiMultipartService;
 import com.iaminca.client.ChatClient;
 import com.iaminca.handler.ChatHandler;
+import com.iaminca.service.OpenAiMultipartService;
 import com.iaminca.service.bo.ChatRequestBO;
 import com.iaminca.web.convert.ChatCompletionRequestDTOConvert;
 import com.iaminca.web.dto.ChatCompletionRequestDTO;

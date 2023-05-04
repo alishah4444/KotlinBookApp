@@ -1,4 +1,4 @@
-package com.iaminca;
+package com.iaminca.config;
 
 import com.theokanning.openai.OpenAiError;
 import com.theokanning.openai.OpenAiHttpException;

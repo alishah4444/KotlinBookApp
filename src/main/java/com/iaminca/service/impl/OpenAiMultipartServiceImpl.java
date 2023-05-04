@@ -1,5 +1,6 @@
-package com.iaminca;
+package com.iaminca.service.impl;
 
+import com.iaminca.service.OpenAiMultipartService;
 import com.theokanning.openai.OpenAiApi;
 import com.theokanning.openai.file.File;
 import com.theokanning.openai.image.CreateImageEditRequest;
@@ -15,14 +16,16 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
-public class OpenAiMultipartService {
+public class OpenAiMultipartServiceImpl implements OpenAiMultipartService {
 
     private final OpenAiApi api;
 
