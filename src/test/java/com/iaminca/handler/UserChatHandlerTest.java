@@ -1,9 +1,8 @@
 package com.iaminca.handler;
 
 import com.iaminca.OpenaiApplicationTests;
-import com.iaminca.service.bo.UserBO;
-import com.theokanning.openai.completion.chat.ChatCompletionRequest;
-import com.theokanning.openai.completion.chat.ChatMessage;
+import com.iaminca.service.bo.ChatRequestBO;
+import com.iaminca.service.bo.ChatRequestMessageBO;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;
@@ -22,12 +21,13 @@ public class UserChatHandlerTest extends OpenaiApplicationTests {
 
     @Test
     public void createChat() {
-        ChatCompletionRequest request = new ChatCompletionRequest();
+        ChatRequestBO request = new ChatRequestBO();
         request.setModel("gpt-3.5-turbo");
         request.setN(1);
         request.setMaxTokens(50);
-        List<ChatMessage> messageList = new ArrayList();
-        ChatMessage chatMessage = new ChatMessage();
+
+        List<ChatRequestMessageBO> messageList = new ArrayList();
+        ChatRequestMessageBO chatMessage = new ChatRequestMessageBO();
         chatMessage.setRole("user");
         chatMessage.setContent("来一首7言绝句");
         messageList.add(chatMessage);

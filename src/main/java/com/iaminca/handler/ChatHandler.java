@@ -4,6 +4,7 @@ import com.iaminca.client.ChatClient;
 import com.iaminca.service.bo.ChatRequestBO;
 import com.iaminca.service.bo.ChatResponseBO;
 import com.iaminca.service.bo.ChatResponseChoicesBO;
+import com.iaminca.service.covert.ChatRequestConvert;
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionChunk;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
@@ -28,7 +29,8 @@ public class ChatHandler {
      * @param request
      * @return
      */
-    public Flowable<ChatCompletionChunk> streamChatCompletion(ChatCompletionRequest request){
+    public Flowable<ChatCompletionChunk> streamChatCompletion(ChatRequestBO chatRequestBO){
+        ChatCompletionRequest request = ChatRequestConvert.toGptBO(chatRequestBO);
         Flowable<ChatCompletionChunk> chatCompletionChunkFlowable = chatClient.streamChatCompletion(request);
         return chatCompletionChunkFlowable;
     }
@@ -38,16 +40,17 @@ public class ChatHandler {
      * @param request
      * @return
      */
-    public ChatCompletionResult createChatCompletion(ChatCompletionRequest request){
+    public ChatCompletionResult createChatCompletion(ChatRequestBO request){
 
         //Saving the content of request
-        ChatRequestBO chatRequestBO = new ChatRequestBO();
-        chatRequestBO.setChatModel(request.getModel());
-        chatRequestBO.setChatContent(request.getMessages().get(0).getContent());
-        chatRequestBO.setUserId(5000L);
-        chatRequestHandler.addChatRequest(chatRequestBO);
+        request.setModel(request.getModel());
+        request.setUserId(5000L);
+        request.setKeyId(5000L);
+        request.setStream(false);
+        chatRequestHandler.addChatRequest(request);
 
-        ChatCompletionResult chatCompletion = chatClient.createChatCompletion(request);
+
+        ChatCompletionResult chatCompletion = chatClient.createChatCompletion(ChatRequestConvert.toGptBO(request));
 
         ChatResponseBO chatResponseBO = new ChatResponseBO();
         chatResponseBO.setUserId(5000L);

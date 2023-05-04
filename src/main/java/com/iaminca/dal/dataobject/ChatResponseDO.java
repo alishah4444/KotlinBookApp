@@ -1,7 +1,6 @@
 package com.iaminca.dal.dataobject;
 
 import lombok.Data;
-import lombok.Generated;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

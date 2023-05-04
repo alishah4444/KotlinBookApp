@@ -2,7 +2,6 @@ package com.iaminca.dal.dao;
 
 import com.iaminca.dal.dataobject.ChatResponseChoicesDO;
 import tk.mybatis.mapper.additional.insert.InsertListMapper;
-import tk.mybatis.mapper.common.Mapper;
 
 /**
  * 

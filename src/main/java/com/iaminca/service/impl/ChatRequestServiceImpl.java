@@ -29,9 +29,11 @@ public class ChatRequestServiceImpl implements ChatRequestService {
 
 
     @Override
-    public int add(ChatRequestBO chatRequestBO){
+    public ChatRequestBO add(ChatRequestBO chatRequestBO){
         chatRequestBO.setId(null);
-		return chatRequestDAO.insert(ChatRequestConvert.toDO(chatRequestBO));
+        ChatRequestDO chatRequestDO = ChatRequestConvert.toDO(chatRequestBO);
+        chatRequestDAO.insert(chatRequestDO);
+		return ChatRequestConvert.toBO(chatRequestDO);
     }
 
     @Override
@@ -51,7 +53,7 @@ public class ChatRequestServiceImpl implements ChatRequestService {
      * @return
      */
     private Example convertExample(ChatRequestQuery chatRequestQuery) {
-        Example example = new Example(ChatRequestQuery.class);
+        Example example = new Example(ChatRequestDO.class);
         Example.Criteria criteria = example.createCriteria();
         if (!ObjectUtils.isEmpty(chatRequestQuery.getId())) {
             criteria.andEqualTo("id", chatRequestQuery.getId());

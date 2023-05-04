@@ -19,7 +19,7 @@ public interface ChatRequestService {
 	 * @param
 	 * @return
 	 */
-    int add(ChatRequestBO chatRequestBO);
+    ChatRequestBO add(ChatRequestBO chatRequestBO);
 
     /**
      * 修改数据

@@ -1,11 +1,14 @@
-package com.iaminca;
+package com.iaminca.web.controller;
 
+import com.iaminca.OpenAiMultipartService;
 import com.iaminca.client.ChatClient;
 import com.iaminca.handler.ChatHandler;
+import com.iaminca.service.bo.ChatRequestBO;
+import com.iaminca.web.convert.ChatCompletionRequestDTOConvert;
+import com.iaminca.web.dto.ChatCompletionRequestDTO;
 import com.theokanning.openai.DeleteResult;
 import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.completion.CompletionRequest;
-import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.edit.EditRequest;
 import com.theokanning.openai.edit.EditResult;
 import com.theokanning.openai.embedding.EmbeddingRequest;
@@ -82,8 +85,9 @@ public class BaseController {
     }
 
     @PostMapping(value = "/v1/chat/completions", produces = ALL_VALUE)
-    public ResponseEntity<?> chatCompletion(@RequestBody ChatCompletionRequest request) {
-        return selectStream(request.getStream(), openAiService::streamChatCompletion, openAiService::createChatCompletion, request);
+    public ResponseEntity<?> chatCompletion(@RequestBody ChatCompletionRequestDTO requestDTO) {
+        ChatRequestBO request = ChatCompletionRequestDTOConvert.toBO(requestDTO);
+        return selectStream(request.getStream(), chatHandler::streamChatCompletion, chatHandler::createChatCompletion, request);
     }
 
 //    @Deprecated

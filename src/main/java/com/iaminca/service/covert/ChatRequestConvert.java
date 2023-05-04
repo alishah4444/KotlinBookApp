@@ -1,12 +1,15 @@
 package com.iaminca.service.covert;
 
 import com.google.common.collect.Lists;
+import com.iaminca.common.Constants;
 import com.iaminca.dal.dataobject.ChatRequestDO;
 import com.iaminca.service.bo.ChatRequestBO;
+import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -17,6 +20,26 @@ import java.util.List;
  */
 public class ChatRequestConvert {
 
+	public static ChatCompletionRequest toGptBO(ChatRequestBO chatRequestBO) {
+		if (chatRequestBO == null) {
+			return null;
+		}
+		ChatCompletionRequest chatCompletionRequest = new ChatCompletionRequest();
+		chatCompletionRequest.setMessages(ChatRequestMessageConvert.toGptList(chatRequestBO.getMessages()));
+		chatCompletionRequest.setModel(chatRequestBO.getModel());
+		chatCompletionRequest.setTemperature(chatRequestBO.getTemperature());
+		chatCompletionRequest.setTopP(chatRequestBO.getTopP());
+		chatCompletionRequest.setN(chatRequestBO.getN());
+		chatCompletionRequest.setStream(chatRequestBO.getStream());
+		chatCompletionRequest.setStop(chatRequestBO.getStop());
+		chatCompletionRequest.setMaxTokens(chatRequestBO.getMaxTokens());
+		chatCompletionRequest.setPresencePenalty(chatRequestBO.getPresencePenalty());
+		chatCompletionRequest.setFrequencyPenalty(chatRequestBO.getFrequencyPenalty());
+		chatCompletionRequest.setLogitBias(chatRequestBO.getLogitBias());
+		chatCompletionRequest.setUser(chatRequestBO.getUser());
+
+		return chatCompletionRequest;
+	}
 	public static ChatRequestBO toBO(ChatRequestDO chatRequestDO) {
 		if (chatRequestDO == null) {
 			return null;
@@ -24,10 +47,21 @@ public class ChatRequestConvert {
 		ChatRequestBO chatRequestBO = new ChatRequestBO();
 		chatRequestBO.setId(chatRequestDO.getId());
 		chatRequestBO.setUserId(chatRequestDO.getUserId());
-		chatRequestBO.setChatModel(chatRequestDO.getChatModel());
-		chatRequestBO.setChatContent(chatRequestDO.getChatContent());
-		chatRequestBO.setChatMaxToken(chatRequestDO.getChatMaxToken());
-		chatRequestBO.setChatMaxNumber(chatRequestDO.getChatMaxNumber());
+		chatRequestBO.setKeyId(chatRequestDO.getKeyId());
+		chatRequestBO.setModel(chatRequestDO.getModel());
+		chatRequestBO.setTemperature(chatRequestDO.getTemperature());
+		chatRequestBO.setTopP(chatRequestDO.getTopP());
+		chatRequestBO.setN(chatRequestDO.getN());
+		chatRequestBO.setStream(chatRequestDO.getStream()==0?false:true);
+		chatRequestBO.setStop(Constants.GSON.fromJson(chatRequestDO.getStop(),List.class));
+		chatRequestBO.setMaxTokens(chatRequestDO.getMaxTokens());
+		chatRequestBO.setPresencePenalty(chatRequestDO.getPresencePenalty());
+		chatRequestBO.setFrequencyPenalty(chatRequestDO.getFrequencyPenalty());
+		chatRequestBO.setLogitBias(Constants.GSON.fromJson(chatRequestDO.getLogitBias(), Map.class));
+		chatRequestBO.setUser(chatRequestDO.getUser());
+		chatRequestBO.setDelFlag(chatRequestDO.getDelFlag());
+		chatRequestBO.setCreateTime(chatRequestDO.getCreateTime());
+		chatRequestBO.setUpdateTime(chatRequestDO.getUpdateTime());
 		return chatRequestBO;
 	}
 
@@ -38,10 +72,21 @@ public class ChatRequestConvert {
 		ChatRequestDO chatRequestDO = new ChatRequestDO();
 		chatRequestDO.setId(chatRequestBO.getId());
 		chatRequestDO.setUserId(chatRequestBO.getUserId());
-		chatRequestDO.setChatModel(chatRequestBO.getChatModel());
-		chatRequestDO.setChatContent(chatRequestBO.getChatContent());
-		chatRequestDO.setChatMaxToken(chatRequestBO.getChatMaxToken());
-		chatRequestDO.setChatMaxNumber(chatRequestBO.getChatMaxNumber());
+		chatRequestDO.setKeyId(chatRequestBO.getKeyId());
+		chatRequestDO.setModel(chatRequestBO.getModel());
+		chatRequestDO.setTemperature(chatRequestBO.getTemperature());
+		chatRequestDO.setTopP(chatRequestBO.getTopP());
+		chatRequestDO.setN(chatRequestBO.getN());
+		chatRequestDO.setStream(chatRequestBO.getStream()?1:0);
+		chatRequestDO.setStop(Constants.GSON.toJson(chatRequestBO.getStop()));
+		chatRequestDO.setMaxTokens(chatRequestBO.getMaxTokens());
+		chatRequestDO.setPresencePenalty(chatRequestBO.getPresencePenalty());
+		chatRequestDO.setFrequencyPenalty(chatRequestBO.getFrequencyPenalty());
+		chatRequestDO.setLogitBias(Constants.GSON.toJson(chatRequestBO.getLogitBias()));
+		chatRequestDO.setUser(chatRequestBO.getUser());
+		chatRequestDO.setDelFlag(chatRequestBO.getDelFlag());
+		chatRequestDO.setCreateTime(chatRequestBO.getCreateTime());
+		chatRequestDO.setUpdateTime(chatRequestBO.getUpdateTime());
 		return chatRequestDO;
 	}
 

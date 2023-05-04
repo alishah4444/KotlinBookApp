@@ -7,7 +7,6 @@ import com.iaminca.service.UserService;
 import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.covert.UserConvert;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import tk.mybatis.mapper.entity.Example;
 
