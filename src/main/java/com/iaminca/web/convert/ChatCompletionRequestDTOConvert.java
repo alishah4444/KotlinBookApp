@@ -56,6 +56,8 @@ public class ChatCompletionRequestDTOConvert {
 		chatRequestBO.setFrequencyPenalty(chatCompletionRequestDTO.getFrequencyPenalty());
 		chatRequestBO.setLogitBias(chatCompletionRequestDTO.getLogitBias());
 		chatRequestBO.setUser(chatCompletionRequestDTO.getUser());
+		//Convert the message list
+		chatRequestBO.setMessages(ChatCompletionMessageRequestDTOConvert.toBOList(chatCompletionRequestDTO.getMessages()));
 		return chatRequestBO;
 	}
 
