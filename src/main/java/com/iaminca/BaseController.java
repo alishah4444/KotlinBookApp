@@ -79,7 +79,7 @@ public class BaseController {
 
     @PostMapping(value = "/v1/chat/completions", produces = ALL_VALUE)
     public ResponseEntity<?> chatCompletion(@RequestBody ChatCompletionRequest request) {
-        return selectStream(request.getStream(), chatHandler::streamChatCompletion, chatHandler::createChatCompletion, request);
+        return selectStream(request.getStream(), openAiService::streamChatCompletion, openAiService::createChatCompletion, request);
     }
 
 //    @Deprecated
