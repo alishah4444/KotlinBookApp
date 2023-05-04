@@ -1,4 +1,4 @@
-package com.iaminca.dataobject;
+package com.iaminca.dal.dataobject;
 
 import lombok.Data;
 

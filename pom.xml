@@ -15,6 +15,8 @@
     <properties>
         <openai.version>0.12.0</openai.version>
         <mysql.version>8.0.30</mysql.version>
+        <mybatis-spring-boot.version>2.1.0</mybatis-spring-boot.version>
+        <tk.mybatis.version>2.1.5</tk.mybatis.version>
     </properties>
 
     <dependencies>
@@ -22,6 +24,22 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>${tk.mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <!--<version>${guava.version}</version>-->
+            <version>18.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
