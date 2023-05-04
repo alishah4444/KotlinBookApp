@@ -14,7 +14,9 @@ import com.theokanning.openai.file.File;
 import com.theokanning.openai.finetune.FineTuneEvent;
 import com.theokanning.openai.finetune.FineTuneRequest;
 import com.theokanning.openai.finetune.FineTuneResult;
+import com.theokanning.openai.image.CreateImageEditRequest;
 import com.theokanning.openai.image.CreateImageRequest;
+import com.theokanning.openai.image.CreateImageVariationRequest;
 import com.theokanning.openai.image.ImageResult;
 import com.theokanning.openai.model.Model;
 import com.theokanning.openai.moderation.ModerationRequest;
@@ -25,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -41,6 +44,7 @@ public class BaseController {
     private final ChatHandler chatHandler;
     private final ChatClient chatClient;
     private final OpenAiService openAiService;
+    private final OpenAiMultipartService openAiMultipartService;
 
     private <Tp> OpenAiResponse<Tp> makeResponse(List<Tp> list) {
         OpenAiResponse<Tp> response = new OpenAiResponse<>();
@@ -112,18 +116,10 @@ public class BaseController {
         return makeResponse(openAiService.listFiles());
     }
 
-    // TODO MultipartFile
-//    @PostMapping("/v1/files")
-//    public File uploadFile(
-//            @RequestParam("purpose") String purpose,
-//            @RequestParam("file") MultipartFile multipartFile)
-//            throws IOException {
-//        okhttp3.RequestBody purposeBody = okhttp3.RequestBody.create(okhttp3.MultipartBody.FORM, purpose);
-//        okhttp3.RequestBody fileBody = okhttp3.RequestBody.create(MediaType.parse("text"), multipartFile.getBytes());
-//        MultipartBody.Part body = MultipartBody.Part.createFormData("file", multipartFile.getOriginalFilename(), fileBody);
-//
-//        return openAiService.execute(openAiService.api.uploadFile(purposeBody, body));
-//    }
+    @PostMapping("/v1/files")
+    public Mono<File> uploadFile(@RequestPart("purpose") String purpose, @RequestPart("file") FilePart file) {
+        return openAiMultipartService.uploadFile(purpose, file);
+    }
 
     @DeleteMapping("/v1/files/{file_id}")
     public DeleteResult deleteFile(@PathVariable("file_id") String fileId) {
@@ -176,17 +172,31 @@ public class BaseController {
         return openAiService.createImage(request);
     }
 
-    // TODO MultipartFile
-//    @PostMapping("/v1/images/edits")
-//    public ImageResult createImageEdit(@RequestBody RequestBody requestBody) {
-//        return openAiService.createImageEdit(requestBody);
-//    }
+    @PostMapping("/v1/images/edits")
+    public Mono<ImageResult> createImageEdit(
+            @RequestPart("prompt") String prompt,
+            @RequestPart(value = "size", required = false) String size,
+            @RequestPart(value = "response_format", required = false) String responseFormat,
+            @RequestPart(value = "n", required = false) Integer n,
+            @RequestPart("image") FilePart image,
+            @RequestPart(value = "mask", required = false) FilePart mask) {
+        CreateImageEditRequest request = CreateImageEditRequest.builder()
+                .prompt(prompt).size(size).responseFormat(responseFormat).n(n)
+                .build();
+        return openAiMultipartService.createImageEdit(request, image, mask);
+    }
 
-    // TODO MultipartFile
-//    @PostMapping("/v1/images/variations")
-//    public ImageResult createImageVariation(@RequestBody RequestBody requestBody){
-//        return openAiService.createImageVariation(requestBody);
-//    }
+    @PostMapping("/v1/images/variations")
+    public Mono<ImageResult> createImageVariation(
+            @RequestPart(value = "size", required = false) String size,
+            @RequestPart(value = "response_format", required = false) String responseFormat,
+            @RequestPart(value = "n", required = false) Integer n,
+            @RequestPart("image") FilePart image) {
+        CreateImageVariationRequest request = CreateImageVariationRequest.builder()
+                .size(size).responseFormat(responseFormat).n(n)
+                .build();
+        return openAiMultipartService.createImageVariation(request, image);
+    }
 
     @PostMapping("/v1/moderations")
     public ModerationResult createModeration(@RequestBody ModerationRequest request) {
