@@ -1,7 +1,5 @@
 package com.iaminca.service.impl;
 
-import javax.annotation.Resource;
-
 import com.iaminca.dal.dao.ChatRequestDAO;
 import com.iaminca.dal.dataobject.ChatRequestDO;
 import com.iaminca.query.ChatRequestQuery;
@@ -9,7 +7,10 @@ import com.iaminca.service.ChatRequestService;
 import com.iaminca.service.bo.ChatRequestBO;
 import com.iaminca.service.covert.ChatRequestConvert;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -29,19 +30,32 @@ public class ChatRequestServiceImpl implements ChatRequestService {
 
     @Override
     public int add(ChatRequestBO chatRequestBO){
+        chatRequestBO.setId(null);
 		return chatRequestDAO.insert(ChatRequestConvert.toDO(chatRequestBO));
     }
 
     @Override
     public int update(ChatRequestBO chatRequestBO){
-        return chatRequestDAO.update(ChatRequestConvert.toDO(chatRequestBO));
+        return chatRequestDAO.updateByPrimaryKey(ChatRequestConvert.toDO(chatRequestBO));
     }
 
     @Override
     public List<ChatRequestBO> findList(ChatRequestQuery query) {
-        List<ChatRequestDO> listByQuery = chatRequestDAO.findListByQuery(query);
+        List<ChatRequestDO> listByQuery = chatRequestDAO.selectByExample(this.convertExample(query));
         return ChatRequestConvert.toBOList(listByQuery);
     }
 
-
+    /**
+     *
+     * @param chatRequestQuery
+     * @return
+     */
+    private Example convertExample(ChatRequestQuery chatRequestQuery) {
+        Example example = new Example(ChatRequestQuery.class);
+        Example.Criteria criteria = example.createCriteria();
+        if (!ObjectUtils.isEmpty(chatRequestQuery.getId())) {
+            criteria.andEqualTo("id", chatRequestQuery.getId());
+        }
+        return example;
+    }
 }

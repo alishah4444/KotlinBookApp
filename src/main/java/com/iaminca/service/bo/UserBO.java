@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class UserBO{
 	private static final long serialVersionUID = 1L;
-
+	private Long Id;
 	/***/
 	private String userName;
 	/***/

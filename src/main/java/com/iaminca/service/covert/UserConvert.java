@@ -23,6 +23,7 @@ public class UserConvert {
 			return null;
 		}
 		UserBO userBO = new UserBO();
+		userBO.setId(userDO.getId());
 		userBO.setUserName(userDO.getUserName());
 		userBO.setUserPhone(userDO.getUserPhone());
 		userBO.setUserChatLimitation(userDO.getUserChatLimitation());
@@ -36,6 +37,7 @@ public class UserConvert {
 			return null;
 		}
 		UserDO userDO = new UserDO();
+		userDO.setId(userBO.getId());
 		userDO.setUserName(userBO.getUserName());
 		userDO.setUserPhone(userBO.getUserPhone());
 		userDO.setUserChatLimitation(userBO.getUserChatLimitation());

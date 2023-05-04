@@ -23,6 +23,7 @@ public class ChatResponseConvert {
 			return null;
 		}
 		ChatResponseBO chatResponseBO = new ChatResponseBO();
+		chatResponseBO.setId(chatResponseDO.getId());
 		chatResponseBO.setUserId(chatResponseDO.getUserId());
 		chatResponseBO.setChatResponseId(chatResponseDO.getChatResponseId());
 		chatResponseBO.setChatModel(chatResponseDO.getChatModel());
@@ -39,6 +40,7 @@ public class ChatResponseConvert {
 			return null;
 		}
 		ChatResponseDO chatResponseDO = new ChatResponseDO();
+		chatResponseDO.setId(chatResponseBO.getId());
 		chatResponseDO.setUserId(chatResponseBO.getUserId());
 		chatResponseDO.setChatResponseId(chatResponseBO.getChatResponseId());
 		chatResponseDO.setChatModel(chatResponseBO.getChatModel());

@@ -22,6 +22,7 @@ public class ChatRequestConvert {
 			return null;
 		}
 		ChatRequestBO chatRequestBO = new ChatRequestBO();
+		chatRequestBO.setId(chatRequestDO.getId());
 		chatRequestBO.setUserId(chatRequestDO.getUserId());
 		chatRequestBO.setChatModel(chatRequestDO.getChatModel());
 		chatRequestBO.setChatContent(chatRequestDO.getChatContent());
@@ -35,6 +36,7 @@ public class ChatRequestConvert {
 			return null;
 		}
 		ChatRequestDO chatRequestDO = new ChatRequestDO();
+		chatRequestDO.setId(chatRequestBO.getId());
 		chatRequestDO.setUserId(chatRequestBO.getUserId());
 		chatRequestDO.setChatModel(chatRequestBO.getChatModel());
 		chatRequestDO.setChatContent(chatRequestBO.getChatContent());
