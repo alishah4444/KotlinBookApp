@@ -1,21 +1,26 @@
 package com.iaminca.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theokanning.openai.OpenAiApi;
 import com.theokanning.openai.service.OpenAiService;
 import okhttp3.OkHttpClient;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
-
 @Configuration
+@EnableConfigurationProperties(OpenAiProperties.class)
 public class OpenAiConfiguration {
 
     @Bean
-    public OpenAiApi openAiApi(OpenAiClient openAiClient) {
-        return OpenAiService.defaultRetrofit(openAiClient.get(), OpenAiService.defaultObjectMapper()).create(OpenAiApi.class);
+    public ObjectMapper jacksonObjectMapper() {
+        return OpenAiService.defaultObjectMapper();
+    }
+
+    @Bean
+    public OpenAiApi openAiApi(OpenAiClient openAiClient, ObjectMapper mapper) {
+        return OpenAiService.defaultRetrofit(openAiClient.get(), mapper).create(OpenAiApi.class);
     }
 
     @Bean(destroyMethod = "shutdownExecutor")
@@ -27,8 +32,8 @@ public class OpenAiConfiguration {
     static class OpenAiClient {
         private final OkHttpClient value;
 
-        OpenAiClient(@Value("${openai.token}") String token) {
-            this.value = OpenAiService.defaultClient(token, Duration.ofSeconds(10));
+        OpenAiClient(OpenAiProperties properties) {
+            this.value = OpenAiService.defaultClient(properties.getToken(), properties.getTimeout());
         }
 
         public OkHttpClient get() {
