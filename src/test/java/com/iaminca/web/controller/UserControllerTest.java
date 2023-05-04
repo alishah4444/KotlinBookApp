@@ -15,7 +15,7 @@ public class UserControllerTest {
     private WebTestClient webClient;
 
     @Test
-    public void testCreateChatCompletion() {
+    public void testAddUser() {
         UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
         userRegisterDTO.setUserPhone("5199989118");
         webClient.post().uri("/user/register").bodyValue(userRegisterDTO).exchange()
