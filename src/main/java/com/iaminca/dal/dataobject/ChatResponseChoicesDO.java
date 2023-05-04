@@ -20,7 +20,7 @@ public class ChatResponseChoicesDO {
 	@Id
 	private Long id;
 	/***/
-	private String chatResponseId;
+	private Long responseId;
 	/***/
 	private Integer choicesIndex;
 	/***/

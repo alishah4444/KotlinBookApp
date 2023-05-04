@@ -24,7 +24,7 @@ public class ChatResponseChoicesConvert {
 		}
 		ChatResponseChoicesBO chatResponseChoicesBO = new ChatResponseChoicesBO();
 		chatResponseChoicesBO.setId(chatResponseChoicesDO.getId());
-		chatResponseChoicesBO.setChatResponseId(chatResponseChoicesDO.getChatResponseId());
+		chatResponseChoicesBO.setResponseId(chatResponseChoicesDO.getResponseId());
 		chatResponseChoicesBO.setChoicesIndex(chatResponseChoicesDO.getChoicesIndex());
 		chatResponseChoicesBO.setChoicesMessageRole(chatResponseChoicesDO.getChoicesMessageRole());
 		chatResponseChoicesBO.setChoicesMessageContent(chatResponseChoicesDO.getChoicesMessageContent());
@@ -38,7 +38,7 @@ public class ChatResponseChoicesConvert {
 		}
 		ChatResponseChoicesDO chatResponseChoicesDO = new ChatResponseChoicesDO();
 		chatResponseChoicesDO.setId(chatResponseChoicesBO.getId());
-		chatResponseChoicesDO.setChatResponseId(chatResponseChoicesBO.getChatResponseId());
+		chatResponseChoicesDO.setResponseId(chatResponseChoicesBO.getResponseId());
 		chatResponseChoicesDO.setChoicesIndex(chatResponseChoicesBO.getChoicesIndex());
 		chatResponseChoicesDO.setChoicesMessageRole(chatResponseChoicesBO.getChoicesMessageRole());
 		chatResponseChoicesDO.setChoicesMessageContent(chatResponseChoicesBO.getChoicesMessageContent());

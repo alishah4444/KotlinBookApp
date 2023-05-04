@@ -1,6 +1,7 @@
 package com.iaminca.service.impl;
 
 import com.iaminca.dal.dao.ChatResponseChoicesDAO;
+import com.iaminca.dal.dao.ChatResponseChoicesListDAO;
 import com.iaminca.dal.dataobject.ChatResponseChoicesDO;
 import com.iaminca.query.ChatResponseChoicesQuery;
 import com.iaminca.service.ChatResponseChoicesService;
@@ -26,12 +27,19 @@ public class ChatResponseChoicesServiceImpl implements ChatResponseChoicesServic
 
 	@Resource
 	private ChatResponseChoicesDAO chatResponseChoicesDAO;
+    @Resource
+    private ChatResponseChoicesListDAO chatResponseChoicesListDAO;
 
 
     @Override
     public int add(ChatResponseChoicesBO chatResponseChoicesBO){
         chatResponseChoicesBO.setId(null);
 		return chatResponseChoicesDAO.insert(ChatResponseChoicesConvert.toDO(chatResponseChoicesBO));
+    }
+
+    @Override
+    public int addList(List<ChatResponseChoicesBO> chatResponseChoicesBOList) {
+        return chatResponseChoicesListDAO.insertList(ChatResponseChoicesConvert.toDOList(chatResponseChoicesBOList));
     }
 
     @Override

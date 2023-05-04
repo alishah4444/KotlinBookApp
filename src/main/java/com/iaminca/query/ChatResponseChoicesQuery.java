@@ -15,7 +15,7 @@ public class ChatResponseChoicesQuery{
 	private static final long serialVersionUID = 1L;
 	private Long Id;
 	/***/
-	private String chatResponseId;
+	private Long responseId;
 	/***/
 	private Integer choicesIndex;
 	/***/

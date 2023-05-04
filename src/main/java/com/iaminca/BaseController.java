@@ -1,6 +1,7 @@
 package com.iaminca;
 
 import com.iaminca.client.ChatClient;
+import com.iaminca.handler.ChatHandler;
 import com.theokanning.openai.DeleteResult;
 import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.completion.CompletionRequest;
@@ -22,6 +23,7 @@ import com.theokanning.openai.service.OpenAiService;
 import io.reactivex.Flowable;
 import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Publisher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,8 @@ import static org.springframework.http.MediaType.ALL_VALUE;
 @RequiredArgsConstructor
 public class BaseController {
 
+    @Autowired
+    private ChatHandler chatHandler;
     private final ChatClient chatClient;
     private final OpenAiService openAiService;
 
@@ -77,7 +81,7 @@ public class BaseController {
 
     @PostMapping(value = "/v1/chat/completions", produces = ALL_VALUE)
     public ResponseEntity<?> chatCompletion(@RequestBody ChatCompletionRequest request) {
-        return selectStream(request.getStream(), chatClient::streamChatCompletion, chatClient::createChatCompletion, request);
+        return selectStream(request.getStream(), chatHandler::streamChatCompletion, chatHandler::createChatCompletion, request);
     }
 
 //    @Deprecated

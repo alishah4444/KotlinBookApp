@@ -20,6 +20,7 @@ public interface ChatResponseChoicesService {
 	 * @return
 	 */
     int add(ChatResponseChoicesBO chatResponseChoicesBO);
+    int addList(List<ChatResponseChoicesBO> chatResponseChoicesBOList);
 
     /**
      * 修改数据

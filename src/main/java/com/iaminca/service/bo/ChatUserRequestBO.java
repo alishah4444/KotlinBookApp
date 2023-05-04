@@ -11,17 +11,17 @@ import lombok.Data;
  * @date 2023-05-02 16:58:23
  */
 @Data
-public class ChatResponseChoicesBO{
+public class ChatUserRequestBO {
 	private static final long serialVersionUID = 1L;
 	private Long Id;
 	/***/
-	private Long responseId;
+	private Long userId;
 	/***/
-	private Integer choicesIndex;
+	private String chatModel;
 	/***/
-	private String choicesMessageRole;
+	private String chatContent;
 	/***/
-	private String choicesMessageContent;
+	private Integer chatMaxToken;
 	/***/
-	private String choicesMessageFinishReason;
+	private Integer chatMaxNumber;
 }

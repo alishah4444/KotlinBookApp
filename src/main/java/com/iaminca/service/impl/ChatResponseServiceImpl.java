@@ -29,9 +29,11 @@ public class ChatResponseServiceImpl implements ChatResponseService {
 
 
     @Override
-    public int add(ChatResponseBO chatResponseBO){
+    public ChatResponseBO add(ChatResponseBO chatResponseBO){
         chatResponseBO.setId(null);
-		return chatResponseDAO.insert(ChatResponseConvert.toDO(chatResponseBO));
+        ChatResponseDO chatResponseDO = ChatResponseConvert.toDO(chatResponseBO);
+        chatResponseDAO.insert(chatResponseDO);
+		return ChatResponseConvert.toBO(chatResponseDO);
     }
 
     @Override
