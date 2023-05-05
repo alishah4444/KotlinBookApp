@@ -25,20 +25,16 @@ import com.theokanning.openai.model.Model;
 import com.theokanning.openai.moderation.ModerationRequest;
 import com.theokanning.openai.moderation.ModerationResult;
 import com.theokanning.openai.service.OpenAiService;
-import io.reactivex.Flowable;
 import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.function.Function;
-
-import static org.springframework.http.MediaType.ALL_VALUE;
 
 @RestController
 @RequiredArgsConstructor
@@ -66,28 +62,27 @@ public class BaseController {
         return openAiService.getModel(modelId);
     }
 
-    private <Req, Chunk, Body> ResponseEntity<? extends Publisher<?>> selectStream(
+    private <Request> ResponseEntity<?> selectStream(
             Boolean stream,
-            Function<? super Req, ? extends Flowable<Chunk>> ifStream,
-            Function<? super Req, Body> notStream,
-            Req request) {
-        if (Boolean.TRUE.equals(stream)) {
-            // https://platform.openai.com/docs/api-reference/completions/create#completions/create-stream
-            Flux<Object> result = Flux.<Object>from(ifStream.apply(request)).concatWithValues("[DONE]");
-            return ResponseEntity.ok().contentType(MediaType.TEXT_EVENT_STREAM).body(result);
+            Function<? super Request, ? extends Publisher<?>> ifStream,
+            Function<? super Request, ?> notStream,
+            Mono<Request> request) {
+        if (!Boolean.TRUE.equals(stream)) {
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(request.map(notStream));
         }
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(Mono.fromCallable(() -> notStream.apply(request)));
+        // https://platform.openai.com/docs/api-reference/completions/create#completions/create-stream
+        return ResponseEntity.ok().contentType(MediaType.TEXT_EVENT_STREAM).body(request.flatMapMany(ifStream).concatWithValues("[DONE]"));
     }
 
-    @PostMapping(value = "/v1/completions", produces = ALL_VALUE)
+    @PostMapping("/v1/completions")
     public ResponseEntity<?> completion(@RequestBody CompletionRequest request) {
-        return selectStream(request.getStream(), openAiService::streamCompletion, openAiService::createCompletion, request);
+        return selectStream(request.getStream(), openAiService::streamCompletion, openAiService::createCompletion, Mono.just(request));
     }
 
-    @PostMapping(value = "/v1/chat/completions", produces = ALL_VALUE)
+    @PostMapping("/v1/chat/completions")
     public ResponseEntity<?> chatCompletion(@RequestBody ChatCompletionRequestDTO requestDTO) {
         ChatRequestBO request = ChatCompletionRequestDTOConvert.toBO(requestDTO);
-        return selectStream(request.getStream(), chatHandler::streamChatCompletion, chatHandler::createChatCompletion, request);
+        return selectStream(request.getStream(), chatHandler::streamChatCompletion, chatHandler::createChatCompletion, Mono.just(request));
     }
 
 //    @Deprecated
