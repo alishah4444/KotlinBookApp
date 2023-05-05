@@ -25,4 +25,14 @@ public class UserControllerTest {
                 .jsonPath("$.usage.total_tokens").value(Matchers.greaterThan(0));
     }
 
+
+    @Test
+    public void testApplyKey() {
+        webClient.post().uri("/user/applyKey").bodyValue("{}").exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody();
+//                .jsonPath("$.usage.total_tokens").value(Matchers.greaterThan(0));
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.iaminca.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 
@@ -15,5 +16,6 @@ public class UserRegisterDTO {
 	private static final long serialVersionUID = 1L;
 
 	/***/
+	@JsonProperty("user_phone")
 	private String userPhone;
 }

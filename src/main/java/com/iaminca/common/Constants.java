@@ -5,4 +5,7 @@ import com.google.gson.GsonBuilder;
 
 public class Constants {
     public static Gson GSON = new GsonBuilder().create();
+
+
+
 }
