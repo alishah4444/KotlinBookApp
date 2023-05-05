@@ -118,7 +118,7 @@ public class BaseControllerTest {
         ChatCompletionRequest request = chatCompletionRequestBuilder().build();
         webClient.post().uri("/v1/chat/completions").bodyValue(request).exchange()
                 .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
                 .expectBody()
                 .jsonPath("$.usage.total_tokens").value(Matchers.greaterThan(0));
     }

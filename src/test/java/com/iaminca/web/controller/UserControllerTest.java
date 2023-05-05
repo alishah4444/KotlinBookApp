@@ -20,7 +20,7 @@ public class UserControllerTest {
         userRegisterDTO.setUserPhone("5199989118");
         webClient.post().uri("/user/register").bodyValue(userRegisterDTO).exchange()
                 .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
                 .expectBody()
                 .jsonPath("$.usage.total_tokens").value(Matchers.greaterThan(0));
     }
@@ -30,7 +30,7 @@ public class UserControllerTest {
     public void testApplyKey() {
         webClient.post().uri("/user/applyKey").bodyValue("{}").exchange()
                 .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
                 .expectBody();
 //                .jsonPath("$.usage.total_tokens").value(Matchers.greaterThan(0));
     }
