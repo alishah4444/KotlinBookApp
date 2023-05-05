@@ -16,6 +16,5 @@ public class UserRegisterDTO {
 	private static final long serialVersionUID = 1L;
 
 	/***/
-	@JsonProperty("user_phone")
 	private String userPhone;
 }
