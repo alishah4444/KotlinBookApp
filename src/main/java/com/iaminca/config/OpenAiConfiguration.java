@@ -1,6 +1,5 @@
 package com.iaminca.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theokanning.openai.OpenAiApi;
 import com.theokanning.openai.service.OpenAiService;
 import okhttp3.OkHttpClient;
@@ -14,13 +13,8 @@ import org.springframework.stereotype.Component;
 public class OpenAiConfiguration {
 
     @Bean
-    public ObjectMapper jacksonObjectMapper() {
-        return OpenAiService.defaultObjectMapper();
-    }
-
-    @Bean
-    public OpenAiApi openAiApi(OpenAiClient openAiClient, ObjectMapper mapper) {
-        return OpenAiService.defaultRetrofit(openAiClient.get(), mapper).create(OpenAiApi.class);
+    public OpenAiApi openAiApi(OpenAiClient openAiClient) {
+        return OpenAiService.defaultRetrofit(openAiClient.get(), OpenAiService.defaultObjectMapper()).create(OpenAiApi.class);
     }
 
     @Bean(destroyMethod = "shutdownExecutor")
