@@ -18,6 +18,7 @@ public class OpenAiProperties {
     private Duration writeTimeout = Duration.ofSeconds(10);
     private Duration pingInterval = Duration.ZERO;
     private final Pool pool = new Pool();
+    private String baseUrl = "https://api.openai.com/";
 
     @Getter
     @Setter

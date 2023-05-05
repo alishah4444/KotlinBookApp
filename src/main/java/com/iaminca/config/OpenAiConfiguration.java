@@ -8,6 +8,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -17,8 +20,13 @@ import java.util.concurrent.TimeUnit;
 public class OpenAiConfiguration {
 
     @Bean
-    public OpenAiApi openAiApi(OpenAiClient openAiClient) {
-        return OpenAiService.defaultRetrofit(openAiClient.get(), OpenAiService.defaultObjectMapper()).create(OpenAiApi.class);
+    public OpenAiApi openAiApi(OpenAiClient openAiClient, OpenAiProperties properties) {
+        return new Retrofit.Builder()
+                .baseUrl(properties.getBaseUrl())
+                .client(openAiClient.get())
+                .addConverterFactory(JacksonConverterFactory.create(OpenAiService.defaultObjectMapper()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build().create(OpenAiApi.class);
     }
 
     @Bean(destroyMethod = "shutdownExecutor")
