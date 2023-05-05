@@ -31,10 +31,10 @@ public class OpenAiHttpExceptionHandler {
         Response<?> response = ex.response();
         if (response != null) {
             builder.headers(headers -> headers.putAll(response.headers().toMultimap()));
-            try (ResponseBody responseBody = response.errorBody()) {
-                if (responseBody != null) {
-                    return builder.body(responseBody.bytes());
-                }
+            //noinspection resource
+            ResponseBody responseBody = response.errorBody();
+            if (responseBody != null) {
+                return builder.body(responseBody.bytes());
             }
         }
         return builder.build();
