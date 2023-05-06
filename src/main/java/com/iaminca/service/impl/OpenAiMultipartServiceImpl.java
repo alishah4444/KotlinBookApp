@@ -61,6 +61,9 @@ public class OpenAiMultipartServiceImpl implements OpenAiMultipartService {
                 builder.addFormDataPart("n", request.getN().toString());
             }
             tuple.getT2().ifPresent(builder::addPart);
+            if (request.getUser() != null) {
+                builder.addFormDataPart("user", request.getUser());
+            }
             return OpenAiService.execute(api.createImageEdit(builder.build()));
         });
     }
@@ -76,7 +79,9 @@ public class OpenAiMultipartServiceImpl implements OpenAiMultipartService {
             if (request.getN() != null) {
                 builder.addFormDataPart("n", request.getN().toString());
             }
-
+            if (request.getUser() != null) {
+                builder.addFormDataPart("user", request.getUser());
+            }
             return OpenAiService.execute(api.createImageVariation(builder.build()));
         });
     }

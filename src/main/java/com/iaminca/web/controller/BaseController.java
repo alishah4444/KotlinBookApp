@@ -178,9 +178,10 @@ public class BaseController {
             @RequestPart(value = "response_format", required = false) String responseFormat,
             @RequestPart(value = "n", required = false) Integer n,
             @RequestPart("image") FilePart image,
-            @RequestPart(value = "mask", required = false) FilePart mask) {
+            @RequestPart(value = "mask", required = false) FilePart mask,
+            @RequestPart(value = "user", required = false) String user) {
         CreateImageEditRequest request = CreateImageEditRequest.builder()
-                .prompt(prompt).size(size).responseFormat(responseFormat).n(n)
+                .prompt(prompt).size(size).responseFormat(responseFormat).n(n).user(user)
                 .build();
         return openAiMultipartService.createImageEdit(request, image, mask);
     }
@@ -190,9 +191,10 @@ public class BaseController {
             @RequestPart(value = "size", required = false) String size,
             @RequestPart(value = "response_format", required = false) String responseFormat,
             @RequestPart(value = "n", required = false) Integer n,
-            @RequestPart("image") FilePart image) {
+            @RequestPart("image") FilePart image,
+            @RequestPart(value = "user", required = false) String user) {
         CreateImageVariationRequest request = CreateImageVariationRequest.builder()
-                .size(size).responseFormat(responseFormat).n(n)
+                .size(size).responseFormat(responseFormat).n(n).user(user)
                 .build();
         return openAiMultipartService.createImageVariation(request, image);
     }
