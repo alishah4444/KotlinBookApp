@@ -1,0 +1,5 @@
+spring:
+  redis:
+    host: 173.82.205.214
+    password: 3DSyexKXX6uGG89S
+    database: 0
