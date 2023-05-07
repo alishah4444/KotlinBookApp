@@ -1,5 +1,6 @@
 package com.iaminca.service.impl;
 
+import com.iaminca.common.DelFlagEnum;
 import com.iaminca.dal.dao.UserDAO;
 import com.iaminca.dal.dataobject.UserDO;
 import com.iaminca.query.UserQuery;
@@ -11,6 +12,7 @@ import org.springframework.util.ObjectUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,6 +33,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public int add(UserBO userBO){
         userBO.setId(null);
+        userBO.setDelFlag(DelFlagEnum.NOT_DEL.getCode());
+        userBO.setCreateTime(new Date());
+        userBO.setUpdateTime(userBO.getCreateTime());
 		return userDAO.insert(UserConvert.toDO(userBO));
     }
 
