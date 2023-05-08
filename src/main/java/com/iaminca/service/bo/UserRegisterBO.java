@@ -1,6 +1,5 @@
-package com.iaminca.web.dto;
+package com.iaminca.service.bo;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 
@@ -12,10 +11,11 @@ import lombok.Data;
  * @date 2023-05-02 16:58:22
  */
 @Data
-public class UserRegisterDTO {
+public class UserRegisterBO {
 	private static final long serialVersionUID = 1L;
 
 	/***/
 	private String userPhone;
 	private String verificationCode;
+
 }

@@ -5,6 +5,7 @@ import com.iaminca.handler.UserHandler;
 import com.iaminca.handler.UserKeyHandler;
 import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.bo.UserKeyBO;
+import com.iaminca.service.bo.UserRegisterBO;
 import com.iaminca.web.dto.UserRegisterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,14 @@ public class UserController {
 
     @PostMapping("/register")
     public ResultModel register(@RequestBody  UserRegisterDTO userRegisterDTO) {
+        UserRegisterBO userRegisterBO = new UserRegisterBO();
+        userRegisterBO.setUserPhone(userRegisterDTO.getUserPhone());
+        userHandler.chekVerificationCode(userRegisterBO);
+        return new ResultModel();
+    }
+
+    @PostMapping("/sendCode")
+    public ResultModel sendCode(@RequestBody  UserRegisterDTO userRegisterDTO) {
         UserBO userBO = new UserBO();
         userBO.setUserPhone(userRegisterDTO.getUserPhone());
         userHandler.addUser(userBO);

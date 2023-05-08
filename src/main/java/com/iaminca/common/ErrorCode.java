@@ -1,11 +1,12 @@
 package com.iaminca.common;
 
+import com.iaminca.exception.ErrorCodeService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ErrorCode {
+public enum ErrorCode implements ErrorCodeService {
 	SUCCESS(200, "成功"),
 	UNKNOW_ERROR(9999, "服务器繁忙，请稍后再试！"),
 	PARAM_IS_ERROR(10000, "参数有误"),
