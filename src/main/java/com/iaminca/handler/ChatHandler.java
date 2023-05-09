@@ -35,21 +35,22 @@ public class ChatHandler {
     private final StringRedisTemplate stringRedisTemplate;
     private final RedisTemplate redisTemplate;
 
-    private UserBalanceCacheBO checkGptKey(String gptKey){
-        String  userIdCache = stringRedisTemplate.opsForValue().get(RedisKeyUtil.userInfoKey(gptKey));
+    private void checkGptKey(String gptKey){
+        String userIdCache = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getGptKey(gptKey));
         if(StringUtils.isEmptyOrWhitespaceOnly(userIdCache)){
             throw new BusinessException(ErrorCode.GPT_KEY_ERROR);
         }
         String userBalance = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getUserBalance(Long.valueOf(userIdCache)));
-        UserBalanceCacheBO userBalanceCache = Constants.GSON.fromJson(userBalance, UserBalanceCacheBO.class);
-        if(ObjectUtils.isEmpty(userBalanceCache) || userBalanceCache.getUserTokensBalance()<= 0){
+        if(Long.valueOf(userBalance) <= 0){
             throw new BusinessException(ErrorCode.GPT_BALANCE_ERROR);
         }
-        return userBalanceCache;
     }
 
     private void reduceGptTokens(Long userId,long tokensNumber){
 
+//        String tokensBalance = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getUserBalance(userId));
+//        long balance = Long.valueOf(tokensBalance) - tokensNumber;
+//        stringRedisTemplate.opsForValue().set(RedisKeyUtil.getUserBalance(userId),String.valueOf(balance));
         redisTemplate.opsForValue().decrement(RedisKeyUtil.getUserBalance(userId),tokensNumber);
     }
 
@@ -87,6 +88,10 @@ public class ChatHandler {
         request.setUserId(request.getUserId());
         request.setKeyId(5000L);
         request.setStream(false);
+        request.setModel("gpt-3.5-turbo");
+        request.setN(1);
+        request.setMaxTokens(500);
+        request.setUser(String.valueOf(request.getUserId()));
         chatRequestHandler.addChatRequest(request);
 
 

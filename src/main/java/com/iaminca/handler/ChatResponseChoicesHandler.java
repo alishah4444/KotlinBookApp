@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +29,10 @@ public class ChatResponseChoicesHandler {
         log.info("Add Chat response choices: {}", Constants.GSON.toJson(chatResponseChoicesList));
         if(CollectionUtils.isEmpty(chatResponseChoicesList)){
             return;
+        }
+        for(ChatResponseChoicesBO chatResponseChoicesBO : chatResponseChoicesList){
+            chatResponseChoicesBO.setCreateTime(new Date());
+            chatResponseChoicesBO.setUpdateTime(chatResponseChoicesBO.getCreateTime());
         }
         chatResponseChoicesService.addList(chatResponseChoicesList);
     }

@@ -1,6 +1,7 @@
 package com.iaminca.handler;
 
 import com.iaminca.common.Constants;
+import com.iaminca.common.DelFlagEnum;
 import com.iaminca.service.ChatRequestMessageService;
 import com.iaminca.service.bo.ChatRequestMessageBO;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +30,11 @@ public class ChatRequestMessagesHandler {
         log.info("Add Chat request messages: {}", Constants.GSON.toJson(chatRequestMessageBOList));
         if(CollectionUtils.isEmpty(chatRequestMessageBOList)){
             return;
+        }
+        for(ChatRequestMessageBO chatRequestMessageBO : chatRequestMessageBOList){
+            chatRequestMessageBO.setDelFlag(DelFlagEnum.NOT_DEL.getCode());
+            chatRequestMessageBO.setCreateTime(new Date());
+            chatRequestMessageBO.setUpdateTime(chatRequestMessageBO.getCreateTime());
         }
         chatRequestMessageService.add(chatRequestMessageBOList);
     }

@@ -42,9 +42,11 @@ public class OpenAIBaseController {
             balanceQuery.setUserId(userKey.getUserId());
             UserBalanceBO userBalance = userBalanceHandler.findUserBalance(balanceQuery);
             stringRedisTemplate.opsForValue().set(RedisKeyUtil.getGptKey(gptKey), String.valueOf(userKey.getUserId()));
-            redisTemplate.opsForValue().set(RedisKeyUtil.getUserBalance(userKey.getUserId()),userBalance.getUserBalance());
+            String userBalanceRedisKey = RedisKeyUtil.getUserBalance(userKey.getUserId());
+//            stringRedisTemplate.opsForValue().set(userBalanceRedisKey,String.valueOf(userBalance.getUserBalance()));
+            redisTemplate.opsForValue().set(userBalanceRedisKey,userBalance.getUserBalance());
         }
-        return Long.getLong(gptKeyUserID);
+        return Long.valueOf(gptKeyUserID);
     }
 
 }

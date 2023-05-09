@@ -21,7 +21,7 @@ public enum ErrorCode implements ErrorCodeService {
 
 
 	//权限模块 15500
-	NO_AUTH(55555, "权限不足，请联系管理员"),
+	NO_AUTH(55555, "登录过期或超时，请重新登录！"),
 	SYS_TEM_ERROR(50000, "系统错误"),
 	;
 

@@ -20,7 +20,7 @@ public class UserBalanceBO {
 	private Long id;
 	/***/
 	private Long userId;
-	/**unite: cent*/
+	/**unite: tokens*/
 	private Integer userBalance;
 	/**delete flag: 0 false, 1 true*/
 	private Integer delFlag;

@@ -83,7 +83,7 @@ public class OpenAIController extends OpenAIBaseController {
     @PostMapping("/v1/chat/completions")
     public ResponseEntity<?> chatCompletion(@RequestBody ChatCompletionRequestDTO requestDTO,@RequestHeader("Authorization")String gptKeyParam) {
         ChatRequestBO request = ChatCompletionRequestDTOConvert.toBO(requestDTO);
-        String gptKey = gptKeyParam.split(" ")[0];
+        String gptKey = gptKeyParam.split(" ")[1];
         Long userID = getUserID(gptKey);
         request.setUserId(userID);
         request.setGptKey(gptKey);
