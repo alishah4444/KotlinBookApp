@@ -40,7 +40,7 @@ public class UserHandler {
     private static final Integer LENGTH_LIMITATION = 200;
 
     @Autowired
-    private RedisTemplate<String, String> template;
+    private RedisTemplate redisTemplate;
     @Resource
     private UserService userService;
 
@@ -63,7 +63,7 @@ public class UserHandler {
         SmsSendUtil smsSendUtil=new SmsSendUtil();
         smsSendUtil.sendSms(userBO.getUserPhone(), SmsBusinessEnum.PHONE_REGISTER,sendSmsBO);
         // Save in Redis as Cache.
-        template.opsForValue().set(userBO.getUserPhone(),randomNumberString);
+        redisTemplate.opsForValue().set(userBO.getUserPhone(),randomNumberString);
     }
 
 
@@ -82,12 +82,12 @@ public class UserHandler {
             userService.add(userBO);
         }
         //TODO Check Verification Code
-        String verificationCodeCache = template.opsForValue().get(userRegisterBO.getUserPhone());
+        String verificationCodeCache = (String)redisTemplate.opsForValue().get(userRegisterBO.getUserPhone());
         if(StringUtils.isEmpty(verificationCodeCache) && !verificationCodeCache.equals(userRegisterBO.getVerificationCode())){
             //Checked Unsuccessfully
             throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
         }
-        //Save the token and information to Cacge
+        //Save the token and information to Cache
 
     }
 
