@@ -61,6 +61,9 @@ public class UserServiceImpl implements UserService {
         if (!ObjectUtils.isEmpty(userQuery.getId())) {
             criteria.andEqualTo("id", userQuery.getId());
         }
+        if (!ObjectUtils.isEmpty(userQuery.getUserPhone())) {
+            criteria.andEqualTo("userPhone", userQuery.getUserPhone());
+        }
         return example;
     }
 

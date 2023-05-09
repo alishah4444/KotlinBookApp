@@ -1,6 +1,8 @@
 package com.iaminca.web.controller;
 
+import com.iaminca.common.ErrorCode;
 import com.iaminca.common.ResultModel;
+import com.iaminca.exception.BusinessException;
 import com.iaminca.handler.UserHandler;
 import com.iaminca.handler.UserKeyHandler;
 import com.iaminca.service.bo.UserBO;
@@ -9,6 +11,8 @@ import com.iaminca.service.bo.UserRegisterBO;
 import com.iaminca.web.controller.base.UserBaseController;
 import com.iaminca.web.dto.UserRegisterDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,6 +20,7 @@ import javax.annotation.Resource;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
+@Slf4j
 public class UserController extends UserBaseController {
 
     @Resource
@@ -25,8 +30,13 @@ public class UserController extends UserBaseController {
 
     @PostMapping("/register")
     public ResultModel register(@RequestBody  UserRegisterDTO userRegisterDTO) {
+        if(ObjectUtils.isEmpty(userRegisterDTO) || ObjectUtils.isEmpty(userRegisterDTO.getUserPhone())||
+                ObjectUtils.isEmpty(userRegisterDTO.getVerificationCode())){
+            throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
+        }
         UserRegisterBO userRegisterBO = new UserRegisterBO();
         userRegisterBO.setUserPhone(userRegisterDTO.getUserPhone());
+        userRegisterBO.setVerificationCode(userRegisterDTO.getVerificationCode());
         String token = userHandler.chekVerificationCode(userRegisterBO);
         return new ResultModel(token);
     }

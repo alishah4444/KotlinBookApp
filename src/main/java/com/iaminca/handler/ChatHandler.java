@@ -44,7 +44,7 @@ public class ChatHandler {
 
         //Saving the content of request
         request.setModel(request.getModel());
-        request.setUserId(5000L);
+        request.setUserId(request.getUserId());
         request.setKeyId(5000L);
         request.setStream(false);
         chatRequestHandler.addChatRequest(request);

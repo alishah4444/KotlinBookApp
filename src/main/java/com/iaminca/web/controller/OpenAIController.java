@@ -4,6 +4,7 @@ import com.iaminca.client.ChatClient;
 import com.iaminca.handler.ChatHandler;
 import com.iaminca.service.OpenAiMultipartService;
 import com.iaminca.service.bo.ChatRequestBO;
+import com.iaminca.web.controller.base.OpenAIBaseController;
 import com.iaminca.web.convert.ChatCompletionRequestDTOConvert;
 import com.iaminca.web.dto.ChatCompletionRequestDTO;
 import com.theokanning.openai.DeleteResult;
@@ -38,7 +39,7 @@ import java.util.function.Function;
 
 @RestController
 @RequiredArgsConstructor
-public class OpenAIController {
+public class OpenAIController extends OpenAIBaseController {
 
     private final ChatHandler chatHandler;
     private final ChatClient chatClient;
@@ -80,8 +81,10 @@ public class OpenAIController {
     }
 
     @PostMapping("/v1/chat/completions")
-    public ResponseEntity<?> chatCompletion(@RequestBody ChatCompletionRequestDTO requestDTO) {
+    public ResponseEntity<?> chatCompletion(@RequestBody ChatCompletionRequestDTO requestDTO,@RequestHeader("Authorization")String gptKey) {
         ChatRequestBO request = ChatCompletionRequestDTOConvert.toBO(requestDTO);
+        Long userID = getUserID(gptKey.split(" ")[0]);
+        request.setUserId(userID);
         return selectStream(request.getStream(), chatHandler::streamChatCompletion, chatHandler::createChatCompletion, Mono.just(request));
     }
 

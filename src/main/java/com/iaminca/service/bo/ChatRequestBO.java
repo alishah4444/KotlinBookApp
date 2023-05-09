@@ -25,6 +25,7 @@ public class ChatRequestBO {
 	private Long userId;
 	/** User Key ID*/
 	private Long keyId;
+	private String gptKey;
 	/***/
 	private String model;
 	/***/

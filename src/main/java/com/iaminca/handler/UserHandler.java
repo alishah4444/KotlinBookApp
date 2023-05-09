@@ -9,6 +9,7 @@ import com.iaminca.service.UserService;
 import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.bo.UserRegisterBO;
 import com.iaminca.utils.CodeUtil;
+import com.iaminca.utils.RedisKeyUtil;
 import com.iaminca.utils.sms.SendSmsBO;
 import com.iaminca.utils.sms.SmsBusinessEnum;
 import com.iaminca.utils.sms.SmsSendResponse;
@@ -23,7 +24,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 
@@ -65,7 +68,8 @@ public class UserHandler {
         SmsSendUtil smsSendUtil=new SmsSendUtil();
         smsSendUtil.sendSms(userBO.getUserPhone(), SmsBusinessEnum.PHONE_REGISTER,sendSmsBO);
         // Save in Redis as Cache.
-        stringRedisTemplate.opsForValue().set(Constants.USER_REDIS_REGISTER_DIRE+userBO.getUserPhone(),randomNumberString);
+
+        stringRedisTemplate.opsForValue().set(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()),randomNumberString,10, TimeUnit.MINUTES);
     }
 
 
@@ -74,6 +78,7 @@ public class UserHandler {
         query.setUserPhone(userRegisterBO.getUserPhone());
         List<UserBO> list = userService.findList(query);
         if(CollectionUtils.isEmpty(list)){
+            list = new ArrayList<>();
             UserBO userBO = new UserBO();
             userBO.setUserPhone(userRegisterBO.getUserPhone());
             userBO.setUserName(userBO.getUserPhone());
@@ -86,14 +91,15 @@ public class UserHandler {
         }
         UserBO userBO = list.get(0);
         //TODO Check Verification Code
-        String verificationCodeCache = stringRedisTemplate.opsForValue().get(userRegisterBO.getUserPhone());
-        if(StringUtils.isEmpty(verificationCodeCache) && !verificationCodeCache.equals(userRegisterBO.getVerificationCode())){
+        String verificationCodeCache = stringRedisTemplate.opsForValue().get(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()));
+        if(StringUtils.isEmpty(verificationCodeCache) || !verificationCodeCache.equals(userRegisterBO.getVerificationCode())){
             //Checked Unsuccessfully
-            throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
+            throw new BusinessException(ErrorCode.USER_VERIFICATION_CODE_ERROR);
         }
+        stringRedisTemplate.delete(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()));
         //Save the token and information to Cache
         String token = CodeUtil.getUpperUUID();
-        stringRedisTemplate.opsForValue().set(Constants.USER_REDIS_INFO_DIRE+token, Constants.GSON.toJson(userBO));
+        stringRedisTemplate.opsForValue().set(RedisKeyUtil.userInfoKey(token), Constants.GSON.toJson(userBO));
         return token;
     }
 
