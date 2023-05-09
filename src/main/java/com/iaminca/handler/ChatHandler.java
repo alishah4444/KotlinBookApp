@@ -15,12 +15,12 @@ import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionChunk;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
-import io.reactivex.Flowable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,15 +52,25 @@ public class ChatHandler {
 
         redisTemplate.opsForValue().decrement(RedisKeyUtil.getUserBalance(userId),tokensNumber);
     }
+
+    private void saveChatCompletionChunk(ChatRequestBO chatRequestBO, List<ChatCompletionChunk> list) {
+        System.out.println(Constants.GSON.toJson(chatRequestBO) + ": " + Constants.GSON.toJson(list));
+    }
+
     /**
      * Stream chat
      * @param chatRequestBO
      * @return
      */
-    public Flowable<ChatCompletionChunk> streamChatCompletion(ChatRequestBO chatRequestBO){
+    public Flux<ChatCompletionChunk> streamChatCompletion(ChatRequestBO chatRequestBO) {
         ChatCompletionRequest request = ChatRequestConvert.toGptBO(chatRequestBO);
-        Flowable<ChatCompletionChunk> chatCompletionChunkFlowable = chatClient.streamChatCompletion(request);
-        return chatCompletionChunkFlowable;
+
+        Flux<ChatCompletionChunk> flux = Flux.from(chatClient.streamChatCompletion(request)).replay().autoConnect();
+
+        return flux.concatWith(flux.collectList()
+                .doOnSuccess(list -> this.saveChatCompletionChunk(chatRequestBO, list))
+                .ignoreElement().dematerialize()
+        );
     }
 
     /**
