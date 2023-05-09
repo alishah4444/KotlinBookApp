@@ -16,7 +16,7 @@ public class WebSessionTestController {
 
     @GetMapping("user")
     public Map<String, String> testGet(WebSession session) {
-        return Collections.singletonMap(SESSION_KEY, session.getAttribute("user"));
+        return Collections.singletonMap("user", session.getAttribute(SESSION_KEY));
     }
 
     @PostMapping("login")
