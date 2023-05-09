@@ -17,7 +17,7 @@ public class RedisKeyUtil {
         return Constants.GPT_REDIS_USERINFO_DIRE+gptKey;
     }
 
-    public static String getUserBalance(String userID) {
+    public static String getUserBalance(Long userID) {
         return Constants.GPT_REDIS_USER_BALANCE_DIRE+userID;
     }
 }

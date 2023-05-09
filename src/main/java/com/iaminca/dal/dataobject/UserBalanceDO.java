@@ -1,7 +1,9 @@
-package com.iaminca.service.bo;
+package com.iaminca.dal.dataobject;
 
 import lombok.Data;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 
@@ -13,10 +15,12 @@ import java.util.Date;
  * @date 2023-05-09 16:08:49
  */
 @Data
-public class UserBalanceBO {
+@Table(name = "user_balance")
+public class UserBalanceDO {
 	private static final long serialVersionUID = 1L;
 
 	/***/
+	@Id
 	private Long id;
 	/***/
 	private Long userId;

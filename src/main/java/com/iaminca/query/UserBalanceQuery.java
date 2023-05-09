@@ -1,4 +1,4 @@
-package com.iaminca.service.bo;
+package com.iaminca.query;
 
 import lombok.Data;
 
@@ -6,14 +6,14 @@ import java.util.Date;
 
 
 /**
- * 
+ * 实体的查询对象
  * 
  * @author xw
  * @email xw
  * @date 2023-05-09 16:08:49
  */
 @Data
-public class UserBalanceBO {
+public class UserBalanceQuery{
 	private static final long serialVersionUID = 1L;
 
 	/***/

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -47,6 +48,8 @@ public class UserHandler {
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private UserService userService;
+    @Resource
+    private UserBalanceHandler userBalanceHandler;
 
     public void addUser(UserBO userBO){
         UserQuery query = new UserQuery();
@@ -73,6 +76,7 @@ public class UserHandler {
     }
 
 
+    @Transactional(rollbackFor = Exception.class)
     public String chekVerificationCode(UserRegisterBO userRegisterBO){
         UserQuery query = new UserQuery();
         query.setUserPhone(userRegisterBO.getUserPhone());
@@ -86,7 +90,8 @@ public class UserHandler {
             userBO.setUserChatLimitation(CHAT_LIMITATION);
             userBO.setUserLengthLimitation(LENGTH_LIMITATION);
             log.info("Add UserBO: {}", Constants.GSON.toJson(userBO));
-            userService.add(userBO);
+            UserBO userNewBO = userService.add(userBO);
+            userBalanceHandler.addNewUserBalance(userNewBO.getId());
             list.add(userBO);
         }
         UserBO userBO = list.get(0);

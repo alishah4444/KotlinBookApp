@@ -19,7 +19,7 @@ public interface UserService {
 	 * @param
 	 * @return
 	 */
-    int add(UserBO userBO);
+    UserBO add(UserBO userBO);
 
     /**
      * 修改数据

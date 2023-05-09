@@ -31,12 +31,14 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public int add(UserBO userBO){
+    public UserBO add(UserBO userBO){
         userBO.setId(null);
         userBO.setDelFlag(DelFlagEnum.NOT_DEL.getCode());
         userBO.setCreateTime(new Date());
         userBO.setUpdateTime(userBO.getCreateTime());
-		return userDAO.insert(UserConvert.toDO(userBO));
+        UserDO userDO = UserConvert.toDO(userBO);
+        userDAO.insert(userDO);
+		return UserConvert.toBO(userDO);
     }
 
     @Override

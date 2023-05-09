@@ -13,6 +13,11 @@ public enum ErrorCode implements ErrorCodeService {
 	//User Model
 	USER_VERIFICATION_CODE_ERROR(11000, "验证码有误"),
 
+	//GPT Model
+	GPT_KEY_ERROR(12000, "GPT key 有误"),
+	GPT_BALANCE_ERROR(12001, "余额不足"),
+
+
 
 
 	//权限模块 15500

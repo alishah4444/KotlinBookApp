@@ -2,6 +2,7 @@ package com.iaminca.handler;
 
 import com.iaminca.common.Constants;
 import com.iaminca.common.UserTypeEnum;
+import com.iaminca.query.UserKeyQuery;
 import com.iaminca.service.UserKeyService;
 import com.iaminca.service.UserService;
 import com.iaminca.service.bo.UserBO;
@@ -10,9 +11,11 @@ import com.iaminca.utils.KeyUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -43,6 +46,14 @@ public class UserKeyHandler {
         userKeyBO.setUserChatLimitation(CHAT_LIMITATION);
         userKeyBO.setUserLengthLimitation(LENGTH_LIMITATION);
         userKeyService.add(userKeyBO);
+    }
+
+    public UserKeyBO findUserKey(UserKeyQuery query){
+        List<UserKeyBO> list = userKeyService.findList(query);
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
     }
 
 
