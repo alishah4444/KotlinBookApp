@@ -34,25 +34,8 @@ public class ChatHandler {
     private final ChatResponseHandler chatResponseHandler;
     private final StringRedisTemplate stringRedisTemplate;
     private final RedisTemplate redisTemplate;
+    private final ChatTokensCalculationHandler chatTokensCalculationHandler;
 
-    private void checkGptKey(String gptKey){
-        String userIdCache = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getGptKey(gptKey));
-        if(StringUtils.isEmptyOrWhitespaceOnly(userIdCache)){
-            throw new BusinessException(ErrorCode.GPT_KEY_ERROR);
-        }
-        String userBalance = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getUserBalance(Long.valueOf(userIdCache)));
-        if(Long.valueOf(userBalance) <= 0){
-            throw new BusinessException(ErrorCode.GPT_BALANCE_ERROR);
-        }
-    }
-
-    private void reduceGptTokens(Long userId,long tokensNumber){
-
-//        String tokensBalance = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getUserBalance(userId));
-//        long balance = Long.valueOf(tokensBalance) - tokensNumber;
-//        stringRedisTemplate.opsForValue().set(RedisKeyUtil.getUserBalance(userId),String.valueOf(balance));
-        redisTemplate.opsForValue().decrement(RedisKeyUtil.getUserBalance(userId),tokensNumber);
-    }
 
     private void saveChatCompletionChunk(ChatRequestBO chatRequestBO, List<ChatCompletionChunk> list) {
         System.out.println(Constants.GSON.toJson(chatRequestBO) + ": " + Constants.GSON.toJson(list));
@@ -82,7 +65,7 @@ public class ChatHandler {
     public ChatCompletionResult createChatCompletion(ChatRequestBO request){
 
         //Check GPT balance
-        this.checkGptKey(request.getGptKey());
+        chatTokensCalculationHandler.checkGptKey(request.getGptKey());
         //Saving the content of request
         request.setModel(request.getModel());
         request.setUserId(request.getUserId());
@@ -120,7 +103,7 @@ public class ChatHandler {
 
         chatResponseHandler.addChatRequest(chatResponseBO,chatResponseChoicesList);
         //Reduce the user's tokens.
-        this.reduceGptTokens(request.getUserId(),chatCompletion.getUsage().getTotalTokens());
+        chatTokensCalculationHandler.reduceGptTokens(request.getUserId(),chatCompletion.getUsage().getTotalTokens());
         return chatCompletion;
     }
 }
