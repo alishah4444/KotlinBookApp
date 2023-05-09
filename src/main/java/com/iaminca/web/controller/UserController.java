@@ -10,6 +10,7 @@ import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.service.bo.UserRegisterBO;
 import com.iaminca.web.controller.base.UserBaseController;
+import com.iaminca.web.convert.UserKeyConvertDTO;
 import com.iaminca.web.dto.UserRegisterDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -62,8 +64,8 @@ public class UserController extends UserBaseController {
     public ResultModel selectKey(@RequestHeader("token")String token) {
         UserKeyQuery query = new UserKeyQuery();
         query.setUserId(getUserID(token));
-        userKeyHandler.findUserKeyList(query);
-        return new ResultModel();
+        List<UserKeyBO> userKeyList = userKeyHandler.findUserKeyList(query);
+        return new ResultModel(UserKeyConvertDTO.toDTOList(userKeyList));
     }
 
 }
