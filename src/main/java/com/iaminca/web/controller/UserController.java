@@ -5,6 +5,7 @@ import com.iaminca.common.ResultModel;
 import com.iaminca.exception.BusinessException;
 import com.iaminca.handler.UserHandler;
 import com.iaminca.handler.UserKeyHandler;
+import com.iaminca.query.UserKeyQuery;
 import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.service.bo.UserRegisterBO;
@@ -54,6 +55,14 @@ public class UserController extends UserBaseController {
         UserKeyBO userKeyBO = new UserKeyBO();
         userKeyBO.setUserId(getUserID(token));
         userKeyHandler.addUserKey(userKeyBO);
+        return new ResultModel();
+    }
+
+    @PostMapping("/selectKey")
+    public ResultModel selectKey(@RequestHeader("token")String token) {
+        UserKeyQuery query = new UserKeyQuery();
+        query.setUserId(getUserID(token));
+        userKeyHandler.findUserKeyList(query);
         return new ResultModel();
     }
 

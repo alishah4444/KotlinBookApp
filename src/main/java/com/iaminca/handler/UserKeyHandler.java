@@ -1,5 +1,6 @@
 package com.iaminca.handler;
 
+import com.google.common.collect.Lists;
 import com.iaminca.common.Constants;
 import com.iaminca.common.UserTypeEnum;
 import com.iaminca.query.UserKeyQuery;
@@ -54,6 +55,14 @@ public class UserKeyHandler {
             return null;
         }
         return list.get(0);
+    }
+
+
+    public List<UserKeyBO> findUserKeyList(UserKeyQuery query){
+        if(ObjectUtils.isEmpty(query) || ObjectUtils.isEmpty(query.getUserId())){
+            return Lists.newArrayList();
+        }
+        return userKeyService.findList(query);
     }
 
 
