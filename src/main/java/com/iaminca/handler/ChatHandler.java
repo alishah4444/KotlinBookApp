@@ -90,7 +90,7 @@ public class ChatHandler {
         request.setStream(false);
         request.setModel("gpt-3.5-turbo");
         request.setN(1);
-        request.setMaxTokens(500);
+        request.setMaxTokens(1024);
         request.setUser(String.valueOf(request.getUserId()));
         chatRequestHandler.addChatRequest(request);
 
