@@ -1,17 +1,17 @@
-package com.iaminca.config;
+package com.iaminca.web.controller;
 
 import com.theokanning.openai.OpenAiError;
 import com.theokanning.openai.OpenAiHttpException;
 import okhttp3.ResponseBody;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
 import java.io.IOException;
 
-@ControllerAdvice
+@RestControllerAdvice(assignableTypes = BaseController.class)
 public class OpenAiHttpExceptionHandler {
 
     @ExceptionHandler
