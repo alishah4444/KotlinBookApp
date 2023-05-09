@@ -6,19 +6,17 @@ import com.iaminca.handler.UserKeyHandler;
 import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.service.bo.UserRegisterBO;
+import com.iaminca.web.controller.base.UserBaseController;
 import com.iaminca.web.dto.UserRegisterDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends UserBaseController {
 
     @Resource
     private UserHandler userHandler;
@@ -29,8 +27,8 @@ public class UserController {
     public ResultModel register(@RequestBody  UserRegisterDTO userRegisterDTO) {
         UserRegisterBO userRegisterBO = new UserRegisterBO();
         userRegisterBO.setUserPhone(userRegisterDTO.getUserPhone());
-        userHandler.chekVerificationCode(userRegisterBO);
-        return new ResultModel();
+        String token = userHandler.chekVerificationCode(userRegisterBO);
+        return new ResultModel(token);
     }
 
     @PostMapping("/sendCode")
@@ -42,9 +40,9 @@ public class UserController {
     }
 
     @PostMapping("/applyKey")
-    public ResultModel applyKey() {
+    public ResultModel applyKey(@RequestHeader("token")String token) {
         UserKeyBO userKeyBO = new UserKeyBO();
-        userKeyBO.setUserId(5000L);
+        userKeyBO.setUserId(getUserID(token));
         userKeyHandler.addUserKey(userKeyBO);
         return new ResultModel();
     }

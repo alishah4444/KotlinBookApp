@@ -5,6 +5,7 @@ import com.iaminca.service.bo.UserBO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;
 
@@ -17,11 +18,11 @@ public class UtilsHandlerTest extends OpenaiApplicationTests {
     @Resource
     private UserHandler userHandler;
     @Autowired
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
     @Test
     public void addUser() {
-        redisTemplate.opsForValue().set("a","xw");
+        stringRedisTemplate.opsForValue().set("a","xw");
         System.out.println("DONE.");
     }
 

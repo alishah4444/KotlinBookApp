@@ -90,4 +90,16 @@ public class GeoOperationsTests {
         var geohashes = geoOperations.hash("Sicily", "Catania", "Palermo");
         assertThat(geohashes).hasSize(2).contains("sqdtr74hyu0", "sq9sm1716e0");
     }
+
+
+    /**
+     * Return the geo-hash.
+     */
+    @Test
+    public void stringTemplate() {
+        operations.opsForValue().set("1","xw");
+        System.out.println("DONE!!!");
+    }
+
+
 }

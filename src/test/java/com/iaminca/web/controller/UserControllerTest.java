@@ -35,4 +35,16 @@ public class UserControllerTest {
 //                .jsonPath("$.usage.total_tokens").value(Matchers.greaterThan(0));
     }
 
+
+    @Test
+    public void testSendUser() {
+        UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
+        userRegisterDTO.setUserPhone("15869007707");
+        webClient.post().uri("/user/sendCode").bodyValue(userRegisterDTO).exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
+                .expectBody();
+//                .jsonPath("$.usage.total_tokens").value(Matchers.greaterThan(0));
+    }
+
 }

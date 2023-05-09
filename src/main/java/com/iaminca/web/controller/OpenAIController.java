@@ -38,7 +38,7 @@ import java.util.function.Function;
 
 @RestController
 @RequiredArgsConstructor
-public class BaseController {
+public class OpenAIController {
 
     private final ChatHandler chatHandler;
     private final ChatClient chatClient;

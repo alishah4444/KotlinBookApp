@@ -11,7 +11,7 @@ import retrofit2.Response;
 
 import java.io.IOException;
 
-@RestControllerAdvice(assignableTypes = BaseController.class)
+@RestControllerAdvice(assignableTypes = OpenAIController.class)
 public class OpenAiHttpExceptionHandler {
 
     @ExceptionHandler

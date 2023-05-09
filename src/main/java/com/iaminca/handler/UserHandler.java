@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -40,7 +41,7 @@ public class UserHandler {
     private static final Integer LENGTH_LIMITATION = 200;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
     @Resource
     private UserService userService;
 
@@ -57,17 +58,18 @@ public class UserHandler {
             userService.add(userBO);
         }
         //TODO Send Verification Code
-        String randomNumberString = CodeUtil.getRandomNumberString();
+//        String randomNumberString = CodeUtil.getRandomNumberString();
+        String randomNumberString = "111111";
         SendSmsBO sendSmsBO=new SendSmsBO();
         sendSmsBO.setCode(randomNumberString);
         SmsSendUtil smsSendUtil=new SmsSendUtil();
         smsSendUtil.sendSms(userBO.getUserPhone(), SmsBusinessEnum.PHONE_REGISTER,sendSmsBO);
         // Save in Redis as Cache.
-        redisTemplate.opsForValue().set(userBO.getUserPhone(),randomNumberString);
+        stringRedisTemplate.opsForValue().set(Constants.USER_REDIS_REGISTER_DIRE+userBO.getUserPhone(),randomNumberString);
     }
 
 
-    public void chekVerificationCode(UserRegisterBO userRegisterBO){
+    public String chekVerificationCode(UserRegisterBO userRegisterBO){
         UserQuery query = new UserQuery();
         query.setUserPhone(userRegisterBO.getUserPhone());
         List<UserBO> list = userService.findList(query);
@@ -80,15 +82,19 @@ public class UserHandler {
             userBO.setUserLengthLimitation(LENGTH_LIMITATION);
             log.info("Add UserBO: {}", Constants.GSON.toJson(userBO));
             userService.add(userBO);
+            list.add(userBO);
         }
+        UserBO userBO = list.get(0);
         //TODO Check Verification Code
-        String verificationCodeCache = (String)redisTemplate.opsForValue().get(userRegisterBO.getUserPhone());
+        String verificationCodeCache = stringRedisTemplate.opsForValue().get(userRegisterBO.getUserPhone());
         if(StringUtils.isEmpty(verificationCodeCache) && !verificationCodeCache.equals(userRegisterBO.getVerificationCode())){
             //Checked Unsuccessfully
             throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
         }
         //Save the token and information to Cache
-
+        String token = CodeUtil.getUpperUUID();
+        stringRedisTemplate.opsForValue().set(Constants.USER_REDIS_INFO_DIRE+token, Constants.GSON.toJson(userBO));
+        return token;
     }
 
 

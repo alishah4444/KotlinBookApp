@@ -1,6 +1,7 @@
 package com.iaminca.utils;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class CodeUtil {
 
@@ -13,5 +14,10 @@ public class CodeUtil {
 
         // this will convert any number sequence into 6 character.
         return String.format("%06d", number);
+    }
+
+    public static String getUpperUUID() {
+        String uuid = UUID.randomUUID().toString();
+        return uuid.replace("-","").toUpperCase();
     }
 }
