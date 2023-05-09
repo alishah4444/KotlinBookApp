@@ -1,0 +1,17 @@
+###
+GET http://localhost:8080/test/session/user
+
+###
+POST http://localhost:8080/test/session/login
+
+###
+DELETE http://localhost:8080/test/session/user
+
+###
+DELETE http://localhost:8080/test/session
+
+### 貌似异常类型不太对，应该要返回类似401的code才对
+GET http://localhost:8080/test/session/user_required
+
+###
+GET http://localhost:8080/test/session/user_optional
