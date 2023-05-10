@@ -43,16 +43,29 @@ public class ChatHandler {
 
     /**
      * Stream chat
-     * @param chatRequestBO
+     * @param request
      * @return
      */
-    public Flux<ChatCompletionChunk> streamChatCompletion(ChatRequestBO chatRequestBO) {
-        ChatCompletionRequest request = ChatRequestConvert.toGptBO(chatRequestBO);
+    public Flux<ChatCompletionChunk> streamChatCompletion(ChatRequestBO request) {
+        //Check GPT balance
+        chatTokensCalculationHandler.checkGptKey(request.getGptKey());
 
-        Flux<ChatCompletionChunk> flux = Flux.from(chatClient.streamChatCompletion(request)).replay().autoConnect();
+        request.setUserId(request.getUserId());
+        request.setKeyId(5000L);
+        request.setStream(false);
+        request.setModel("gpt-3.5-turbo");
+        request.setN(1);
+        request.setMaxTokens(2048);
+        request.setUser(String.valueOf(request.getUserId()));
+        chatRequestHandler.addChatRequest(request);
+
+        ChatCompletionRequest chatRequest = ChatRequestConvert.toGptBO(request);
+        //Saving the content of request
+
+        Flux<ChatCompletionChunk> flux = Flux.from(chatClient.streamChatCompletion(chatRequest)).replay().autoConnect();
 
         return flux.concatWith(flux.collectList()
-                .doOnSuccess(list -> this.saveChatCompletionChunk(chatRequestBO, list))
+                .doOnSuccess(list -> this.saveChatCompletionChunk(request, list))
                 .ignoreElement().dematerialize()
         );
     }
@@ -67,7 +80,6 @@ public class ChatHandler {
         //Check GPT balance
         chatTokensCalculationHandler.checkGptKey(request.getGptKey());
         //Saving the content of request
-        request.setModel(request.getModel());
         request.setUserId(request.getUserId());
         request.setKeyId(5000L);
         request.setStream(false);
