@@ -1,6 +1,5 @@
 package com.iaminca.web.controller;
 
-import com.iaminca.client.ChatClient;
 import com.iaminca.handler.ChatHandler;
 import com.iaminca.service.OpenAiMultipartService;
 import com.iaminca.service.bo.ChatRequestBO;
@@ -42,7 +41,6 @@ import java.util.function.Function;
 public class OpenAIController extends OpenAIBaseController {
 
     private final ChatHandler chatHandler;
-    private final ChatClient chatClient;
     private final OpenAiService openAiService;
     private final OpenAiMultipartService openAiMultipartService;
 
