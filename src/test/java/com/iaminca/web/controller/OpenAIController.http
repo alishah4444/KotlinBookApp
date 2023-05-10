@@ -253,31 +253,45 @@ Content-Type: application/json
   "temperature": 0.7
 }
 
+#######################################
+### The following are bad requests. ###
+#######################################
 
-##################
-## bad requests ##
-##################
-###
+#@name incorrect Content-Type - openai
 POST https://api.openai.com/v1/files
 Authorization: Bearer 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
 Content-Type: application/x-www-form-urlencoded
 
 purpose=fine-tune&file=%7B%22prompt%22%3A%20%22%3Cprompt%20text%3E%22%2C%20%22completion%22%3A%20%22%3Cideal%20generated%20text%3E%22%7D
 
-###
+### too short-openai
+POST https://api.openai.com/v1/chat/completions
+Authorization: Bearer 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
+Content-Type: application/json
+
+{
+  "model": "gpt-3.5-turbo",
+  "n": 1,
+  "messages": [],
+  "stream": true,
+  "max_tokens": 50,
+  "logit_bias": {}
+}
+
+### incorrect Content-Type - dev
 POST http://localhost:8080/v1/files
 Content-Type: application/x-www-form-urlencoded
 
 purpose=fine-tune&file=%7B%22prompt%22%3A%20%22%3Cprompt%20text%3E%22%2C%20%22completion%22%3A%20%22%3Cideal%20generated%20text%3E%22%7D
 
-### "[] is too short - 'messages'"
+### too short-dev
 POST http://localhost:8080/v1/chat/completions
 Content-Type: application/json
 
 {
   "model": "gpt-3.5-turbo",
   "n": 1,
-  "message": [],
+  "messages": [],
   "stream": true,
   "max_tokens": 50,
   "logit_bias": {}
