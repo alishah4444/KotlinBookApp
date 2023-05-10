@@ -36,7 +36,7 @@ public class ChatTokensCalculationHandler {
             throw new BusinessException(ErrorCode.GPT_KEY_ERROR);
         }
         Integer userBalance = redisTemplateIntegerValue.opsForValue().get(RedisKeyUtil.getUserBalance(userKeyBO.getUserId()));
-        if(userBalance <= 0){
+        if(userBalance ==null || userBalance <= 0){
             throw new BusinessException(ErrorCode.GPT_BALANCE_ERROR);
         }
         return userKeyBO;
