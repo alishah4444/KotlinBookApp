@@ -3,6 +3,8 @@ package com.iaminca.web.controller;
 import com.theokanning.openai.OpenAiError;
 import com.theokanning.openai.OpenAiHttpException;
 import okhttp3.ResponseBody;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -11,6 +13,10 @@ import retrofit2.Response;
 
 import java.io.IOException;
 
+/**
+ * @link <a href="https://platform.openai.com/docs/guides/error-codes/api-errors">OpenAI API - Error codes</a>
+ */
+@Order(Ordered.HIGHEST_PRECEDENCE) // make the handler high precedence than global BusinessExceptionHandler
 @RestControllerAdvice(assignableTypes = OpenAIController.class)
 public class OpenAiHttpExceptionHandler {
 
