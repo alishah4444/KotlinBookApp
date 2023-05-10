@@ -4,7 +4,7 @@
 
 	<!--<property file="${cdiamond.file.path}"/>-->
 
-	<property name="LOG_PATH" value="/logs/openai-logger"/>
+	<property name="LOG_PATH" value="logs/openai-logger"/>
 	<property name="LOG_LEVEL" value="INFO"/>
 
 	<!--业务日志输出格式-->
