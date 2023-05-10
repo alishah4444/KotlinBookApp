@@ -72,9 +72,9 @@ public class UserController extends UserBaseController {
     }
 
 
-    @PostMapping("/selectKeyPage")
-    public ResultModel selectKeyPage(@RequestHeader(name = "token",required = false)String token) {
-        UserKeyQuery query = new UserKeyQuery();
+    @GetMapping("/selectKeyPage")
+    public ResultModel selectKeyPage(@RequestHeader(name = "token")String token,UserKeyQuery query) {
+//        UserKeyQuery query = new UserKeyQuery();
         query.setUserId(getUserID(token));
         PageListResult<UserKeyBO> userKeyPage = userKeyHandler.findUserKeyPage(query);
         List<UserKeyDTO> userKeyDTOS = UserKeyConvertDTO.toDTOList(userKeyPage.getList());
