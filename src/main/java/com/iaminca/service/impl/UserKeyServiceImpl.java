@@ -61,6 +61,7 @@ public class UserKeyServiceImpl implements UserKeyService {
         //分页页码设置
         pagerCondition.setOrderBy(Constants.ORDER_BY);
         Page page = PageHelperAdaptor.preparePage(pagerCondition, Boolean.TRUE);
+        page.setReasonable(Boolean.FALSE);
         List<UserKeyDO> list = userKeyDAO.selectByExample(this.convertExample(pagerCondition));
         //结果集设置
         PageListResult<UserKeyBO> pageListResult = new PageListResult(UserKeyConvert.toBOList(list));

@@ -38,7 +38,7 @@ public class ChatHandler {
 
 
     private void saveChatCompletionChunk(ChatRequestBO chatRequestBO, List<ChatCompletionChunk> list) {
-        System.out.println(Constants.GSON.toJson(chatRequestBO) + "********** " + Constants.GSON.toJson(list));
+        chatTokensCalculationHandler.saveChatCompletionChunk( chatRequestBO, list);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ChatHandler {
         Flux<ChatCompletionChunk> flux = Flux.from(chatClient.streamChatCompletion(chatRequest)).replay().autoConnect();
 
         return flux.concatWith(flux.collectList()
-                .doOnSuccess(list -> this.saveChatCompletionChunk(request, list))
+                .doOnSuccess(list -> chatTokensCalculationHandler.saveChatCompletionChunk(request, list))
                 .ignoreElement().dematerialize()
         );
     }

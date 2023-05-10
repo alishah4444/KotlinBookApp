@@ -25,6 +25,7 @@ public class ChatClient {
      * @return
      */
     public Flowable<ChatCompletionChunk> streamChatCompletion(ChatCompletionRequest request){
+        log.info("create Chat Completion stream request : {}", Constants.GSON.toJson(request));
         Flowable<ChatCompletionChunk> chatCompletionChunkFlowable = openAiService.streamChatCompletion(request);
         return chatCompletionChunkFlowable;
     }
