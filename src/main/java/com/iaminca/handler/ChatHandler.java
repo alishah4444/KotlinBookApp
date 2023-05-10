@@ -38,7 +38,7 @@ public class ChatHandler {
 
 
     private void saveChatCompletionChunk(ChatRequestBO chatRequestBO, List<ChatCompletionChunk> list) {
-        System.out.println(Constants.GSON.toJson(chatRequestBO) + ": " + Constants.GSON.toJson(list));
+        System.out.println(Constants.GSON.toJson(chatRequestBO) + "********** " + Constants.GSON.toJson(list));
     }
 
     /**
