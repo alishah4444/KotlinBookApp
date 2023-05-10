@@ -1,5 +1,6 @@
 package com.iaminca.query;
 
+import com.iaminca.common.model.PageInfo;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.Date;
  * @date 2023-05-04 17:34:01
  */
 @Data
-public class UserKeyQuery{
+public class UserKeyQuery extends PageInfo {
 	private static final long serialVersionUID = 1L;
 
 	/***/

@@ -5,7 +5,8 @@ import com.google.gson.GsonBuilder;
 
 public class Constants {
     public static Gson GSON = new GsonBuilder().create();
-
+    //查询排序字段
+    public static String  ORDER_BY = "update_time desc";
 
     public static String USER_REDIS_REGISTER_DIRE = "user:register:";
     public static String USER_REDIS_INFO_DIRE = "user:info:";

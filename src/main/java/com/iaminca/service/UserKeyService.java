@@ -1,5 +1,6 @@
 package com.iaminca.service;
 
+import com.iaminca.common.model.PageListResult;
 import com.iaminca.query.UserKeyQuery;
 import com.iaminca.service.bo.UserKeyBO;
 
@@ -34,5 +35,7 @@ public interface UserKeyService {
      * @return
      */
     List<UserKeyBO> findList(UserKeyQuery query);
+
+    public PageListResult<UserKeyBO> findPage(UserKeyQuery pagerCondition);
 
 }

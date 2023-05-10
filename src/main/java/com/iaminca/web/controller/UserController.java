@@ -2,6 +2,7 @@ package com.iaminca.web.controller;
 
 import com.iaminca.common.ErrorCode;
 import com.iaminca.common.ResultModel;
+import com.iaminca.common.model.PageListResult;
 import com.iaminca.exception.BusinessException;
 import com.iaminca.handler.UserHandler;
 import com.iaminca.handler.UserKeyHandler;
@@ -11,6 +12,7 @@ import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.service.bo.UserRegisterBO;
 import com.iaminca.web.controller.base.UserBaseController;
 import com.iaminca.web.convert.UserKeyConvertDTO;
+import com.iaminca.web.dto.UserKeyDTO;
 import com.iaminca.web.dto.UserRegisterDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,19 +55,21 @@ public class UserController extends UserBaseController {
     }
 
     @PostMapping("/applyKey")
-    public ResultModel applyKey(@RequestHeader("token")String token) {
+    public ResultModel applyKey(@RequestHeader(name = "token",required = false)String token) {
         UserKeyBO userKeyBO = new UserKeyBO();
         userKeyBO.setUserId(getUserID(token));
-        userKeyHandler.addUserKey(userKeyBO);
-        return new ResultModel();
+        String gptKey = userKeyHandler.addUserKey(userKeyBO);
+        return new ResultModel(gptKey);
     }
 
     @PostMapping("/selectKey")
-    public ResultModel selectKey(@RequestHeader("token")String token) {
+    public ResultModel selectKey(@RequestHeader(name = "token",required = false)String token) {
         UserKeyQuery query = new UserKeyQuery();
         query.setUserId(getUserID(token));
-        List<UserKeyBO> userKeyList = userKeyHandler.findUserKeyList(query);
-        return new ResultModel(UserKeyConvertDTO.toDTOList(userKeyList));
+        PageListResult<UserKeyBO> userKeyPage = userKeyHandler.findUserKeyPage(query);
+        List<UserKeyDTO> userKeyDTOS = UserKeyConvertDTO.toDTOList(userKeyPage.getList());
+        PageListResult<UserKeyDTO> page = new PageListResult<>(userKeyDTOS,userKeyPage.getPageNum(),userKeyPage.getPageSize(),userKeyPage.getTotal());
+        return new ResultModel(page);
     }
 
 }

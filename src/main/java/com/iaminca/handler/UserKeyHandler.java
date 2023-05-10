@@ -2,7 +2,10 @@ package com.iaminca.handler;
 
 import com.google.common.collect.Lists;
 import com.iaminca.common.Constants;
+import com.iaminca.common.ErrorCode;
 import com.iaminca.common.UserTypeEnum;
+import com.iaminca.common.model.PageListResult;
+import com.iaminca.exception.BusinessException;
 import com.iaminca.query.UserKeyQuery;
 import com.iaminca.service.UserKeyService;
 import com.iaminca.service.UserService;
@@ -37,16 +40,17 @@ public class UserKeyHandler {
     @Resource
     private UserKeyService userKeyService;
 
-    public void addUserKey(UserKeyBO userKeyBO){
+    public String addUserKey(UserKeyBO userKeyBO){
         log.info("Add UserKeyBO: {}", Constants.GSON.toJson(userKeyBO));
         if(ObjectUtils.isEmpty(userKeyBO) || ObjectUtils.isEmpty(userKeyBO.getUserId())){
             log.info("No User ID");
-            return;
+           throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
         }
         userKeyBO.setUserKey("sk-"+KeyUtil.openaiKey(48));
         userKeyBO.setUserChatLimitation(CHAT_LIMITATION);
         userKeyBO.setUserLengthLimitation(LENGTH_LIMITATION);
         userKeyService.add(userKeyBO);
+        return userKeyBO.getUserKey();
     }
 
     public UserKeyBO findUserKey(UserKeyQuery query){
@@ -65,5 +69,10 @@ public class UserKeyHandler {
         return userKeyService.findList(query);
     }
 
-
+    public PageListResult<UserKeyBO> findUserKeyPage(UserKeyQuery query){
+        if(ObjectUtils.isEmpty(query) || ObjectUtils.isEmpty(query.getUserId())){
+            return new PageListResult();
+        }
+        return userKeyService.findPage(query);
+    }
 }

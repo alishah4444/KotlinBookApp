@@ -1,6 +1,10 @@
 package com.iaminca.service.impl;
 
+import com.github.pagehelper.Page;
+import com.iaminca.common.Constants;
 import com.iaminca.common.DelFlagEnum;
+import com.iaminca.common.model.PageHelperAdaptor;
+import com.iaminca.common.model.PageListResult;
 import com.iaminca.dal.dao.UserKeyDAO;
 import com.iaminca.dal.dataobject.UserKeyDO;
 import com.iaminca.query.UserKeyQuery;
@@ -51,6 +55,20 @@ public class UserKeyServiceImpl implements UserKeyService {
         List<UserKeyDO> listByQuery = userKeyDAO.selectByExample(this.convertExample(query));
         return UserKeyConvert.toBOList(listByQuery);
     }
+
+    @Override
+    public PageListResult<UserKeyBO> findPage(UserKeyQuery pagerCondition){
+        //分页页码设置
+        pagerCondition.setOrderBy(Constants.ORDER_BY);
+        Page page = PageHelperAdaptor.preparePage(pagerCondition, Boolean.TRUE);
+        List<UserKeyDO> list = userKeyDAO.selectByExample(this.convertExample(pagerCondition));
+        //结果集设置
+        PageListResult<UserKeyBO> pageListResult = new PageListResult(UserKeyConvert.toBOList(list));
+        PageHelperAdaptor.setPageResult(page, pageListResult);
+        pageListResult.setPageNum(pagerCondition.getPageNum());
+        pageListResult.setPageSize(pagerCondition.getPageSize());
+        return pageListResult;
+    }
     /**
         *
         * @param userKeyQuery
@@ -65,6 +83,9 @@ public class UserKeyServiceImpl implements UserKeyService {
         }
         if (!ObjectUtils.isEmpty(userKeyQuery.getUserKey())) {
             criteria.andEqualTo("userKey", userKeyQuery.getUserKey());
+        }
+        if (!ObjectUtils.isEmpty(userKeyQuery.getUserId())) {
+            criteria.andEqualTo("userId", userKeyQuery.getUserId());
         }
         return example;
     }
