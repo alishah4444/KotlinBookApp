@@ -24,7 +24,9 @@ public class UserBaseController {
 		if(StringUtils.isEmpty(token)){
 			throw new BusinessException(ErrorCode.NO_AUTH);
 		}
-		String userInfo = stringRedisTemplate.opsForValue().get(RedisKeyUtil.userInfoKey(token));
+		String userRedisCache = RedisKeyUtil.userInfoKey(token);
+
+		String userInfo = stringRedisTemplate.opsForValue().get(userRedisCache);
 		if(ObjectUtils.isEmpty(userInfo)){
 			throw new BusinessException(ErrorCode.NO_AUTH);
 		}
