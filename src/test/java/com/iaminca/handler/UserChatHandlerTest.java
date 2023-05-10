@@ -1,6 +1,7 @@
 package com.iaminca.handler;
 
 import com.iaminca.OpenaiApplicationTests;
+import com.iaminca.common.Constants;
 import com.iaminca.service.bo.ChatRequestBO;
 import com.iaminca.service.bo.ChatRequestMessageBO;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ public class UserChatHandlerTest extends OpenaiApplicationTests {
     @Test
     public void createChat() {
         ChatRequestBO request = new ChatRequestBO();
-        request.setModel("gpt-3.5-turbo");
+        request.setModel(Constants.GPT_CHAT_MODEL);
         request.setN(1);
         request.setMaxTokens(50);
 

@@ -40,14 +40,14 @@ Content-Type: application/json
 
 ### createChatCompletion-openai
 POST https://api.openai.com/v1/chat/completions
-Authorization: Bearer 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
+Authorization: Bearer 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
 Content-Type: application/json
 
 {
   "model": "gpt-3.5-turbo",
   "messages": [
     {
-      "role": "system",
+      "role": "user",
       "content": "You are a dog and will speak as such."
     }
   ],
