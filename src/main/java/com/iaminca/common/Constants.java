@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Constants {
-    public static Gson GSON = new GsonBuilder().create();
+    public static Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:sss").create();
     //查询排序字段
     public static String  ORDER_BY = "update_time desc";
 
