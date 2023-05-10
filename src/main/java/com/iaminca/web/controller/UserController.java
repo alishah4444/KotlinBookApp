@@ -82,4 +82,14 @@ public class UserController extends UserBaseController {
         return new ResultModel(page);
     }
 
+
+
+    @PostMapping("/deleteKey")
+    public ResultModel deleteKey(@RequestBody UserKeyDTO userKeyDTO, @RequestHeader(name = "token")String token) {
+        getUserID(token);
+        userKeyHandler.deleteUserKey(userKeyDTO.getId());
+        return new ResultModel();
+    }
+
+
 }

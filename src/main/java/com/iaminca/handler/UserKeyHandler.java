@@ -2,14 +2,12 @@ package com.iaminca.handler;
 
 import com.google.common.collect.Lists;
 import com.iaminca.common.Constants;
+import com.iaminca.common.DelFlagEnum;
 import com.iaminca.common.ErrorCode;
-import com.iaminca.common.UserTypeEnum;
 import com.iaminca.common.model.PageListResult;
 import com.iaminca.exception.BusinessException;
 import com.iaminca.query.UserKeyQuery;
 import com.iaminca.service.UserKeyService;
-import com.iaminca.service.UserService;
-import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.utils.KeyUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,6 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 
@@ -59,6 +56,13 @@ public class UserKeyHandler {
             return null;
         }
         return list.get(0);
+    }
+
+    public void deleteUserKey(Long id){
+        UserKeyBO userKeyBO = new UserKeyBO();
+        userKeyBO.setId(id);
+        userKeyBO.setDelFlag(DelFlagEnum.DEL.getCode());
+        userKeyService.update(userKeyBO);
     }
 
 
