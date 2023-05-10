@@ -22,7 +22,7 @@ public class UtilsHandlerTest extends OpenaiApplicationTests {
     private StringRedisTemplate stringRedisTemplate;
 
     @Test
-    public void addUser() {
+    public void selectRedis() {
 //        stringRedisTemplate.opsForValue().set("a","xw");
         String str = stringRedisTemplate.opsForValue().get("user:info:CAFB62D795B1468DAFA2A2C53086BF4B");
         System.out.println(str);
