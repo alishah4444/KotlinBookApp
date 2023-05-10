@@ -96,7 +96,7 @@ public class UserHandler {
             log.info("Add UserBO: {}", Constants.GSON.toJson(userBO));
             UserBO userNewBO = userService.add(userBO);
             userBalanceHandler.addNewUserBalance(userNewBO.getId());
-            list.add(userBO);
+            list.add(userNewBO);
         }
         UserBO userBO = list.get(0);
         //TODO Check Verification Code

@@ -55,7 +55,7 @@ public class UserController extends UserBaseController {
     }
 
     @PostMapping("/applyKey")
-    public ResultModel applyKey(@RequestHeader(name = "token",required = false)String token) {
+    public ResultModel applyKey(@RequestHeader(name = "token")String token) {
         UserKeyBO userKeyBO = new UserKeyBO();
         userKeyBO.setUserId(getUserID(token));
         String gptKey = userKeyHandler.addUserKey(userKeyBO);
