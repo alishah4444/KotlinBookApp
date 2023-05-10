@@ -20,6 +20,7 @@ public class ChatResponseQuery{
 	private Long id;
 	/***/
 	private Long userId;
+	private String recordId;
 	/***/
 	private String chatResponseId;
 	/***/

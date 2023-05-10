@@ -1,5 +1,6 @@
 package com.iaminca.web.controller.base;
 
+import com.iaminca.common.Constants;
 import com.iaminca.common.ErrorCode;
 import com.iaminca.exception.BusinessException;
 import com.iaminca.handler.UserBalanceHandler;
@@ -31,7 +32,8 @@ public class OpenAIBaseController {
             throw new BusinessException(ErrorCode.NO_AUTH);
         }
         String gptKeyUserID = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getGptKey(gptKey));
-        if(StringUtils.isEmpty(gptKeyUserID)){
+        UserKeyBO userKeyBO = Constants.GSON.fromJson(gptKeyUserID, UserKeyBO.class);
+        if(!ObjectUtils.isEmpty(userKeyBO) && StringUtils.isEmpty(userKeyBO.getUserId())){
             UserKeyQuery query = new UserKeyQuery();
             query.setUserKey(gptKey);
             UserKeyBO userKey = userKeyHandler.findUserKey(query);
@@ -41,12 +43,12 @@ public class OpenAIBaseController {
             UserBalanceQuery balanceQuery = new UserBalanceQuery();
             balanceQuery.setUserId(userKey.getUserId());
             UserBalanceBO userBalance = userBalanceHandler.findUserBalance(balanceQuery);
-            stringRedisTemplate.opsForValue().set(RedisKeyUtil.getGptKey(gptKey), String.valueOf(userKey.getUserId()));
+            stringRedisTemplate.opsForValue().set(RedisKeyUtil.getGptKey(gptKey), Constants.GSON.toJson(userKey));
             String userBalanceRedisKey = RedisKeyUtil.getUserBalance(userKey.getUserId());
 //            stringRedisTemplate.opsForValue().set(userBalanceRedisKey,String.valueOf(userBalance.getUserBalance()));
             redisTemplate.opsForValue().set(userBalanceRedisKey,userBalance.getUserBalance());
         }
-        return Long.valueOf(gptKeyUserID);
+        return userKeyBO.getUserId();
     }
 
 }

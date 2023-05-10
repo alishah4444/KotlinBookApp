@@ -63,6 +63,9 @@ public class ChatResponseServiceImpl implements ChatResponseService {
         if (!ObjectUtils.isEmpty(chatResponseQuery.getId())) {
             criteria.andEqualTo("id", chatResponseQuery.getId());
         }
+        if (!ObjectUtils.isEmpty(chatResponseQuery.getRecordId())) {
+            criteria.andEqualTo("recordId", chatResponseQuery.getRecordId());
+        }
         return example;
     }
 

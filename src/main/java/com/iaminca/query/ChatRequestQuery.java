@@ -22,6 +22,7 @@ public class ChatRequestQuery {
 	private Long userId;
 	/***/
 	private Long keyId;
+	private String recordId;
 	/***/
 	private String model;
 	/***/

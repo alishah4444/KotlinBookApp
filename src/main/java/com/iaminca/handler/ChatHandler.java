@@ -4,11 +4,9 @@ import com.iaminca.client.ChatClient;
 import com.iaminca.common.Constants;
 import com.iaminca.common.ErrorCode;
 import com.iaminca.exception.BusinessException;
-import com.iaminca.service.bo.ChatRequestBO;
-import com.iaminca.service.bo.ChatResponseBO;
-import com.iaminca.service.bo.ChatResponseChoicesBO;
-import com.iaminca.service.bo.UserBalanceCacheBO;
+import com.iaminca.service.bo.*;
 import com.iaminca.service.covert.ChatRequestConvert;
+import com.iaminca.utils.IDUtil;
 import com.iaminca.utils.RedisKeyUtil;
 import com.mysql.cj.util.StringUtils;
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
@@ -32,14 +30,8 @@ public class ChatHandler {
     private final ChatClient chatClient;
     private final ChatRequestHandler chatRequestHandler;
     private final ChatResponseHandler chatResponseHandler;
-    private final StringRedisTemplate stringRedisTemplate;
-    private final RedisTemplate redisTemplate;
     private final ChatTokensCalculationHandler chatTokensCalculationHandler;
 
-
-    private void saveChatCompletionChunk(ChatRequestBO chatRequestBO, List<ChatCompletionChunk> list) {
-        chatTokensCalculationHandler.saveChatCompletionChunk( chatRequestBO, list);
-    }
 
     /**
      * Stream chat
@@ -78,14 +70,15 @@ public class ChatHandler {
     public ChatCompletionResult createChatCompletion(ChatRequestBO request){
 
         //Check GPT balance
-        chatTokensCalculationHandler.checkGptKey(request.getGptKey());
+        UserKeyBO userKeyBO = chatTokensCalculationHandler.checkGptKey(request.getGptKey());
         //Saving the content of request
-        request.setUserId(request.getUserId());
-        request.setKeyId(5000L);
+        String recordCycleID = IDUtil.getRecordCycleID();
+        request.setRecordId(recordCycleID);
+        request.setKeyId(userKeyBO.getId());
         request.setStream(false);
-        request.setModel("gpt-3.5-turbo");
-        request.setN(1);
-        request.setMaxTokens(2048);
+        request.setModel(Constants.GPT_CHAT_MODEL);
+        request.setN(Constants.GPT_CHAT_N);
+        request.setMaxTokens(Constants.GPT_CHAT_MAX_TOKENS);
         request.setUser(String.valueOf(request.getUserId()));
         chatRequestHandler.addChatRequest(request);
 
@@ -93,8 +86,8 @@ public class ChatHandler {
         ChatCompletionResult chatCompletion = chatClient.createChatCompletion(ChatRequestConvert.toGptBO(request));
 
         ChatResponseBO chatResponseBO = new ChatResponseBO();
-        chatResponseBO.setUserId(request.getUserId());
-        chatResponseBO.setKeyId(1L);
+        chatResponseBO.setRecordId(recordCycleID);
+        chatResponseBO.setKeyId(userKeyBO.getId());
         chatResponseBO.setChatResponseId(chatCompletion.getId());
         chatResponseBO.setModel(chatCompletion.getModel());
         chatResponseBO.setCreated(chatCompletion.getCreated());

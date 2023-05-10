@@ -29,6 +29,7 @@ public class ChatRequestDO {
 	private Long userId;
 	/** User Key ID*/
 	private Long keyId;
+	private String recordId;
 	private String gptKey;
 	/***/
 	private String model;

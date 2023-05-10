@@ -8,12 +8,10 @@ public class Constants {
     //查询排序字段
     public static String  ORDER_BY = "update_time desc";
 
-    public static String USER_REDIS_REGISTER_DIRE = "user:register:";
-    public static String USER_REDIS_INFO_DIRE = "user:info:";
 
-    public static String GPT_REDIS_USERINFO_DIRE = "gpt:user:info:";
-    public static String GPT_REDIS_USER_BALANCE_DIRE = "gpt:user:balance:";
-
+    public static String GPT_CHAT_MODEL = "gpt-3.5-turbo";
+    public static Integer GPT_CHAT_N = 1;
+    public static Integer GPT_CHAT_MAX_TOKENS = 2048;
 
 
 }

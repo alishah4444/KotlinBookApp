@@ -24,6 +24,7 @@ public class ChatResponseBO{
 	/***/
 	private Long userId;
 	private Long keyId;
+	private String recordId;
 	/***/
 	private String chatResponseId;
 	/***/

@@ -1,23 +1,34 @@
 package com.iaminca.utils;
 
-import com.iaminca.common.Constants;
-
 public class RedisKeyUtil {
 
-    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    public static String USER_REDIS_REGISTER_DIRE = "user:register:";
+    public static String USER_REDIS_INFO_DIRE = "user:info:";
+
+    public static String GPT_REDIS_USERINFO_DIRE = "gpt:user:info:";
+    public static String GPT_REDIS_USER_BALANCE_DIRE = "gpt:user:balance:";
+
+
+    public static String GPT_REDIS_RECORD_ID_CYCLE = "gpt:record:id:cycle";
+
 
     public static String registerCodeKey(String verification) {
-       return Constants.USER_REDIS_REGISTER_DIRE+verification;
+       return USER_REDIS_REGISTER_DIRE+verification;
     }
     public static String userInfoKey(String token) {
-        return Constants.USER_REDIS_INFO_DIRE+token;
+        return USER_REDIS_INFO_DIRE+token;
     }
 
     public static String getGptKey(String gptKey) {
-        return Constants.GPT_REDIS_USERINFO_DIRE+gptKey;
+        return GPT_REDIS_USERINFO_DIRE+gptKey;
     }
 
     public static String getUserBalance(Long userID) {
-        return Constants.GPT_REDIS_USER_BALANCE_DIRE+userID;
+        return GPT_REDIS_USER_BALANCE_DIRE+userID;
+    }
+
+    public static String getRecordIdSuffix() {
+        return GPT_REDIS_RECORD_ID_CYCLE;
     }
 }

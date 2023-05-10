@@ -48,6 +48,7 @@ public class ChatRequestConvert {
 		chatRequestBO.setId(chatRequestDO.getId());
 		chatRequestBO.setUserId(chatRequestDO.getUserId());
 		chatRequestBO.setKeyId(chatRequestDO.getKeyId());
+		chatRequestBO.setRecordId(chatRequestDO.getRecordId());
 		chatRequestBO.setGptKey(chatRequestDO.getGptKey());
 		chatRequestBO.setModel(chatRequestDO.getModel());
 		chatRequestBO.setTemperature(chatRequestDO.getTemperature());
@@ -74,6 +75,7 @@ public class ChatRequestConvert {
 		chatRequestDO.setId(chatRequestBO.getId());
 		chatRequestDO.setUserId(chatRequestBO.getUserId());
 		chatRequestDO.setKeyId(chatRequestBO.getKeyId());
+		chatRequestDO.setRecordId(chatRequestBO.getRecordId());
 		chatRequestDO.setGptKey(chatRequestBO.getGptKey());
 		chatRequestDO.setModel(chatRequestBO.getModel());
 		chatRequestDO.setTemperature(chatRequestBO.getTemperature());

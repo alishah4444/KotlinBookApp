@@ -28,6 +28,7 @@ public class ChatResponseDO {
 	/***/
 	private Long userId;
 	private Long keyId;
+	private String recordId;
 	/***/
 	private String chatResponseId;
 	/***/

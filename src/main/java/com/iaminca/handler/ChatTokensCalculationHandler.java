@@ -4,6 +4,8 @@ import com.iaminca.common.Constants;
 import com.iaminca.common.ErrorCode;
 import com.iaminca.exception.BusinessException;
 import com.iaminca.service.bo.ChatRequestBO;
+import com.iaminca.service.bo.ChatResponseBO;
+import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.utils.RedisKeyUtil;
 import com.mysql.cj.util.StringUtils;
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
@@ -13,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -23,16 +26,19 @@ public class ChatTokensCalculationHandler {
 
     private final StringRedisTemplate stringRedisTemplate;
     private final RedisTemplate redisTemplate;
+    private final ChatResponseHandler chatResponseHandler;
 
-    public void checkGptKey(String gptKey){
+    public UserKeyBO checkGptKey(String gptKey){
         String userIdCache = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getGptKey(gptKey));
-        if(StringUtils.isEmptyOrWhitespaceOnly(userIdCache)){
+        UserKeyBO userKeyBO = Constants.GSON.fromJson(userIdCache, UserKeyBO.class);
+        if(ObjectUtils.isEmpty(userKeyBO) || StringUtils.isEmptyOrWhitespaceOnly(userKeyBO.getId())){
             throw new BusinessException(ErrorCode.GPT_KEY_ERROR);
         }
         String userBalance = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getUserBalance(Long.valueOf(userIdCache)));
         if(Long.valueOf(userBalance) <= 0){
             throw new BusinessException(ErrorCode.GPT_BALANCE_ERROR);
         }
+        return userKeyBO;
     }
 
     public void reduceGptTokens(Long userId,long tokensNumber){
@@ -54,6 +60,25 @@ public class ChatTokensCalculationHandler {
             }
         }
         log.info("String buffer : {}",sb);
+
+
+
+        ChatResponseBO chatResponseBO = new ChatResponseBO();
+        chatResponseBO.setUserId(chatRequestBO.getUserId());
+        chatResponseBO.setKeyId(1L);
+        chatResponseBO.setChatResponseId(list.get(0).getId());
+        chatResponseBO.setModel(list.get(0).getModel());
+        chatResponseBO.setCreated(list.get(0).getCreated());
+        chatResponseBO.setObject(list.get(0).getObject());
+        chatRequestBO.getMessages().get(0).getContent();//TODO Calculate the length of sentences.
+//        chatResponseBO.setUsageCompletionTokens(new Long(chatCompletion.getUsage().getCompletionTokens()).intValue());
+//        chatResponseBO.setUsagePromptTokens(new Long(chatCompletion.getUsage().getPromptTokens()).intValue());
+//        chatResponseBO.setUsageTotalTokens(new Long(chatCompletion.getUsage().getTotalTokens()).intValue());
+//
+//
+//        chatResponseHandler.addChatRequest(chatResponseBO,chatResponseChoicesList);
+//        //Reduce the user's tokens.
+//        this.reduceGptTokens(request.getUserId(),chatCompletion.getUsage().getTotalTokens());
     }
 
 }
