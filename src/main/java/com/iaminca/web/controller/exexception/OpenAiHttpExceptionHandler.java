@@ -1,7 +1,10 @@
-package com.iaminca.web.controller;
+package com.iaminca.web.controller.exexception;
 
+import com.iaminca.common.Constants;
+import com.iaminca.web.controller.OpenAIController;
 import com.theokanning.openai.OpenAiError;
 import com.theokanning.openai.OpenAiHttpException;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.ResponseBody;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -18,16 +21,19 @@ import java.io.IOException;
  */
 @Order(Ordered.HIGHEST_PRECEDENCE) // make the handler high precedence than global BusinessExceptionHandler
 @RestControllerAdvice(assignableTypes = OpenAIController.class)
+@Slf4j
 public class OpenAiHttpExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<OpenAiError> handle(OpenAiHttpException ex) {
+        log.info("Open AI Exception ======");
         OpenAiError oae = new OpenAiError();
         oae.error = new OpenAiError.OpenAiErrorDetails();
         oae.error.setMessage(ex.getMessage());
         oae.error.setType(ex.type);
         oae.error.setParam(ex.param);
         oae.error.setCode(ex.code);
+        log.info("Open AI Exception ======: {}", Constants.GSON.toJson(oae));
         return ResponseEntity.status(ex.statusCode).body(oae);
     }
 
