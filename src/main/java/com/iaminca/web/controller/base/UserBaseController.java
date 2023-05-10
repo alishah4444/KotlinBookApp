@@ -7,6 +7,7 @@ import com.iaminca.service.bo.UserBO;
 import com.iaminca.utils.RedisKeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -24,6 +25,9 @@ public class UserBaseController {
 			throw new BusinessException(ErrorCode.NO_AUTH);
 		}
 		String userInfo = stringRedisTemplate.opsForValue().get(RedisKeyUtil.userInfoKey(token));
+		if(ObjectUtils.isEmpty(userInfo)){
+			throw new BusinessException(ErrorCode.NO_AUTH);
+		}
 		UserBO userBO = Constants.GSON.fromJson(userInfo, UserBO.class);
 		return userBO.getId();
 	}

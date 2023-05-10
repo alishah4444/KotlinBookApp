@@ -17,6 +17,7 @@ import com.iaminca.utils.sms.SmsSendUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -43,7 +44,8 @@ public class UserHandler {
 
     private static final Integer CHAT_LIMITATION = 2;
     private static final Integer LENGTH_LIMITATION = 200;
-
+    @Value("${spring.profiles.active}")
+    private String env;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Resource
@@ -52,20 +54,22 @@ public class UserHandler {
     private UserBalanceHandler userBalanceHandler;
 
     public void addUser(UserBO userBO){
-        UserQuery query = new UserQuery();
-        query.setUserPhone(userBO.getUserPhone());
-        List<UserBO> list = userService.findList(query);
-        if(CollectionUtils.isEmpty(list)){
-            userBO.setUserName(userBO.getUserPhone());
-            userBO.setUserType(UserTypeEnum.USER.getCode());
-            userBO.setUserChatLimitation(CHAT_LIMITATION);
-            userBO.setUserLengthLimitation(LENGTH_LIMITATION);
-            log.info("Add UserBO: {}", Constants.GSON.toJson(userBO));
-            userService.add(userBO);
-        }
+//        UserQuery query = new UserQuery();
+//        query.setUserPhone(userBO.getUserPhone());
+//        List<UserBO> list = userService.findList(query);
+//        if(CollectionUtils.isEmpty(list)){
+//            userBO.setUserName(userBO.getUserPhone());
+//            userBO.setUserType(UserTypeEnum.USER.getCode());
+//            userBO.setUserChatLimitation(CHAT_LIMITATION);
+//            userBO.setUserLengthLimitation(LENGTH_LIMITATION);
+//            log.info("Add UserBO: {}", Constants.GSON.toJson(userBO));
+//            userService.add(userBO);
+//        }
         //TODO Send Verification Code
-//        String randomNumberString = CodeUtil.getRandomNumberString();
         String randomNumberString = "111111";
+        if(!StringUtils.isEmpty(env) && !"dev".equals(env)){
+             randomNumberString = CodeUtil.getRandomNumberString();
+        }
         SendSmsBO sendSmsBO=new SendSmsBO();
         sendSmsBO.setCode(randomNumberString);
         SmsSendUtil smsSendUtil=new SmsSendUtil();

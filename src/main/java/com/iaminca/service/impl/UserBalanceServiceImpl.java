@@ -1,5 +1,6 @@
 package com.iaminca.service.impl;
 
+import com.iaminca.common.DelFlagEnum;
 import com.iaminca.dal.dao.UserBalanceDAO;
 import com.iaminca.dal.dataobject.UserBalanceDO;
 import com.iaminca.query.UserBalanceQuery;
@@ -11,6 +12,7 @@ import org.springframework.util.ObjectUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,6 +33,9 @@ public class UserBalanceServiceImpl implements UserBalanceService {
     @Override
     public int add(UserBalanceBO userBalanceBO){
         userBalanceBO.setId(null);
+        userBalanceBO.setDelFlag(DelFlagEnum.NOT_DEL.getCode());
+        userBalanceBO.setCreateTime(new Date());
+        userBalanceBO.setUpdateTime(userBalanceBO.getCreateTime());
 		UserBalanceDO userBalanceDO = UserBalanceConvert.toDO(userBalanceBO);
 		return userBalanceDAO.insert(userBalanceDO);
     }

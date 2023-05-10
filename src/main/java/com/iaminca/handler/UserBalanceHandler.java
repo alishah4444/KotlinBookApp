@@ -37,11 +37,12 @@ public class UserBalanceHandler {
     private UserBalanceService userBalanceService;
 
     public void addNewUserBalance(Long userID){
-        UserBalanceBO userBalanceBO = new UserBalanceBO();
-        log.info("Add UserBalanceBO: {}", Constants.GSON.toJson(userBalanceBO));
-        if(ObjectUtils.isEmpty(userBalanceBO) || ObjectUtils.isEmpty(userBalanceBO.getUserId())){
+
+        log.info("Add UserBalanceBO: {}", userID);
+        if(ObjectUtils.isEmpty(userID)){
             throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
         }
+        UserBalanceBO userBalanceBO = new UserBalanceBO();
         userBalanceBO.setUserId(userID);
         userBalanceBO.setUserBalance(NEW_USER_BALANCE_TOKENS);
         userBalanceService.add(userBalanceBO);
