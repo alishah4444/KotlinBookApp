@@ -26,6 +26,9 @@ public class OpenAIBaseController {
     private UserKeyHandler userKeyHandler;
     @Resource
     private UserBalanceHandler userBalanceHandler;
+    @Resource
+    private RedisTemplate redisTemplateIntegerValue;
+
 
     public Long getUserID(String gptKey){
         if(StringUtils.isEmpty(gptKey)){
@@ -33,20 +36,20 @@ public class OpenAIBaseController {
         }
         String gptKeyUserID = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getGptKey(gptKey));
         UserKeyBO userKeyBO = Constants.GSON.fromJson(gptKeyUserID, UserKeyBO.class);
-        if(!ObjectUtils.isEmpty(userKeyBO) && StringUtils.isEmpty(userKeyBO.getUserId())){
+        if(ObjectUtils.isEmpty(userKeyBO) || StringUtils.isEmpty(userKeyBO.getUserId())){
             UserKeyQuery query = new UserKeyQuery();
             query.setUserKey(gptKey);
-            UserKeyBO userKey = userKeyHandler.findUserKey(query);
-            if(ObjectUtils.isEmpty(userKey)){
+            userKeyBO = userKeyHandler.findUserKey(query);
+            if(ObjectUtils.isEmpty(userKeyBO)){
                 throw new BusinessException(ErrorCode.GPT_KEY_ERROR);
             }
             UserBalanceQuery balanceQuery = new UserBalanceQuery();
-            balanceQuery.setUserId(userKey.getUserId());
+            balanceQuery.setUserId(userKeyBO.getUserId());
             UserBalanceBO userBalance = userBalanceHandler.findUserBalance(balanceQuery);
-            stringRedisTemplate.opsForValue().set(RedisKeyUtil.getGptKey(gptKey), Constants.GSON.toJson(userKey));
-            String userBalanceRedisKey = RedisKeyUtil.getUserBalance(userKey.getUserId());
+            stringRedisTemplate.opsForValue().set(RedisKeyUtil.getGptKey(gptKey), Constants.GSON.toJson(userKeyBO));
+            String userBalanceRedisKey = RedisKeyUtil.getUserBalance(userKeyBO.getUserId());
 //            stringRedisTemplate.opsForValue().set(userBalanceRedisKey,String.valueOf(userBalance.getUserBalance()));
-            redisTemplate.opsForValue().set(userBalanceRedisKey,userBalance.getUserBalance());
+            redisTemplateIntegerValue.opsForValue().set(userBalanceRedisKey,userBalance.getUserBalance());
         }
         return userKeyBO.getUserId();
     }

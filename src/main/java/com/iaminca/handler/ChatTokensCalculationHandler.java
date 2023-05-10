@@ -27,22 +27,23 @@ public class ChatTokensCalculationHandler {
     private final StringRedisTemplate stringRedisTemplate;
     private final RedisTemplate redisTemplate;
     private final ChatResponseHandler chatResponseHandler;
+    private final RedisTemplate<String, Integer> redisTemplateIntegerValue;
 
     public UserKeyBO checkGptKey(String gptKey){
         String userIdCache = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getGptKey(gptKey));
         UserKeyBO userKeyBO = Constants.GSON.fromJson(userIdCache, UserKeyBO.class);
-        if(ObjectUtils.isEmpty(userKeyBO) || StringUtils.isEmptyOrWhitespaceOnly(userKeyBO.getId())){
+        if(ObjectUtils.isEmpty(userKeyBO) || ObjectUtils.isEmpty(userKeyBO.getId())){
             throw new BusinessException(ErrorCode.GPT_KEY_ERROR);
         }
-        String userBalance = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getUserBalance(Long.valueOf(userIdCache)));
-        if(Long.valueOf(userBalance) <= 0){
+        Integer userBalance = redisTemplateIntegerValue.opsForValue().get(RedisKeyUtil.getUserBalance(userKeyBO.getUserId()));
+        if(userBalance <= 0){
             throw new BusinessException(ErrorCode.GPT_BALANCE_ERROR);
         }
         return userKeyBO;
     }
 
     public void reduceGptTokens(Long userId,long tokensNumber){
-        redisTemplate.opsForValue().decrement(RedisKeyUtil.getUserBalance(userId),tokensNumber);
+        redisTemplateIntegerValue.opsForValue().decrement(RedisKeyUtil.getUserBalance(userId),tokensNumber);
     }
 
 

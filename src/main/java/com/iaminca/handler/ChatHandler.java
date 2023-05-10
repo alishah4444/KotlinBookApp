@@ -87,6 +87,7 @@ public class ChatHandler {
 
         ChatResponseBO chatResponseBO = new ChatResponseBO();
         chatResponseBO.setRecordId(recordCycleID);
+        chatResponseBO.setUserId(request.getUserId());
         chatResponseBO.setKeyId(userKeyBO.getId());
         chatResponseBO.setChatResponseId(chatCompletion.getId());
         chatResponseBO.setModel(chatCompletion.getModel());
