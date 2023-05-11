@@ -78,7 +78,7 @@ public class UserKeyServiceImpl implements UserKeyService {
     private Example convertExample(UserKeyQuery userKeyQuery) {
         Example example = new Example(UserKeyDO.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("delFlag", DelFlagEnum.NOT_DEL);
+        criteria.andEqualTo("delFlag", DelFlagEnum.NOT_DEL.getCode());
         if (!ObjectUtils.isEmpty(userKeyQuery.getId())) {
             criteria.andEqualTo("id", userKeyQuery.getId());
         }

@@ -66,6 +66,7 @@ public class ChatTokensCalculationHandler {
 
         ChatResponseBO chatResponseBO = new ChatResponseBO();
         chatResponseBO.setUserId(chatRequestBO.getUserId());
+        chatResponseBO.setRecordId(chatRequestBO.getRecordId());
         chatResponseBO.setKeyId(1L);
         chatResponseBO.setChatResponseId(list.get(0).getId());
         chatResponseBO.setModel(list.get(0).getModel());

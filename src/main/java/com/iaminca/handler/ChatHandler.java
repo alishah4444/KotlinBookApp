@@ -14,6 +14,7 @@ import com.theokanning.openai.completion.chat.ChatCompletionChunk;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ChatHandler {
 
     private final ChatClient chatClient;
@@ -39,15 +41,16 @@ public class ChatHandler {
      * @return
      */
     public Flux<ChatCompletionChunk> streamChatCompletion(ChatRequestBO request) {
+        log.info("stream chat streamChatCompletion");
         //Check GPT balance
-        chatTokensCalculationHandler.checkGptKey(request.getGptKey());
-
-        request.setUserId(request.getUserId());
-        request.setKeyId(5000L);
-        request.setStream(false);
-        request.setModel("gpt-3.5-turbo");
-        request.setN(1);
-        request.setMaxTokens(2048);
+        UserKeyBO userKeyBO = chatTokensCalculationHandler.checkGptKey(request.getGptKey());
+        String recordCycleID = IDUtil.getRecordCycleID();
+        request.setRecordId(recordCycleID);
+        request.setKeyId(userKeyBO.getId());
+        request.setStream(true);
+        request.setModel(Constants.GPT_CHAT_MODEL);
+        request.setN(Constants.GPT_CHAT_N);
+        request.setMaxTokens(Constants.GPT_CHAT_MAX_TOKENS);
         request.setUser(String.valueOf(request.getUserId()));
         chatRequestHandler.addChatRequest(request);
 
@@ -68,7 +71,7 @@ public class ChatHandler {
      * @return
      */
     public ChatCompletionResult createChatCompletion(ChatRequestBO request){
-
+        log.info("unstream chat createChatCompletion");
         //Check GPT balance
         UserKeyBO userKeyBO = chatTokensCalculationHandler.checkGptKey(request.getGptKey());
         //Saving the content of request

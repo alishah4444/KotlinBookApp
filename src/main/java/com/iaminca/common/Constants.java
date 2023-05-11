@@ -10,6 +10,7 @@ public class Constants {
 
 
     public static String GPT_CHAT_MODEL = "gpt-3.5-turbo";
+    public static String GPT_CHAT_ROLE = "user";
     public static Integer GPT_CHAT_N = 1;
     public static Integer GPT_CHAT_MAX_TOKENS = 2048;
 

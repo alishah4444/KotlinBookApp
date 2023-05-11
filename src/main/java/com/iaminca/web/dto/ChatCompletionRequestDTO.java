@@ -27,4 +27,5 @@ public class ChatCompletionRequestDTO implements Serializable {
     @JsonProperty("logit_bias")
     Map<String, Integer> logitBias;
     String user;
+    String gptTestKey;
 }

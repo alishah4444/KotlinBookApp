@@ -73,7 +73,7 @@ public class UserController extends UserBaseController {
 
 
     @GetMapping("/selectKeyPage")
-    public ResultModel selectKeyPage(@RequestHeader(name = "token")String token,UserKeyQuery query) {
+    public ResultModel selectKeyPage(@RequestHeader(name = "token",required = false)String token,UserKeyQuery query) {
 //        UserKeyQuery query = new UserKeyQuery();
         query.setUserId(getUserID(token));
         PageListResult<UserKeyBO> userKeyPage = userKeyHandler.findUserKeyPage(query);
