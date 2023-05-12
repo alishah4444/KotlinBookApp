@@ -7,12 +7,14 @@ import com.iaminca.exception.BusinessException;
 import com.iaminca.handler.UserHandler;
 import com.iaminca.handler.UserKeyHandler;
 import com.iaminca.query.UserKeyQuery;
+import com.iaminca.query.UserQuery;
 import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.service.bo.UserRegisterBO;
 import com.iaminca.web.controller.base.UserBaseController;
 import com.iaminca.web.convert.UserKeyConvertDTO;
 import com.iaminca.web.dto.UserKeyDTO;
+import com.iaminca.web.dto.UserMessageDTO;
 import com.iaminca.web.dto.UserRegisterDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +55,18 @@ public class UserController extends UserBaseController {
         userHandler.addUser(userBO);
         return new ResultModel();
     }
+
+
+    @PostMapping("/myMessage")
+    public ResultModel myMessage(@RequestHeader(name = "token")String token) {
+        UserBO user = getUser(token);
+        Long userBalance = userHandler.findUserBalance(user.getId());
+        UserMessageDTO userMessageDTO = new UserMessageDTO();
+        userMessageDTO.setUserPhone(user.getUserPhone());
+        userMessageDTO.setBalance(userBalance);
+        return new ResultModel(userMessageDTO);
+    }
+
 
     @PostMapping("/applyKey")
     public ResultModel applyKey(@RequestHeader(name = "token")String token) {

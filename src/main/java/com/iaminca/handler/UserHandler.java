@@ -54,17 +54,6 @@ public class UserHandler {
     private UserBalanceHandler userBalanceHandler;
 
     public void addUser(UserBO userBO){
-//        UserQuery query = new UserQuery();
-//        query.setUserPhone(userBO.getUserPhone());
-//        List<UserBO> list = userService.findList(query);
-//        if(CollectionUtils.isEmpty(list)){
-//            userBO.setUserName(userBO.getUserPhone());
-//            userBO.setUserType(UserTypeEnum.USER.getCode());
-//            userBO.setUserChatLimitation(CHAT_LIMITATION);
-//            userBO.setUserLengthLimitation(LENGTH_LIMITATION);
-//            log.info("Add UserBO: {}", Constants.GSON.toJson(userBO));
-//            userService.add(userBO);
-//        }
         //TODO Send Verification Code
         String randomNumberString = "111111";
         if(!StringUtils.isEmpty(env) && !"dev".equals(env)){
@@ -79,6 +68,21 @@ public class UserHandler {
         stringRedisTemplate.opsForValue().set(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()),randomNumberString,10, TimeUnit.MINUTES);
     }
 
+    public Long findUserBalance(Long userId){
+        String userBalance = stringRedisTemplate.opsForValue().get(RedisKeyUtil.getUserBalance(userId));
+        if(StringUtils.isEmpty(userBalance)){
+            return 0L;
+        }
+        return Long.valueOf(userBalance);
+    }
+
+    public UserBO findUser(UserQuery query){
+        List<UserBO> list = userService.findList(query);
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
+    }
 
     @Transactional(rollbackFor = Exception.class)
     public String chekVerificationCode(UserRegisterBO userRegisterBO){

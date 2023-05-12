@@ -34,4 +34,19 @@ public class UserBaseController {
 		return userBO.getId();
 	}
 
+
+	public UserBO getUser(String token){
+		if(StringUtils.isEmpty(token)){
+			throw new BusinessException(ErrorCode.NO_AUTH);
+		}
+		String userRedisCache = RedisKeyUtil.userInfoKey(token);
+
+		String userInfo = stringRedisTemplate.opsForValue().get(userRedisCache);
+		if(ObjectUtils.isEmpty(userInfo)){
+			throw new BusinessException(ErrorCode.NO_AUTH);
+		}
+		UserBO userBO = Constants.GSON.fromJson(userInfo, UserBO.class);
+		return userBO;
+	}
+
 }
