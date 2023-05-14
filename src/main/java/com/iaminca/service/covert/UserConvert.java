@@ -26,6 +26,7 @@ public class UserConvert {
 		userBO.setId(userDO.getId());
 		userBO.setUserName(userDO.getUserName());
 		userBO.setUserPhone(userDO.getUserPhone());
+		userBO.setPassword(userDO.getPassword());
 		userBO.setUserChatLimitation(userDO.getUserChatLimitation());
 		userBO.setUserLengthLimitation(userDO.getUserLengthLimitation());
 		userBO.setUserType(userDO.getUserType());
@@ -43,6 +44,7 @@ public class UserConvert {
 		userDO.setId(userBO.getId());
 		userDO.setUserName(userBO.getUserName());
 		userDO.setUserPhone(userBO.getUserPhone());
+		userDO.setPassword(userBO.getPassword());
 		userDO.setUserChatLimitation(userBO.getUserChatLimitation());
 		userDO.setUserLengthLimitation(userBO.getUserLengthLimitation());
 		userDO.setUserType(userBO.getUserType());

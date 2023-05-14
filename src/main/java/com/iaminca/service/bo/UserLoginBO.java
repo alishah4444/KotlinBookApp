@@ -11,12 +11,11 @@ import lombok.Data;
  * @date 2023-05-02 16:58:22
  */
 @Data
-public class UserRegisterBO {
+public class UserLoginBO {
 	private static final long serialVersionUID = 1L;
 
 	/***/
 	private String userPhone;
-	private String verificationCode;
 	private String password;
 
 }

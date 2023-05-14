@@ -30,6 +30,7 @@ public class UserKeyConvert {
 		userKeyBO.setDelFlag(userKeyDO.getDelFlag());
 		userKeyBO.setCreateTime(userKeyDO.getCreateTime());
 		userKeyBO.setUpdateTime(userKeyDO.getUpdateTime());
+		userKeyBO.setRemark(userKeyDO.getRemark());
 		return userKeyBO;
 	}
 
@@ -46,6 +47,7 @@ public class UserKeyConvert {
 		userKeyDO.setDelFlag(userKeyBO.getDelFlag());
 		userKeyDO.setCreateTime(userKeyBO.getCreateTime());
 		userKeyDO.setUpdateTime(userKeyBO.getUpdateTime());
+		userKeyDO.setRemark(userKeyBO.getRemark());
 		return userKeyDO;
 	}
 

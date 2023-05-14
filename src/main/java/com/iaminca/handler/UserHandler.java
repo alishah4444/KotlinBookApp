@@ -7,22 +7,22 @@ import com.iaminca.exception.BusinessException;
 import com.iaminca.query.UserQuery;
 import com.iaminca.service.UserService;
 import com.iaminca.service.bo.UserBO;
+import com.iaminca.service.bo.UserLoginBO;
 import com.iaminca.service.bo.UserRegisterBO;
 import com.iaminca.utils.CodeUtil;
 import com.iaminca.utils.RedisKeyUtil;
 import com.iaminca.utils.sms.SendSmsBO;
 import com.iaminca.utils.sms.SmsBusinessEnum;
-import com.iaminca.utils.sms.SmsSendResponse;
 import com.iaminca.utils.sms.SmsSendUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -93,6 +93,7 @@ public class UserHandler {
             list = new ArrayList<>();
             UserBO userBO = new UserBO();
             userBO.setUserPhone(userRegisterBO.getUserPhone());
+            userBO.setPassword(userRegisterBO.getPassword());
             userBO.setUserName(userBO.getUserPhone());
             userBO.setUserType(UserTypeEnum.USER.getCode());
             userBO.setUserChatLimitation(CHAT_LIMITATION);
@@ -116,5 +117,30 @@ public class UserHandler {
         return token;
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public String passwordLogin(UserLoginBO userLoginBO){
+        if(ObjectUtils.isEmpty(userLoginBO) || StringUtils.isEmpty(userLoginBO.getPassword())
+                || StringUtils.isEmpty(userLoginBO.getUserPhone())){
+            throw new BusinessException(ErrorCode.USER_PHONE_PASSWORD_ERROR);
+        }
+        UserQuery query = new UserQuery();
+        query.setUserPhone(userLoginBO.getUserPhone());
+        List<UserBO> list = userService.findList(query);
+        if(CollectionUtils.isEmpty(list)){
+           throw new BusinessException(ErrorCode.USER_VERIFICATION_CODE_ERROR);
+        }
+        UserBO userBO = list.get(0);
+        //TODO Check Verification Code
+        String verificationCodeCache = stringRedisTemplate.opsForValue().get(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()));
+        if( !userLoginBO.getPassword().equals(userBO.getPassword())){
+            //Checked Unsuccessfully
+            throw new BusinessException(ErrorCode.USER_PHONE_PASSWORD_ERROR);
+        }
+        stringRedisTemplate.delete(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()));
+        //Save the token and information to Cache
+        String token = CodeUtil.getUpperUUID();
+        stringRedisTemplate.opsForValue().set(RedisKeyUtil.userInfoKey(token), Constants.GSON.toJson(userBO));
+        return token;
+    }
 
 }

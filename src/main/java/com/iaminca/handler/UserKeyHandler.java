@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -42,6 +43,9 @@ public class UserKeyHandler {
         if(ObjectUtils.isEmpty(userKeyBO) || ObjectUtils.isEmpty(userKeyBO.getUserId())){
             log.info("No User ID");
            throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
+        }
+        if(StringUtils.isEmpty(userKeyBO.getRemark())){
+            userKeyBO.setRemark(String.valueOf(System.currentTimeMillis()));
         }
         userKeyBO.setUserKey("sk-"+KeyUtil.openaiKey(48));
         userKeyBO.setUserChatLimitation(CHAT_LIMITATION);

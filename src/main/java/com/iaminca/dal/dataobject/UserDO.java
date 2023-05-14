@@ -26,6 +26,8 @@ public class UserDO {
 	/***/
 	private String userName;
 	/***/
+	private String password;
+	/***/
 	private String userPhone;
 	/***/
 	private Integer userChatLimitation;

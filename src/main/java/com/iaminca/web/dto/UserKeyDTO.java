@@ -32,4 +32,6 @@ public class UserKeyDTO {
 	private Date createTime;
 	/***/
 	private Date updateTime;
+	/***/
+	private String remark;
 }

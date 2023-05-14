@@ -10,10 +10,12 @@ import com.iaminca.query.UserKeyQuery;
 import com.iaminca.query.UserQuery;
 import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.bo.UserKeyBO;
+import com.iaminca.service.bo.UserLoginBO;
 import com.iaminca.service.bo.UserRegisterBO;
 import com.iaminca.web.controller.base.UserBaseController;
 import com.iaminca.web.convert.UserKeyConvertDTO;
 import com.iaminca.web.dto.UserKeyDTO;
+import com.iaminca.web.dto.UserLoginDTO;
 import com.iaminca.web.dto.UserMessageDTO;
 import com.iaminca.web.dto.UserRegisterDTO;
 import lombok.RequiredArgsConstructor;
@@ -38,13 +40,27 @@ public class UserController extends UserBaseController {
     @PostMapping("/register")
     public ResultModel register(@RequestBody  UserRegisterDTO userRegisterDTO) {
         if(ObjectUtils.isEmpty(userRegisterDTO) || ObjectUtils.isEmpty(userRegisterDTO.getUserPhone())||
-                ObjectUtils.isEmpty(userRegisterDTO.getVerificationCode())){
+                ObjectUtils.isEmpty(userRegisterDTO.getVerificationCode()) || ObjectUtils.isEmpty(userRegisterDTO.getPassword())){
             throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
         }
         UserRegisterBO userRegisterBO = new UserRegisterBO();
         userRegisterBO.setUserPhone(userRegisterDTO.getUserPhone());
         userRegisterBO.setVerificationCode(userRegisterDTO.getVerificationCode());
+        userRegisterBO.setPassword(userRegisterDTO.getPassword());
         String token = userHandler.chekVerificationCode(userRegisterBO);
+        return new ResultModel(token);
+    }
+
+    @PostMapping("/login")
+    public ResultModel login(@RequestBody UserLoginDTO userLoginDTO) {
+        if(ObjectUtils.isEmpty(userLoginDTO) || ObjectUtils.isEmpty(userLoginDTO.getUserPhone())
+                ||ObjectUtils.isEmpty(userLoginDTO.getPassword())){
+            throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
+        }
+        UserLoginBO userLoginBO = new UserLoginBO();
+        userLoginBO.setUserPhone(userLoginDTO.getUserPhone());
+        userLoginBO.setPassword(userLoginDTO.getPassword());
+        String token = userHandler.passwordLogin(userLoginBO);
         return new ResultModel(token);
     }
 
@@ -69,9 +85,10 @@ public class UserController extends UserBaseController {
 
 
     @PostMapping("/applyKey")
-    public ResultModel applyKey(@RequestHeader(name = "token")String token) {
+    public ResultModel applyKey(@RequestHeader(name = "token")String token,UserKeyDTO userKeyDTO) {
         UserKeyBO userKeyBO = new UserKeyBO();
         userKeyBO.setUserId(getUserID(token));
+        userKeyBO.setRemark(userKeyDTO.getRemark());
         String gptKey = userKeyHandler.addUserKey(userKeyBO);
         return new ResultModel(gptKey);
     }

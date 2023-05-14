@@ -21,6 +21,8 @@ public class UserBO{
 	/***/
 	private String userPhone;
 	/***/
+	private String password;
+	/***/
 	private Integer userChatLimitation;
 	/***/
 	private Integer userLengthLimitation;

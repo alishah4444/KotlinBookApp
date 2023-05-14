@@ -20,4 +20,5 @@ public class UserRegisterDTO implements Serializable {
 	/***/
 	private String userPhone;
 	private String verificationCode;
+	private String password;
 }
