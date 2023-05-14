@@ -37,5 +37,5 @@ public class UserKeyDO {
 	/***/
 	private Date updateTime;
 	/***/
-	private String remark;
+	private String name;
 }

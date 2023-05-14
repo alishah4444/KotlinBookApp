@@ -88,7 +88,7 @@ public class UserController extends UserBaseController {
     public ResultModel applyKey(@RequestHeader(name = "token")String token,UserKeyDTO userKeyDTO) {
         UserKeyBO userKeyBO = new UserKeyBO();
         userKeyBO.setUserId(getUserID(token));
-        userKeyBO.setRemark(userKeyDTO.getRemark());
+        userKeyBO.setName(userKeyDTO.getName());
         String gptKey = userKeyHandler.addUserKey(userKeyBO);
         return new ResultModel(gptKey);
     }

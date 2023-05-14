@@ -33,5 +33,5 @@ public class UserKeyDTO {
 	/***/
 	private Date updateTime;
 	/***/
-	private String remark;
+	private String name;
 }

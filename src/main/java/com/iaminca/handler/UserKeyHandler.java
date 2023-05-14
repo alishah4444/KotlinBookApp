@@ -44,8 +44,8 @@ public class UserKeyHandler {
             log.info("No User ID");
            throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
         }
-        if(StringUtils.isEmpty(userKeyBO.getRemark())){
-            userKeyBO.setRemark(String.valueOf(System.currentTimeMillis()));
+        if(StringUtils.isEmpty(userKeyBO.getName())){
+            userKeyBO.setName(String.valueOf(System.currentTimeMillis()));
         }
         userKeyBO.setUserKey("sk-"+KeyUtil.openaiKey(48));
         userKeyBO.setUserChatLimitation(CHAT_LIMITATION);
