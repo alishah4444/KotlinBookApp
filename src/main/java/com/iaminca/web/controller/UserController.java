@@ -51,6 +51,7 @@ public class UserController extends UserBaseController {
         return new ResultModel(token);
     }
 
+    //TODO 现在token有重复的，加入新的token之前，要把老的token删除。
     @PostMapping("/login")
     public ResultModel login(@RequestBody UserLoginDTO userLoginDTO) {
         if(ObjectUtils.isEmpty(userLoginDTO) || ObjectUtils.isEmpty(userLoginDTO.getUserPhone())

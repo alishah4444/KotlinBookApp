@@ -114,6 +114,7 @@ public class UserHandler {
         //Save the token and information to Cache
         String token = CodeUtil.getUpperUUID();
         stringRedisTemplate.opsForValue().set(RedisKeyUtil.userInfoKey(token), Constants.GSON.toJson(userBO));
+        stringRedisTemplate.opsForValue().set(RedisKeyUtil.phoneAndToken(userRegisterBO.getUserPhone()), token);
         return token;
     }
 
@@ -131,15 +132,18 @@ public class UserHandler {
         }
         UserBO userBO = list.get(0);
         //TODO Check Verification Code
-        String verificationCodeCache = stringRedisTemplate.opsForValue().get(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()));
         if( !userLoginBO.getPassword().equals(userBO.getPassword())){
             //Checked Unsuccessfully
             throw new BusinessException(ErrorCode.USER_PHONE_PASSWORD_ERROR);
         }
-        stringRedisTemplate.delete(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()));
+        //Delete the older message
+        String oldToken = stringRedisTemplate.opsForValue().get(RedisKeyUtil.phoneAndToken(userLoginBO.getUserPhone()));
+        stringRedisTemplate.delete(RedisKeyUtil.phoneAndToken(userLoginBO.getUserPhone()));
+        stringRedisTemplate.delete(RedisKeyUtil.userInfoKey(oldToken));
         //Save the token and information to Cache
         String token = CodeUtil.getUpperUUID();
         stringRedisTemplate.opsForValue().set(RedisKeyUtil.userInfoKey(token), Constants.GSON.toJson(userBO));
+        stringRedisTemplate.opsForValue().set(userLoginBO.getUserPhone(), token);
         return token;
     }
 
