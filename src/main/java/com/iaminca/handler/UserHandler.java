@@ -108,6 +108,7 @@ public class UserHandler {
         String verificationCodeCache = stringRedisTemplate.opsForValue().get(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()));
         if(StringUtils.isEmpty(verificationCodeCache) || !verificationCodeCache.equals(userRegisterBO.getVerificationCode())){
             //Checked Unsuccessfully
+            log.info("Verification Code : {} -- {}",userRegisterBO.getVerificationCode(),verificationCodeCache);
             throw new BusinessException(ErrorCode.USER_VERIFICATION_CODE_ERROR);
         }
         stringRedisTemplate.delete(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()));
