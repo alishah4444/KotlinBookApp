@@ -44,9 +44,7 @@ public class OpenAIBaseController {
             if(ObjectUtils.isEmpty(userKeyBO)){
                 throw new BusinessException(ErrorCode.GPT_KEY_ERROR);
             }
-            UserBalanceQuery balanceQuery = new UserBalanceQuery();
-            balanceQuery.setUserId(userKeyBO.getUserId());
-            UserBalanceBO userBalance = userBalanceHandler.findUserBalance(balanceQuery);
+            UserBalanceBO userBalance = userBalanceHandler.findUserBalance(userKeyBO.getUserId());
             stringRedisTemplate.opsForValue().set(RedisKeyUtil.getGptKey(gptKey), Constants.GSON.toJson(userKeyBO));
             String userBalanceRedisKey = RedisKeyUtil.getUserBalance(userKeyBO.getUserId());
 //            stringRedisTemplate.opsForValue().set(userBalanceRedisKey,String.valueOf(userBalance.getUserBalance()));

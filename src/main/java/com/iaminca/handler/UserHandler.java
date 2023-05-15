@@ -7,6 +7,7 @@ import com.iaminca.exception.BusinessException;
 import com.iaminca.query.UserQuery;
 import com.iaminca.service.UserService;
 import com.iaminca.service.bo.UserBO;
+import com.iaminca.service.bo.UserBalanceBO;
 import com.iaminca.service.bo.UserLoginBO;
 import com.iaminca.service.bo.UserRegisterBO;
 import com.iaminca.utils.CodeUtil;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +51,8 @@ public class UserHandler {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Resource
+    private RedisTemplate<String,Integer> redisTemplateIntegerValue;
+    @Resource
     private UserService userService;
     @Resource
     private UserBalanceHandler userBalanceHandler;
@@ -58,6 +62,11 @@ public class UserHandler {
         String randomNumberString = "111111";
         if(!StringUtils.isEmpty(env) && !"dev".equals(env)){
              randomNumberString = CodeUtil.getRandomNumberString();
+        }
+        //Find user,
+        UserBO userByPhone = this.findUserByPhone(userBO.getUserPhone());
+        if(!ObjectUtils.isEmpty(userByPhone)){
+            throw new BusinessException(ErrorCode.USER_EXIST_ERROR);
         }
         SendSmsBO sendSmsBO=new SendSmsBO();
         sendSmsBO.setCode(randomNumberString);
@@ -77,6 +86,17 @@ public class UserHandler {
     }
 
     public UserBO findUser(UserQuery query){
+        List<UserBO> list = userService.findList(query);
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
+    }
+
+
+    public UserBO findUserByPhone(String phone){
+        UserQuery query = new UserQuery();
+        query.setUserPhone(phone);
         List<UserBO> list = userService.findList(query);
         if(CollectionUtils.isEmpty(list)){
             return null;
@@ -111,6 +131,8 @@ public class UserHandler {
             log.info("Verification Code : {} -- {}",userRegisterBO.getVerificationCode(),verificationCodeCache);
             throw new BusinessException(ErrorCode.USER_VERIFICATION_CODE_ERROR);
         }
+        stringRedisTemplate.delete(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()));
+
 //        stringRedisTemplate.delete(RedisKeyUtil.registerCodeKey(userBO.getUserPhone()));
         //Save the token and information to Cache
         String token = CodeUtil.getUpperUUID();
@@ -129,7 +151,7 @@ public class UserHandler {
         query.setUserPhone(userLoginBO.getUserPhone());
         List<UserBO> list = userService.findList(query);
         if(CollectionUtils.isEmpty(list)){
-           throw new BusinessException(ErrorCode.USER_VERIFICATION_CODE_ERROR);
+           throw new BusinessException(ErrorCode.USER_PHONE_ERROR);
         }
         UserBO userBO = list.get(0);
         //TODO Check Verification Code
@@ -143,11 +165,14 @@ public class UserHandler {
         if(!StringUtils.isEmpty(oldToken)){
             stringRedisTemplate.delete(RedisKeyUtil.userInfoKey(oldToken));
         }
-
+        UserBalanceBO userBalance = userBalanceHandler.findUserBalance(userBO.getId());
+        if(!ObjectUtils.isEmpty(userBalance)){
+            redisTemplateIntegerValue.opsForValue().set(RedisKeyUtil.getUserBalance(userBO.getId()),userBalance.getUserBalance());
+        }
         //Save the token and information to Cache
         String token = CodeUtil.getUpperUUID();
         stringRedisTemplate.opsForValue().set(RedisKeyUtil.userInfoKey(token), Constants.GSON.toJson(userBO));
-        stringRedisTemplate.opsForValue().set(userLoginBO.getUserPhone(), token);
+        stringRedisTemplate.opsForValue().set(RedisKeyUtil.phoneAndToken(userLoginBO.getUserPhone()), token);
         return token;
     }
 

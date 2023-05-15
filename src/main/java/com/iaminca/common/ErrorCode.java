@@ -14,6 +14,7 @@ public enum ErrorCode implements ErrorCodeService {
 	USER_VERIFICATION_CODE_ERROR(11000, "验证码有误"),
 	USER_PHONE_ERROR(11001, "用户不存在"),
 	USER_PHONE_PASSWORD_ERROR(11002, "账号或密码有误"),
+	USER_EXIST_ERROR(11003, "用户已经存在，请直接登录"),
 
 	//GPT Model
 	GPT_KEY_ERROR(12000, "GPT key 有误"),

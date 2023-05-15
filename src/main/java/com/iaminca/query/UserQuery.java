@@ -25,4 +25,6 @@ public class UserQuery{
 	private Integer userLengthLimitation;
 	/**vistor,user,vip,svip*/
 	private String userType;
+	/***/
+	private Integer delFlag;
 }

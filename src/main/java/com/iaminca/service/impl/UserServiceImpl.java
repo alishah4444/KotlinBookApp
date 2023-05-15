@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
     private Example convertExample(UserQuery userQuery) {
         Example example = new Example(UserDO.class);
         Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("delFlag", DelFlagEnum.NOT_DEL.getCode());
         if (!ObjectUtils.isEmpty(userQuery.getId())) {
             criteria.andEqualTo("id", userQuery.getId());
         }

@@ -48,7 +48,9 @@ public class UserBalanceHandler {
         userBalanceService.add(userBalanceBO);
     }
 
-    public UserBalanceBO findUserBalance(UserBalanceQuery query){
+    public UserBalanceBO findUserBalance(Long userId){
+        UserBalanceQuery query = new UserBalanceQuery();
+        query.setUserId(userId);
         List<UserBalanceBO> list = userBalanceService.findList(query);
         if(CollectionUtils.isEmpty(list)){
             return null;
