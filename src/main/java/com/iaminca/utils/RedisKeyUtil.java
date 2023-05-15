@@ -5,7 +5,7 @@ public class RedisKeyUtil {
 
     public static String USER_REDIS_REGISTER_DIRE = "user:register:";
     public static String USER_REDIS_INFO_DIRE = "user:info:";
-    public static String USER_REDIS_PHONE_TOKEN_DIRE = "user:info:phoneGetToken";
+    public static String USER_REDIS_PHONE_TOKEN_DIRE = "user:info:phone:token:";
 
     public static String GPT_REDIS_USERINFO_DIRE = "gpt:user:info:";
     public static String GPT_REDIS_USER_BALANCE_DIRE = "gpt:user:balance:";
