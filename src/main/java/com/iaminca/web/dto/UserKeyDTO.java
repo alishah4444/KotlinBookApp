@@ -2,6 +2,7 @@ package com.iaminca.web.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -13,7 +14,7 @@ import java.util.Date;
  * @date 2023-05-04 17:34:01
  */
 @Data
-public class UserKeyDTO {
+public class UserKeyDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/***/

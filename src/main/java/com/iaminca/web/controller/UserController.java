@@ -86,7 +86,7 @@ public class UserController extends UserBaseController {
 
 
     @PostMapping("/applyKey")
-    public ResultModel applyKey(@RequestHeader(name = "token")String token,UserKeyDTO userKeyDTO) {
+    public ResultModel applyKey(@RequestHeader(name = "token")String token,@RequestBody UserKeyDTO userKeyDTO) {
         UserKeyBO userKeyBO = new UserKeyBO();
         userKeyBO.setUserId(getUserID(token));
         userKeyBO.setName(userKeyDTO.getName());
