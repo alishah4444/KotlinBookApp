@@ -39,7 +39,7 @@ public class UserFileController extends UserBaseController {
             throw new BusinessException(ErrorCode.USER_FILE_SUFFIX_ERROR);
         }
         String format = DateUtil.format(new Date(), DateUtil.SHORT_DATE_PATTERN_2);
-        String filePath = FILE_PATH+format+"/";
+        String filePath = FILE_PATH;
         Path target = Paths.get(filePath, System.currentTimeMillis()+"."+extension);
 
         return file.transferTo(target).then(Mono.fromCallable(() -> {

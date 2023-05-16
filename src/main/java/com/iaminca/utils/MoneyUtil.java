@@ -16,7 +16,7 @@ public class MoneyUtil {
     }
 
     public static Integer getCentUniteMoney(Double money) {
-        if(ObjectUtils.isEmpty(money) || money <= 1){
+        if(ObjectUtils.isEmpty(money) || money < 1){
             throw new BusinessException(ErrorCode.RECHARGE_BALANCE_ERROR);
         }
        Double moneyDouble = money * 100;
