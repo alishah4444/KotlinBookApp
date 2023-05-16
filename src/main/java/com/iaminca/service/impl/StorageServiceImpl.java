@@ -34,7 +34,7 @@ public class StorageServiceImpl implements StorageService {
                         Paths.get("/files/"))
                 .normalize().toAbsolutePath();
         Mono<Void> voidMono = file.transferTo(destinationFile);
-        voidMono.block();
+//        voidMono.block();
         return destinationFile.getFileName().toString();
     }
 }

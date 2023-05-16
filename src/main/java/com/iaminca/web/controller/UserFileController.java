@@ -1,23 +1,22 @@
 package com.iaminca.web.controller;
 
 import com.iaminca.common.ErrorCode;
-import com.iaminca.common.ResultModel;
 import com.iaminca.exception.BusinessException;
-import com.iaminca.handler.UserHandler;
-import com.iaminca.handler.UserKeyHandler;
-import com.iaminca.service.StorageService;
-import com.iaminca.service.bo.UserRegisterBO;
 import com.iaminca.web.controller.base.UserBaseController;
-import com.iaminca.web.dto.UserRegisterDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.codec.multipart.FilePart;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
-
-import javax.annotation.Resource;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,35 +24,22 @@ import javax.annotation.Resource;
 @Slf4j
 public class UserFileController extends UserBaseController {
 
-    @Resource
-    private UserHandler userHandler;
-    @Resource
-    private UserKeyHandler userKeyHandler;
-    @Resource
-    private StorageService storageService;
+    private List<String> imageList = Arrays.asList("jpg","jpeg","png");
 
-    @PostMapping("/upload2")
-    public ResultModel upload(@RequestBody  UserRegisterDTO userRegisterDTO) {
-        if(ObjectUtils.isEmpty(userRegisterDTO) || ObjectUtils.isEmpty(userRegisterDTO.getUserPhone())||
-                ObjectUtils.isEmpty(userRegisterDTO.getVerificationCode()) || ObjectUtils.isEmpty(userRegisterDTO.getPassword())){
-            throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
+
+
+    @PostMapping("/v1/saveImage")
+    public Mono<Object> uploadFile(@RequestPart("file") FilePart file) {
+        String extension = FilenameUtils.getExtension(file.filename());
+        if(!imageList.contains(extension.toLowerCase())){
+            throw new BusinessException(ErrorCode.USER_FILE_SUFFIX_ERROR);
         }
-        UserRegisterBO userRegisterBO = new UserRegisterBO();
-        userRegisterBO.setUserPhone(userRegisterDTO.getUserPhone());
-        userRegisterBO.setVerificationCode(userRegisterDTO.getVerificationCode());
-        userRegisterBO.setPassword(userRegisterDTO.getPassword());
-        String token = userHandler.chekVerificationCode(userRegisterBO);
-        return new ResultModel(token);
-    }
+        Path target = Paths.get("/tmp", System.currentTimeMillis()+"."+extension);
 
-    @PostMapping("/upload")
-    public String handleFileUpload( @RequestPart("file") FilePart file) {
-
-        String store = storageService.store(file);
-//        redirectAttributes.addFlashAttribute("message",
-//                "You successfully uploaded " + file.getOriginalFilename() + "!");
-
-        return "redirect:/";
+        return file.transferTo(target).then(Mono.fromCallable(() -> {
+            // save to db
+            return target.getFileName().toString();
+        }));
     }
 
 }
