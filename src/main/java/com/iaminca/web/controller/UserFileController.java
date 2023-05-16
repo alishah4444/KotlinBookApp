@@ -25,7 +25,7 @@ import java.util.List;
 public class UserFileController extends UserBaseController {
 
     private List<String> imageList = Arrays.asList("jpg","jpeg","png");
-
+    private String FILE_PATH="/home/openai/upload-files/";
 
 
     @PostMapping("/v1/saveImage")
@@ -34,11 +34,11 @@ public class UserFileController extends UserBaseController {
         if(!imageList.contains(extension.toLowerCase())){
             throw new BusinessException(ErrorCode.USER_FILE_SUFFIX_ERROR);
         }
-        Path target = Paths.get("/home/openai/upload-files/", System.currentTimeMillis()+"."+extension);
+        Path target = Paths.get(FILE_PATH, System.currentTimeMillis()+"."+extension);
 
         return file.transferTo(target).then(Mono.fromCallable(() -> {
             // save to db
-            return target.getFileName().toString();
+            return FILE_PATH+target.getFileName().toString();
         }));
     }
 
