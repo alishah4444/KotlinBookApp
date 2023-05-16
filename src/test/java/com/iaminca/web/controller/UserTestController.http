@@ -1,0 +1,17 @@
+###
+GET http://localhost:8080/user/selectRecharge
+Authorization: Bearer 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
+Content-Type: application/json
+token: D6E06DEC6BB24AE7B984526A0AED60F3
+
+
+###
+POST http://localhost:8080/user/recharge
+Authorization: Bearer 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
+Content-Type: application/json
+token: D6E06DEC6BB24AE7B984526A0AED60F3
+
+{
+  "rechargeMoney":200,
+  "filePath":"/filePath"
+}

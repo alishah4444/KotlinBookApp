@@ -123,5 +123,11 @@ public class UserController extends UserBaseController {
         return new ResultModel();
     }
 
+    @PostMapping("/updateKeyName")
+    public ResultModel updateKeyName(@RequestBody UserKeyDTO userKeyDTO, @RequestHeader(name = "token")String token) {
+        userKeyDTO.setUserId(getUserID(token));
+        userKeyHandler.updateById(UserKeyConvertDTO.toBO(userKeyDTO));
+        return new ResultModel();
+    }
 
 }

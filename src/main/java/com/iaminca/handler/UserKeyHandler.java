@@ -68,6 +68,25 @@ public class UserKeyHandler {
         userKeyBO.setDelFlag(DelFlagEnum.DEL.getCode());
         userKeyService.update(userKeyBO);
     }
+    public void updateById(UserKeyBO userKeyBO){
+        log.info("updateById  userKeyBO : {}",Constants.GSON.toJson(userKeyBO));
+        if(ObjectUtils.isEmpty(userKeyBO) || ObjectUtils.isEmpty(userKeyBO.getId())
+                || ObjectUtils.isEmpty(userKeyBO.getUserId())){
+            throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
+        }
+        UserKeyQuery query = new UserKeyQuery();
+        query.setUserId(userKeyBO.getUserId());
+        query.setId(userKeyBO.getId());
+        List<UserKeyBO> list = userKeyService.findList(query);
+        if(ObjectUtils.isEmpty(list)){
+            throw new BusinessException(ErrorCode.DATA_IS_EMPTY_ERROR);
+        }
+        UserKeyBO userKeyUpdateBO = new UserKeyBO();
+        userKeyUpdateBO.setId(userKeyBO.getId());
+        userKeyUpdateBO.setName(userKeyBO.getName());
+        userKeyUpdateBO.setDelFlag(DelFlagEnum.DEL.getCode());
+        userKeyService.update(userKeyUpdateBO);
+    }
 
 
     public List<UserKeyBO> findUserKeyList(UserKeyQuery query){
