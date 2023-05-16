@@ -2,9 +2,11 @@ package com.iaminca.web.convert;
 
 import com.google.common.collect.Lists;
 import com.iaminca.service.bo.UserRechargeBO;
+import com.iaminca.utils.MoneyUtil;
 import com.iaminca.web.dto.UserRechargeDTO;
 import org.springframework.util.CollectionUtils;
 
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class UserRechargeConvert {
 		UserRechargeBO userRechargeBO = new UserRechargeBO();
 		userRechargeBO.setId(userRechargeDTO.getId());
 		userRechargeBO.setUserId(userRechargeDTO.getUserId());
-		userRechargeBO.setRechargeMoney(userRechargeDTO.getRechargeMoney());
+		userRechargeBO.setRechargeMoney(MoneyUtil.getCentUniteMoney(userRechargeDTO.getRechargeMoney()));
 		userRechargeBO.setDelFlag(userRechargeDTO.getDelFlag());
 		userRechargeBO.setCreateTime(userRechargeDTO.getCreateTime());
 		userRechargeBO.setUpdateTime(userRechargeDTO.getUpdateTime());
@@ -39,11 +41,13 @@ public class UserRechargeConvert {
 		UserRechargeDTO userRechargeDTO = new UserRechargeDTO();
 		userRechargeDTO.setId(userRechargeBO.getId());
 		userRechargeDTO.setUserId(userRechargeBO.getUserId());
-		userRechargeDTO.setRechargeMoney(userRechargeBO.getRechargeMoney());
+
+		userRechargeDTO.setRechargeMoney(MoneyUtil.getYuanUniteMoney(userRechargeBO.getRechargeMoney()));
+		userRechargeDTO.setFilePath(userRechargeBO.getFilePath());
+		userRechargeDTO.setRechargeStatus(userRechargeBO.getRechargeStatus());
 		userRechargeDTO.setDelFlag(userRechargeBO.getDelFlag());
 		userRechargeDTO.setCreateTime(userRechargeBO.getCreateTime());
 		userRechargeDTO.setUpdateTime(userRechargeBO.getUpdateTime());
-		userRechargeDTO.setFilePath(userRechargeBO.getFilePath());
 		return userRechargeDTO;
 	}
 

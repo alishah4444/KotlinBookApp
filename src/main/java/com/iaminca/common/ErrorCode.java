@@ -22,6 +22,7 @@ public enum ErrorCode implements ErrorCodeService {
 	//GPT Model
 	GPT_KEY_ERROR(12000, "GPT key 有误"),
 	GPT_BALANCE_ERROR(12001, "余额不足"),
+	RECHARGE_BALANCE_ERROR(12002, "金额有误，最小1元"),
 
 
 

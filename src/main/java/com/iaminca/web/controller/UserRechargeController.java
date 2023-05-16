@@ -9,6 +9,7 @@ import com.iaminca.query.UserKeyQuery;
 import com.iaminca.query.UserRechargeQuery;
 import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.service.bo.UserRechargeBO;
+import com.iaminca.utils.MoneyUtil;
 import com.iaminca.web.controller.base.UserBaseController;
 import com.iaminca.web.convert.UserKeyConvertDTO;
 import com.iaminca.web.convert.UserRechargeConvert;
@@ -34,7 +35,7 @@ public class UserRechargeController extends UserBaseController {
     public ResultModel recharge(@RequestHeader(name = "token")String token,@RequestBody UserRechargeDTO userRechargeDTO) {
         UserRechargeBO userRechargeBO = new UserRechargeBO();
         userRechargeBO.setUserId(getUserID(token));
-        userRechargeBO.setRechargeMoney(userRechargeDTO.getRechargeMoney());
+        userRechargeBO.setRechargeMoney(MoneyUtil.getCentUniteMoney(userRechargeDTO.getRechargeMoney()));
         userRechargeBO.setFilePath(userRechargeDTO.getFilePath());
         userRechargeHandler.submitUserRecharge(userRechargeBO);
         return new ResultModel();

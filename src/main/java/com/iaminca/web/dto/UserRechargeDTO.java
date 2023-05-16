@@ -22,7 +22,7 @@ public class UserRechargeDTO implements Serializable {
 	/***/
 	private Long userId;
 	/***/
-	private Integer rechargeMoney;
+	private Double rechargeMoney;
 	/***/
 	private String filePath;
 	/**delete flag: 0 false, 1 true*/
@@ -31,5 +31,7 @@ public class UserRechargeDTO implements Serializable {
 	private Date createTime;
 	/***/
 	private Date updateTime;
+	/**0 waiting, 1 true,9 false*/
+	private Integer rechargeStatus;
 
 }

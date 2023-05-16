@@ -6,6 +6,7 @@ import com.iaminca.utils.DateUtil;
 import com.iaminca.web.controller.base.UserBaseController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.http.codec.multipart.FilePart;
