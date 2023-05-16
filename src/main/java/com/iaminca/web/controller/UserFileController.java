@@ -34,7 +34,7 @@ public class UserFileController extends UserBaseController {
         if(!imageList.contains(extension.toLowerCase())){
             throw new BusinessException(ErrorCode.USER_FILE_SUFFIX_ERROR);
         }
-        Path target = Paths.get("/tmp", System.currentTimeMillis()+"."+extension);
+        Path target = Paths.get("/home/openai/upload-files/", System.currentTimeMillis()+"."+extension);
 
         return file.transferTo(target).then(Mono.fromCallable(() -> {
             // save to db
