@@ -43,7 +43,7 @@ public class ChatRequestServiceImpl implements ChatRequestService {
 
     @Override
     public int update(ChatRequestBO chatRequestBO){
-        return chatRequestDAO.updateByPrimaryKey(ChatRequestConvert.toDO(chatRequestBO));
+        return chatRequestDAO.updateByPrimaryKeySelective(ChatRequestConvert.toDO(chatRequestBO));
     }
 
     @Override

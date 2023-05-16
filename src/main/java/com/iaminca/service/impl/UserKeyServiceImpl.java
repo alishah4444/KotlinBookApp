@@ -47,7 +47,7 @@ public class UserKeyServiceImpl implements UserKeyService {
     @Override
     public int update(UserKeyBO userKeyBO){
 		UserKeyDO userKeyDO = UserKeyConvert.toDO(userKeyBO);
-        return userKeyDAO.updateByPrimaryKey(userKeyDO);
+        return userKeyDAO.updateByPrimaryKeySelective(userKeyDO);
     }
 
     @Override

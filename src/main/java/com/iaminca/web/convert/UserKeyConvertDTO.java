@@ -30,6 +30,7 @@ public class UserKeyConvertDTO {
 		userKeyBO.setDelFlag(userKeyDTO.getDelFlag());
 		userKeyBO.setCreateTime(userKeyDTO.getCreateTime());
 		userKeyBO.setUpdateTime(userKeyDTO.getUpdateTime());
+		userKeyBO.setName(userKeyDTO.getName());
 		return userKeyBO;
 	}
 

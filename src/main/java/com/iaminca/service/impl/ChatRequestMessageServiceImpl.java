@@ -49,7 +49,7 @@ public class ChatRequestMessageServiceImpl implements ChatRequestMessageService 
 
     @Override
     public int update(ChatRequestMessageBO chatRequestMessageBO){
-        return chatRequestMessageDAO.updateByPrimaryKey(ChatRequestMessageConvert.toDO(chatRequestMessageBO));
+        return chatRequestMessageDAO.updateByPrimaryKeySelective(ChatRequestMessageConvert.toDO(chatRequestMessageBO));
     }
 
     @Override

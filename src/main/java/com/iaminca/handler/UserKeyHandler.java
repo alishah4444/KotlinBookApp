@@ -84,7 +84,6 @@ public class UserKeyHandler {
         UserKeyBO userKeyUpdateBO = new UserKeyBO();
         userKeyUpdateBO.setId(userKeyBO.getId());
         userKeyUpdateBO.setName(userKeyBO.getName());
-        userKeyUpdateBO.setDelFlag(DelFlagEnum.DEL.getCode());
         userKeyService.update(userKeyUpdateBO);
     }
 

@@ -43,7 +43,7 @@ public class UserBalanceServiceImpl implements UserBalanceService {
     @Override
     public int update(UserBalanceBO userBalanceBO){
 		UserBalanceDO userBalanceDO = UserBalanceConvert.toDO(userBalanceBO);
-        return userBalanceDAO.updateByPrimaryKey(userBalanceDO);
+        return userBalanceDAO.updateByPrimaryKeySelective(userBalanceDO);
     }
 
     @Override

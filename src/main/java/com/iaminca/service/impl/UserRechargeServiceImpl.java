@@ -51,7 +51,7 @@ public class UserRechargeServiceImpl implements UserRechargeService {
     @Override
     public int update(UserRechargeBO userRechargeBO){
 		UserRechargeDO userRechargeDO = UserRechargeConvert.toDO(userRechargeBO);
-        return userRechargeDAO.updateByPrimaryKey(userRechargeDO);
+        return userRechargeDAO.updateByPrimaryKeySelective(userRechargeDO);
     }
 
     @Override

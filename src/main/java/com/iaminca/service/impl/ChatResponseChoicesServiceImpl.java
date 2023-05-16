@@ -48,7 +48,7 @@ public class ChatResponseChoicesServiceImpl implements ChatResponseChoicesServic
 
     @Override
     public int update(ChatResponseChoicesBO chatResponseChoicesBO){
-        return chatResponseChoicesDAO.updateByPrimaryKey(ChatResponseChoicesConvert.toDO(chatResponseChoicesBO));
+        return chatResponseChoicesDAO.updateByPrimaryKeySelective(ChatResponseChoicesConvert.toDO(chatResponseChoicesBO));
     }
 
     @Override

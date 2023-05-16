@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int update(UserBO userBO){
-        return userDAO.updateByPrimaryKey(UserConvert.toDO(userBO));
+        return userDAO.updateByPrimaryKeySelective(UserConvert.toDO(userBO));
     }
 
     @Override
