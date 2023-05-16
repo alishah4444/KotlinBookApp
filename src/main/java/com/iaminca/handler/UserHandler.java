@@ -57,7 +57,7 @@ public class UserHandler {
     @Resource
     private UserBalanceHandler userBalanceHandler;
 
-    public void addUser(UserBO userBO){
+    public void sendCode(UserBO userBO){
         //TODO Send Verification Code
         String randomNumberString = "111111";
         if(!StringUtils.isEmpty(env) && !"dev".equals(env)){

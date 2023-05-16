@@ -69,6 +69,7 @@ public class DateUtil {
 	public static final String ACHIEVE_MONTH_PARSE = "yyyy-MM";
 	public static final String ACHIEVE_MONTH_PARSE_2 = "yyyy/MM";
 	public static final String SHORT_DATE_PATTERN = "yyyy-MM-dd";
+	public static final String SHORT_DATE_PATTERN_2 = "yyyyMMdd";
 	public static final String ACHIEVE_DAY_PARSE = "dd";
 
 
@@ -129,6 +130,7 @@ public class DateUtil {
 		return DateUtil.format(cal.getTime());
 	}
 
+
 	/**
 	 * 解析字符串成java.util.Date 使用yyyy-MM-dd
 	 *
@@ -160,6 +162,12 @@ public class DateUtil {
 			return null;
 		}
 		return parse(str.substring(0, 10), DATE_FORMAT_PATTERN);
+	}
+
+
+	public static String formDate(Date date,String pattern) {
+		SimpleDateFormat ft = new SimpleDateFormat (pattern);
+		return ft.format(date);
 	}
 
 	/**

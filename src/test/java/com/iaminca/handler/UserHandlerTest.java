@@ -24,7 +24,7 @@ public class UserHandlerTest extends OpenaiApplicationTests {
         userBO.setUserType("User");
         userBO.setUserChatLimitation(100);
         userBO.setUserLengthLimitation(200);
-        userHandler.addUser(userBO);
+        userHandler.sendCode(userBO);
         System.out.println("DONE.");
     }
 

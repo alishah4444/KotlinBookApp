@@ -69,7 +69,7 @@ public class UserController extends UserBaseController {
     public ResultModel sendCode(@RequestBody  UserRegisterDTO userRegisterDTO) {
         UserBO userBO = new UserBO();
         userBO.setUserPhone(userRegisterDTO.getUserPhone());
-        userHandler.addUser(userBO);
+        userHandler.sendCode(userBO);
         return new ResultModel();
     }
 
