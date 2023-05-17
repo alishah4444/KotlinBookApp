@@ -49,8 +49,8 @@ public class ChatHandler {
         request.setKeyId(userKeyBO.getId());
         request.setStream(true);
         request.setModel(Constants.GPT_CHAT_MODEL);
-        request.setN(Constants.GPT_CHAT_N);
-        request.setMaxTokens(Constants.GPT_CHAT_MAX_TOKENS);
+        request.setN(request.getN() !=null? request.getN() : Constants.GPT_CHAT_N);
+        request.setMaxTokens(request.getMaxTokens() != null? request.getMaxTokens() : Constants.GPT_CHAT_MAX_TOKENS);
         request.setUser(String.valueOf(request.getUserId()));
         chatRequestHandler.addChatRequest(request);
 
