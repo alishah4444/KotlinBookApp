@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ServerWebInputException;
 
 @ControllerAdvice
 @Slf4j
@@ -36,6 +37,12 @@ public class BusinessExceptionHandler {
             BusinessException businessException = (BusinessException) ex;
             result.setCode(businessException.getErrorCode().getCode());
             result.setMessage(businessException.getMessage());
+            return result;
+        }
+        if(ex instanceof ServerWebInputException){
+            ServerWebInputException serverWebInputException = (ServerWebInputException) ex;
+            result.setCode(ErrorCode.WEB_HEADER_ERROR.getCode());
+            result.setMessage(serverWebInputException.getReason());
             return result;
         }
         result.setCode(ErrorCode.UNKNOW_ERROR.getCode());

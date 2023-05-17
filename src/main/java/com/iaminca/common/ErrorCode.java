@@ -11,6 +11,7 @@ public enum ErrorCode implements ErrorCodeService {
 	UNKNOW_ERROR(9999, "服务器繁忙，请稍后再试！"),
 	PARAM_IS_ERROR(10000, "参数有误"),
 	DATA_IS_EMPTY_ERROR(10001, "操作数据不存在"),
+	WEB_HEADER_ERROR(10002, "缺少必要参数或请求权限"),
 	//User Model
 	USER_VERIFICATION_CODE_ERROR(11000, "验证码有误"),
 	USER_PHONE_ERROR(11001, "用户不存在"),
