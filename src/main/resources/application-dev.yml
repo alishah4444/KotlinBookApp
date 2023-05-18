@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/gpt_schema?serverTimezone=GMT-4&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull"
-    username: root
-    password: Aa111111
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: "jdbc:mariadb://ca.martian.tk/gpt_dev?sslMode=VERIFY_CA&serverTimezone=GMT-4&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull"
+    username: gpt_dev
+    password: SCygJ4uWK48jNtGf
 
   redis:
     host: ca.martian.tk
