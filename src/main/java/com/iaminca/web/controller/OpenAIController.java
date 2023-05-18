@@ -8,8 +8,10 @@ import com.iaminca.service.bo.ChatRequestBO;
 import com.iaminca.service.bo.ChatRequestMessageBO;
 import com.iaminca.web.controller.base.OpenAIBaseController;
 import com.iaminca.web.convert.ChatCompletionRequestDTOConvert;
+import com.iaminca.web.convert.CompletionRequestConvertDTO;
 import com.iaminca.web.dto.ChatCompletionRequestDTO;
 import com.iaminca.web.dto.ChatCompletionTestChatRequestDTO;
+import com.iaminca.web.dto.CompletionRequestDTO;
 import com.theokanning.openai.DeleteResult;
 import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.completion.CompletionRequest;
@@ -86,7 +88,8 @@ public class OpenAIController extends OpenAIBaseController {
     }
 
     @PostMapping("/v1/completions")
-    public ResponseEntity<?> completion(@RequestBody CompletionRequest request) {
+    public ResponseEntity<?> completion(@RequestBody CompletionRequestDTO requestDTO) {
+        CompletionRequest request = CompletionRequestConvertDTO.toRequestBO(requestDTO);
         return selectStream(request.getStream(), openAiService::streamCompletion, openAiService::createCompletion, Mono.just(request));
     }
 
