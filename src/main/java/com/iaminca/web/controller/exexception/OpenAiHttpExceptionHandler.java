@@ -11,6 +11,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.server.ServerWebInputException;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
@@ -52,4 +54,17 @@ public class OpenAiHttpExceptionHandler {
         return builder.build();
     }
 
+    /**
+     * this handler also handles {@link ServerWebInputException}
+     */
+    @ExceptionHandler
+    public ResponseEntity<OpenAiError> handle(ResponseStatusException ex) {
+        String type = ex instanceof ServerWebInputException ? "invalid_request_error" : null;
+        ResponseEntity.BodyBuilder builder = ResponseEntity.status(ex.getStatus());
+        OpenAiError oae = new OpenAiError();
+        oae.error = new OpenAiError.OpenAiErrorDetails();
+        oae.error.setMessage(ex.getMessage());
+        oae.error.setType(type);
+        return builder.body(oae);
+    }
 }
