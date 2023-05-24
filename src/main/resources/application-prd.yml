@@ -9,3 +9,7 @@ spring:
     host: 127.0.0.1
     password: 3DSyexKXX6uGG89S
     database: 3
+
+upload:
+  recharge:
+    path: /home/openai/upload-files/recharge

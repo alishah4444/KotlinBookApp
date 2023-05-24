@@ -10,3 +10,7 @@ spring:
     password: 3DSyexKXX6uGG89S
     ssl: true
     database: 1
+
+upload:
+  recharge:
+    path: /tmp
