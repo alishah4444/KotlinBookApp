@@ -5,9 +5,7 @@ import com.iaminca.common.ErrorCode;
 import com.iaminca.exception.BusinessException;
 import com.iaminca.handler.UserBalanceHandler;
 import com.iaminca.handler.UserKeyHandler;
-import com.iaminca.query.UserBalanceQuery;
 import com.iaminca.query.UserKeyQuery;
-import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.bo.UserBalanceBO;
 import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.utils.RedisKeyUtil;
@@ -21,8 +19,6 @@ import javax.annotation.Resource;
 public class OpenAIBaseController {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
-    @Resource
-    private RedisTemplate redisTemplate;
     @Resource
     private UserKeyHandler userKeyHandler;
     @Resource
@@ -52,20 +48,5 @@ public class OpenAIBaseController {
         }
         return userKeyBO.getUserId();
     }
-
-
-
-    public Long getUserIDByToken(String token){
-        if(StringUtils.isEmpty(token)){
-            throw new BusinessException(ErrorCode.NO_AUTH);
-        }
-        String userInfo = stringRedisTemplate.opsForValue().get(RedisKeyUtil.userInfoKey(token));
-        if(ObjectUtils.isEmpty(userInfo)){
-            throw new BusinessException(ErrorCode.NO_AUTH);
-        }
-        UserBO userBO = Constants.GSON.fromJson(userInfo, UserBO.class);
-        return userBO.getId();
-    }
-
 
 }

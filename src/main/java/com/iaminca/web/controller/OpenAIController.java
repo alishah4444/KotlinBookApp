@@ -1,16 +1,12 @@
 package com.iaminca.web.controller;
 
-import com.iaminca.common.Constants;
-import com.iaminca.common.ResultModel;
 import com.iaminca.handler.ChatHandler;
 import com.iaminca.service.OpenAiMultipartService;
 import com.iaminca.service.bo.ChatRequestBO;
-import com.iaminca.service.bo.ChatRequestMessageBO;
 import com.iaminca.web.controller.base.OpenAIBaseController;
 import com.iaminca.web.convert.ChatCompletionRequestDTOConvert;
 import com.iaminca.web.convert.CompletionRequestConvertDTO;
 import com.iaminca.web.dto.ChatCompletionRequestDTO;
-import com.iaminca.web.dto.ChatCompletionTestChatRequestDTO;
 import com.iaminca.web.dto.CompletionRequestDTO;
 import com.theokanning.openai.DeleteResult;
 import com.theokanning.openai.OpenAiResponse;
@@ -40,7 +36,6 @@ import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -101,26 +96,6 @@ public class OpenAIController extends OpenAIBaseController {
         request.setUserId(userID);
         request.setGptKey(gptKey);
         return selectStream(request.getStream(), chatHandler::streamChatCompletion, chatHandler::createChatCompletion, Mono.just(request));
-    }
-
-    @PostMapping("/v1/chat/completions/chatTest")
-    public ResponseEntity<?> chatCompletion(@RequestBody ChatCompletionTestChatRequestDTO requestDTO, @RequestHeader(name = "token")String token) {
-        ChatRequestBO request = new ChatRequestBO();
-        getUserID(requestDTO.getGptKey());
-        Long userID = getUserIDByToken(token);
-        request.setUserId(userID);
-        request.setGptKey(requestDTO.getGptKey());
-        request.setStream(true);
-        List<ChatRequestMessageBO> messages = new ArrayList<>();
-        ChatRequestMessageBO chatRequestMessageBO = new ChatRequestMessageBO();
-        chatRequestMessageBO.setContent(requestDTO.getMessage());
-        chatRequestMessageBO.setRole(Constants.GPT_CHAT_ROLE);
-        messages.add(chatRequestMessageBO);
-        request.setMessages(messages);
-//        ResponseEntity<?> responseEntity = selectStream(request.getStream(), chatHandler::streamChatCompletion, chatHandler::createChatCompletion, Mono.just(request));
-//        return new ResultModel<>(responseEntity);
-        ResponseEntity<?> responseEntity = selectStream(request.getStream(), chatHandler::streamChatCompletion, chatHandler::createChatCompletion, Mono.just(request));
-        return responseEntity;
     }
 
 //    @Deprecated
