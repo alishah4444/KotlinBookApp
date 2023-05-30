@@ -97,7 +97,9 @@ public class UserController extends UserBaseController {
         messages.add(chatRequestMessageBO);
         request.setMessages(messages);
 
-        return ResponseEntity.ok().contentType(MediaType.TEXT_EVENT_STREAM)
+        return ResponseEntity.ok()
+                .header("X-Accel-Buffering", "no")
+                .contentType(MediaType.TEXT_EVENT_STREAM)
                 .body(Mono.just(request).flatMapMany(chatHandler::streamChatCompletion));
     }
 

@@ -76,9 +76,7 @@ public class OpenAIController extends OpenAIBaseController {
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(request.map(notStream));
         }
         // https://platform.openai.com/docs/api-reference/completions/create#completions/create-stream
-        HttpHeaders headers = new HttpHeaders();
-//        headers.set(HttpHeaders.CONTENT_TYPE,"application/octet-stream");
-        ResponseEntity.BodyBuilder bodyBuilder = ResponseEntity.ok().headers(headers);
+        ResponseEntity.BodyBuilder bodyBuilder = ResponseEntity.ok().header("X-Accel-Buffering", "no");
         return bodyBuilder.contentType(MediaType.TEXT_EVENT_STREAM).body(request.flatMapMany(ifStream).concatWithValues("[DONE]"));
     }
 
