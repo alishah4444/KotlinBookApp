@@ -12,4 +12,4 @@ spring:
 
 upload:
   recharge:
-    path: /home/openai/upload-files/recharge
+    path: /home/twoapi/upload-files/recharge
