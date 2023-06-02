@@ -19,20 +19,12 @@ public class UserTaskInfoDTO {
 	private Long id;
 	/***/
 	private Long userId;
-	/***/
-	private Long apiKeyId;
+	/**How many times process the task*/
+	private Integer processNumber;
 	/***/
 	private String cron;
-	/***/
-	private String pushUrl;
-	/***/
-	private String authUsername;
-	/***/
-	private String authPassword;
-	/**The max length of content*/
-	private Integer maxLength;
-	/**the template for key words sentence, will replace the holdpplace*/
-	private String completionTemplate;
+
+	private Integer taskStatus;
 	/**delete flag: 0 false, 1 true*/
 	private Integer delFlag;
 	/***/

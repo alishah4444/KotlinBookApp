@@ -27,6 +27,12 @@ public class UserKeywordsConvert {
 		userKeywordsBO.setFileName(userKeywordsDO.getFileName());
 		userKeywordsBO.setKeywordNumber(userKeywordsDO.getKeywordNumber());
 		userKeywordsBO.setKeywords(userKeywordsDO.getKeywords());
+		userKeywordsBO.setApiKeyId(userKeywordsDO.getApiKeyId());
+		userKeywordsBO.setPushUrl(userKeywordsDO.getPushUrl());
+		userKeywordsBO.setAuthUsername(userKeywordsDO.getAuthUsername());
+		userKeywordsBO.setAuthPassword(userKeywordsDO.getAuthPassword());
+		userKeywordsBO.setMaxLength(userKeywordsDO.getMaxLength());
+		userKeywordsBO.setCompletionTemplate(userKeywordsDO.getCompletionTemplate());
 		userKeywordsBO.setDelFlag(userKeywordsDO.getDelFlag());
 		userKeywordsBO.setCreateTime(userKeywordsDO.getCreateTime());
 		userKeywordsBO.setUpdateTime(userKeywordsDO.getUpdateTime());
@@ -40,9 +46,15 @@ public class UserKeywordsConvert {
 		UserKeywordsDO userKeywordsDO = new UserKeywordsDO();
 		userKeywordsDO.setId(userKeywordsBO.getId());
 		userKeywordsDO.setUserId(userKeywordsBO.getUserId());
+		userKeywordsDO.setApiKeyId(userKeywordsBO.getApiKeyId());
 		userKeywordsDO.setFileName(userKeywordsBO.getFileName());
 		userKeywordsDO.setKeywordNumber(userKeywordsBO.getKeywordNumber());
 		userKeywordsDO.setKeywords(userKeywordsBO.getKeywords());
+		userKeywordsDO.setPushUrl(userKeywordsBO.getPushUrl());
+		userKeywordsDO.setAuthUsername(userKeywordsBO.getAuthUsername());
+		userKeywordsDO.setAuthPassword(userKeywordsBO.getAuthPassword());
+		userKeywordsDO.setMaxLength(userKeywordsBO.getMaxLength());
+		userKeywordsDO.setCompletionTemplate(userKeywordsBO.getCompletionTemplate());
 		userKeywordsDO.setDelFlag(userKeywordsBO.getDelFlag());
 		userKeywordsDO.setCreateTime(userKeywordsBO.getCreateTime());
 		userKeywordsDO.setUpdateTime(userKeywordsBO.getUpdateTime());
