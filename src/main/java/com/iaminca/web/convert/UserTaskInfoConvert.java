@@ -24,6 +24,7 @@ public class UserTaskInfoConvert {
 		UserTaskInfoBO userTaskInfoBO = new UserTaskInfoBO();
 		userTaskInfoBO.setId(userTaskInfoDTO.getId());
 		userTaskInfoBO.setUserId(userTaskInfoDTO.getUserId());
+		userTaskInfoBO.setUserKeywordsId(userTaskInfoDTO.getUserKeywordsId());
 		userTaskInfoBO.setProcessNumber(userTaskInfoDTO.getProcessNumber());
 		userTaskInfoBO.setCron(userTaskInfoDTO.getCron());
 		userTaskInfoBO.setTaskStatus(userTaskInfoDTO.getTaskStatus());
@@ -40,6 +41,7 @@ public class UserTaskInfoConvert {
 		UserTaskInfoDTO userTaskInfoDTO = new UserTaskInfoDTO();
 		userTaskInfoDTO.setId(userTaskInfoBO.getId());
 		userTaskInfoDTO.setUserId(userTaskInfoBO.getUserId());
+		userTaskInfoDTO.setUserKeywordsId(userTaskInfoBO.getUserKeywordsId());
 		userTaskInfoDTO.setTaskStatus(userTaskInfoBO.getTaskStatus());
 		userTaskInfoDTO.setProcessNumber(userTaskInfoBO.getProcessNumber());
 		userTaskInfoDTO.setCron(userTaskInfoBO.getCron());

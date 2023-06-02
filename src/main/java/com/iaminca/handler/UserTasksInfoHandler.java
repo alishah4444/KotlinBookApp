@@ -5,9 +5,6 @@ import com.iaminca.service.UserTaskInfoService;
 import com.iaminca.service.bo.UserTaskInfoBO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -25,10 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserTasksInfoHandler {
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-    @Resource
-    private RedisTemplate<String,Integer> redisTemplateIntegerValue;
     @Resource
     private UserTaskInfoService userTaskInfoService;
 

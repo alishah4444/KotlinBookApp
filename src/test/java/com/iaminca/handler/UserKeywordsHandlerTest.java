@@ -3,6 +3,7 @@ package com.iaminca.handler;
 import com.iaminca.OpenaiApplicationTests;
 import com.iaminca.service.bo.UserBO;
 import com.iaminca.service.bo.UserKeywordsBO;
+import com.iaminca.service.bo.UserTaskInfoBO;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;
@@ -15,6 +16,8 @@ import javax.annotation.Resource;
 public class UserKeywordsHandlerTest extends OpenaiApplicationTests {
     @Resource
     private UserKeywordsHandler userKeywordsHandler;
+    @Resource
+    private UserTasksInfoHandler userTasksInfoHandler;
 
 
     @Test
@@ -30,6 +33,18 @@ public class UserKeywordsHandlerTest extends OpenaiApplicationTests {
         userBO.setCompletionTemplate("2023{place}夏天的旅游攻略");
         userBO.setPushUrl("https://wp.martian.tk/wp-json/wp/v2/posts");
         userKeywordsHandler.insert(userBO);
+        System.out.println("DONE.");
+    }
+
+    @Test
+    public void addUserTaskInfo() {
+        UserTaskInfoBO userBO = new UserTaskInfoBO();
+        userBO.setUserId(5015L);
+        userBO.setCron("10 * * * ?");
+        userBO.setTaskStatus(1);
+        userBO.setProcessNumber(0);
+        userBO.setUserKeywordsId(1L);
+        userTasksInfoHandler.insert(userBO);
         System.out.println("DONE.");
     }
 

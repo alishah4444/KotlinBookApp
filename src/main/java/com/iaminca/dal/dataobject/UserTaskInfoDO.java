@@ -21,7 +21,8 @@ public class UserTaskInfoDO {
 	private Long id;
 	/***/
 	private Long userId;
-
+	/***/
+	private Long userKeywordsId;
 	private Integer taskStatus;
 	/**How many times process the task*/
 	private Integer processNumber;

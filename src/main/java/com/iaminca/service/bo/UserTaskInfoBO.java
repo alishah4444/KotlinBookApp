@@ -19,7 +19,8 @@ public class UserTaskInfoBO {
 	private Long id;
 	/***/
 	private Long userId;
-
+	/***/
+	private Long userKeywordsId;
 
 	private Integer taskStatus;
 	/**How many times process the task*/

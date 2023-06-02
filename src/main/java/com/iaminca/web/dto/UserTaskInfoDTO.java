@@ -19,6 +19,8 @@ public class UserTaskInfoDTO {
 	private Long id;
 	/***/
 	private Long userId;
+	/***/
+	private Long userKeywordsId;
 	/**How many times process the task*/
 	private Integer processNumber;
 	/***/
