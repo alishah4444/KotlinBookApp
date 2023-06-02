@@ -1,14 +1,7 @@
 package com.iaminca.web.convert;
 
-import com.google.common.collect.Lists;
-import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.web.dto.CompletionRequestDTO;
-import com.iaminca.web.dto.UserKeyDTO;
 import com.theokanning.openai.completion.CompletionRequest;
-import org.springframework.util.CollectionUtils;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * 

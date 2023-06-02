@@ -1,9 +1,7 @@
 package com.iaminca.handler;
 
-import com.iaminca.query.UserPostsQuery;
 import com.iaminca.query.UserTaskInfoQuery;
 import com.iaminca.service.UserTaskInfoService;
-import com.iaminca.service.bo.UserTaskInfoBO;
 import com.iaminca.service.bo.UserTaskInfoBO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

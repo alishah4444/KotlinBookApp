@@ -1,12 +1,11 @@
 package com.iaminca.service.covert;
+
 import com.google.common.collect.Lists;
-
-import java.util.Collections;
-
 import com.iaminca.dal.dataobject.UserKeywordsDO;
 import com.iaminca.service.bo.UserKeywordsBO;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 /**

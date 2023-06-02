@@ -1,8 +1,5 @@
 package com.iaminca.utils;
 
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.ObjectUtils;
-
 /**
  * Created by xxxwei on 2019/10/13.
  * @author xxxwei

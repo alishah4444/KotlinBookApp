@@ -3,7 +3,6 @@ package com.iaminca.wordpress.beans;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 public class WordpressTaskBean implements Serializable {

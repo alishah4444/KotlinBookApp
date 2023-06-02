@@ -1,6 +1,5 @@
 package com.iaminca.service.impl;
 
-import com.iaminca.common.DelFlagEnum;
 import com.iaminca.dal.dao.ChatResponseChoicesDAO;
 import com.iaminca.dal.dao.ChatResponseChoicesListDAO;
 import com.iaminca.dal.dataobject.ChatResponseChoicesDO;

@@ -1,9 +1,7 @@
 package com.iaminca.service;
 
 import com.iaminca.common.model.PageListResult;
-import com.iaminca.query.UserKeyQuery;
 import com.iaminca.query.UserRechargeQuery;
-import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.service.bo.UserRechargeBO;
 
 import java.util.List;

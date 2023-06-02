@@ -1,6 +1,5 @@
 package com.iaminca.handler;
 
-import com.iaminca.query.UserKeywordsQuery;
 import com.iaminca.query.UserPostsQuery;
 import com.iaminca.service.UserPostsService;
 import com.iaminca.service.bo.UserPostsBO;

@@ -1,6 +1,7 @@
 package com.iaminca.service.bo;
 
 import lombok.Data;
+
 import java.util.Date;
 
 /**

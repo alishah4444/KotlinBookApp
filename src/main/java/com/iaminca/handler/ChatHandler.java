@@ -2,23 +2,19 @@ package com.iaminca.handler;
 
 import com.iaminca.client.ChatClient;
 import com.iaminca.common.Constants;
-import com.iaminca.common.ErrorCode;
-import com.iaminca.exception.BusinessException;
-import com.iaminca.service.bo.*;
+import com.iaminca.service.bo.ChatRequestBO;
+import com.iaminca.service.bo.ChatResponseBO;
+import com.iaminca.service.bo.ChatResponseChoicesBO;
+import com.iaminca.service.bo.UserKeyBO;
 import com.iaminca.service.covert.ChatRequestConvert;
 import com.iaminca.utils.IDUtil;
-import com.iaminca.utils.RedisKeyUtil;
-import com.mysql.cj.util.StringUtils;
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionChunk;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;

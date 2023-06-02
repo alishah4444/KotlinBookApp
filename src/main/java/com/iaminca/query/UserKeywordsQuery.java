@@ -1,7 +1,7 @@
 package com.iaminca.query;
 
-import lombok.Data;
 import com.iaminca.common.model.PageInfo;
+import lombok.Data;
 
 import java.util.Date;
 
