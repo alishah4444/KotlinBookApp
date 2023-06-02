@@ -36,5 +36,7 @@ public interface UserTaskInfoService {
      */
     List<UserTaskInfoBO> findList(UserTaskInfoQuery query);
 
+    UserTaskInfoBO findOne(UserTaskInfoQuery query);
+
     PageListResult<UserTaskInfoBO> findPage(UserTaskInfoQuery query);
 }

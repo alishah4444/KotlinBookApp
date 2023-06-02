@@ -36,5 +36,12 @@ public interface UserPostsService {
      */
     List<UserPostsBO> findList(UserPostsQuery query);
 
+    /**
+     * query
+     * @param query
+     * @return
+     */
+    UserPostsBO findOne(UserPostsQuery query);
+
     PageListResult<UserPostsBO> findPage(UserPostsQuery query);
 }

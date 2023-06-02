@@ -37,6 +37,7 @@ public interface UserKeywordsService {
      * @return
      */
     List<UserKeywordsBO> findList(UserKeywordsQuery query);
+    UserKeywordsBO findOne(UserKeywordsQuery query);
 
     PageListResult<UserKeywordsBO> findPage(UserKeywordsQuery query);
 }
