@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: "jdbc:mariadb://127.0.0.1:3306/gpt_test?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull"
+    username: gpt_test
+    password: ""
+
+  redis:
+    host: 127.0.0.1
+    password: 3DSyexKXX6uGG89S
+    database: 3
+
+upload:
+  recharge:
+    path: /home/twoapi/upload-files/recharge
