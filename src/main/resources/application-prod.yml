@@ -1,3 +1,6 @@
+openai:
+  base-url: 'https://api.martian.tk'
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
