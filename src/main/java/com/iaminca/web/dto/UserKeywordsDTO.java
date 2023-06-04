@@ -22,6 +22,8 @@ public class UserKeywordsDTO {
 	/***/
 	private Long apiKeyId;
 	/***/
+	private String userKey;
+	/***/
 	private Long fileName;
 	/***/
 	private Integer keywordNumber;

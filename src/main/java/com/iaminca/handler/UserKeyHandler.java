@@ -62,6 +62,16 @@ public class UserKeyHandler {
         return list.get(0);
     }
 
+    public UserKeyBO findUserKeyById(Long id){
+        UserKeyQuery query = new UserKeyQuery();
+        query.setId(id);
+        List<UserKeyBO> list = userKeyService.findList(query);
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
+    }
+
     public void deleteUserKey(Long id){
         UserKeyBO userKeyBO = new UserKeyBO();
         userKeyBO.setId(id);

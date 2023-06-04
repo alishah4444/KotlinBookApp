@@ -1,5 +1,6 @@
 package com.iaminca.handler;
 
+import com.iaminca.common.model.PageListResult;
 import com.iaminca.query.UserKeywordsQuery;
 import com.iaminca.service.UserKeywordsService;
 import com.iaminca.service.bo.UserKeywordsBO;
@@ -44,6 +45,11 @@ public class UserKeywordsHandler {
     public List<UserKeywordsBO> findList(UserKeywordsQuery query){
         List<UserKeywordsBO> list = userKeywordsService.findList(query);
         return list;
+    }
+
+    public PageListResult<UserKeywordsBO> findPage(UserKeywordsQuery query){
+        PageListResult<UserKeywordsBO> page = userKeywordsService.findPage(query);
+        return page;
     }
 
     public UserKeywordsBO findOne(UserKeywordsQuery query){

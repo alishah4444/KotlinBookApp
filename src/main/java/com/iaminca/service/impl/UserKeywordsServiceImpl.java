@@ -6,12 +6,14 @@ import com.iaminca.common.DelFlagEnum;
 import com.iaminca.common.model.PageHelperAdaptor;
 import com.iaminca.common.model.PageListResult;
 import com.iaminca.dal.dao.UserKeywordsDAO;
+import com.iaminca.dal.dao.UserKeywordsListDAO;
 import com.iaminca.dal.dataobject.UserKeywordsDO;
 import com.iaminca.dal.dataobject.UserKeywordsListDO;
 import com.iaminca.query.UserKeywordsQuery;
 import com.iaminca.service.UserKeywordsService;
 import com.iaminca.service.bo.UserKeywordsBO;
 import com.iaminca.service.covert.UserKeywordsConvert;
+import com.iaminca.service.covert.UserKeywordsListConvert;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import tk.mybatis.mapper.entity.Example;
@@ -19,6 +21,7 @@ import tk.mybatis.mapper.entity.Example;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -32,6 +35,8 @@ public class UserKeywordsServiceImpl implements UserKeywordsService {
 
 	@Resource
 	private UserKeywordsDAO userKeywordsDAO;
+    @Resource
+    private UserKeywordsListDAO userKeywordsListDAO;
 
 
     @Override
@@ -52,8 +57,8 @@ public class UserKeywordsServiceImpl implements UserKeywordsService {
 
     @Override
     public List<UserKeywordsBO> findList(UserKeywordsQuery query){
-        List<UserKeywordsDO> listByQuery = userKeywordsDAO.selectByExample(this.convertListExample(query));
-        return UserKeywordsConvert.toBOList(listByQuery);
+        List<UserKeywordsListDO> listByQuery = userKeywordsListDAO.selectByExample(this.convertListExample(query));
+        return UserKeywordsListConvert.toBOList(listByQuery);
     }
 
     @Override
@@ -96,6 +101,7 @@ public class UserKeywordsServiceImpl implements UserKeywordsService {
         if (!ObjectUtils.isEmpty(userKeywordsQuery.getId())) {
             criteria.andEqualTo("id", userKeywordsQuery.getId());
         }
+
         return example;
     }
 

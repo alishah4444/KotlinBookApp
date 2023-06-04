@@ -30,6 +30,8 @@ public class UserKeywordsDO {
     /***/
     private Long apiKeyId;
     /***/
+    private String userKey;
+    /***/
     private String pushUrl;
     /***/
     private String authUsername;

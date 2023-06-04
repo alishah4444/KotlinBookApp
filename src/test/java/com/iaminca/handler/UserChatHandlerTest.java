@@ -26,7 +26,8 @@ public class UserChatHandlerTest extends OpenaiApplicationTests {
         request.setModel(Constants.GPT_CHAT_MODEL);
         request.setN(1);
         request.setMaxTokens(50);
-
+        request.setGptKey("sk-rq5LLtN2H53I3NV46apiq3ftYDYwObj2RwEySSRFH14AuVU6");
+        request.setUserId(5015L);
         List<ChatRequestMessageBO> messageList = new ArrayList();
         ChatRequestMessageBO chatMessage = new ChatRequestMessageBO();
         chatMessage.setRole("user");

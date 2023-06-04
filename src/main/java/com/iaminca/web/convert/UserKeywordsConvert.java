@@ -25,6 +25,7 @@ public class UserKeywordsConvert {
 		userKeywordsBO.setId(userKeywordsDTO.getId());
 		userKeywordsBO.setUserId(userKeywordsDTO.getUserId());
 		userKeywordsBO.setApiKeyId(userKeywordsDTO.getApiKeyId());
+		userKeywordsBO.setUserKey(userKeywordsDTO.getUserKey());
 		userKeywordsBO.setFileName(userKeywordsDTO.getFileName());
 		userKeywordsBO.setKeywordNumber(userKeywordsDTO.getKeywordNumber());
 		userKeywordsBO.setKeywords(userKeywordsDTO.getKeywords());
@@ -47,6 +48,7 @@ public class UserKeywordsConvert {
 		userKeywordsDTO.setId(userKeywordsBO.getId());
 		userKeywordsDTO.setUserId(userKeywordsBO.getUserId());
 		userKeywordsDTO.setApiKeyId(userKeywordsBO.getApiKeyId());
+		userKeywordsDTO.setUserKey(userKeywordsBO.getUserKey());
 		userKeywordsDTO.setFileName(userKeywordsBO.getFileName());
 		userKeywordsDTO.setKeywordNumber(userKeywordsBO.getKeywordNumber());
 		userKeywordsDTO.setKeywords(userKeywordsBO.getKeywords());

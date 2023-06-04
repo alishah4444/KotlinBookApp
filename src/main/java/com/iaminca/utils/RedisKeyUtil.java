@@ -8,6 +8,7 @@ public class RedisKeyUtil {
     public static String USER_REDIS_PHONE_TOKEN_DIRE = "user:info:phone:token:";
 
     public static String GPT_REDIS_USERINFO_DIRE = "gpt:user:info:";
+    public static String GPT_REDIS_KEY_DIRE = "gpt:user:info:id";
     public static String GPT_REDIS_USER_BALANCE_DIRE = "gpt:user:balance:";
 
 
@@ -26,6 +27,10 @@ public class RedisKeyUtil {
 
     public static String getGptKey(String gptKey) {
         return GPT_REDIS_USERINFO_DIRE+gptKey;
+    }
+
+    public static String getGptKeyWithId(Long gptKeyId) {
+        return GPT_REDIS_KEY_DIRE+gptKeyId;
     }
 
     public static String getUserBalance(Long userID) {
