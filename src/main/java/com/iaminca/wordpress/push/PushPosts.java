@@ -29,7 +29,7 @@ public class PushPosts {
      * @param content
      * @param categories
      */
-    public void executePush(String url,String authUsername,String authPassword,String title,String content,int[] categories){
+    public WordpressTaskBean executePush(String url,String authUsername,String authPassword,String title,String content,int[] categories){
         WordpressTaskBean wordpressTaskBean = new WordpressTaskBean();
         wordpressTaskBean.setDate(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
         wordpressTaskBean.setDate_gmt(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
@@ -54,6 +54,8 @@ public class PushPosts {
             log.info(responseResult);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            wordpressTaskBean.setPushStatus(1);
         }
+        return wordpressTaskBean;
     }
 }

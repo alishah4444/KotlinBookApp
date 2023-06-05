@@ -8,11 +8,12 @@ import com.iaminca.query.UserKeyQuery;
 import com.iaminca.query.UserKeywordsQuery;
 import com.iaminca.query.UserTaskInfoQuery;
 import com.iaminca.service.bo.*;
+import com.iaminca.utils.DateUtil;
 import com.iaminca.utils.RedisKeyUtil;
+import com.iaminca.utils.StrToolsUtil;
 import com.iaminca.wordpress.beans.RequestGPTBO;
-import com.iaminca.wordpress.handlers.base.PushPostService;
+import com.iaminca.wordpress.beans.WordpressTaskBean;
 import com.iaminca.wordpress.push.PushPosts;
-import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -23,7 +24,9 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -44,6 +47,8 @@ public class PushPostHandler{
     private UserBalanceHandler userBalanceHandler;
     @Resource
     private RedisTemplate redisTemplateIntegerValue;
+    @Resource
+    private UserPostsHandler userPostsHandler;
 
     /**
      * Just call this method
@@ -61,15 +66,89 @@ public class PushPostHandler{
         requestGPTBO.setGptKey(userKeywords.getUserKey());
         requestGPTBO.setKeySentence(componentKeywords);
         ChatResponseBO chatResponseBO = this.requestGPT(requestGPTBO);
+        if(chatResponseBO == null){
+            //Request GPT fail
+            //Save post data but push content is null;
+            UserPostsBO userPostsBO = this.failSave(requestGPTBO, taskId);
+            userPostsHandler.insert(userPostsBO);
+            return;
+        }
         //Push post
-        pushPosts.executePush(userKeywords.getPushUrl(),
+        String categoriesStr = "5,7"; //TODO 查询出分类列表
+        int[] categories = StrToolsUtil.strToIntegerArray(categoriesStr);
+        WordpressTaskBean wordpressTaskBean = pushPosts.executePush(userKeywords.getPushUrl(),
                 userKeywords.getAuthUsername(),
                 userKeywords.getAuthPassword(),
                 componentKeywords,
                 chatResponseBO.getChatResponseChoicesList().get(0).getMessageContent(),
-                null
-                );
+                categories
+        );
+        //Compose the Entity
+        UserPostsBO userPostsBO = null;
+        if(wordpressTaskBean!=null && wordpressTaskBean.getPushStatus() != 0){
+            //Save Push
+            userPostsBO = this.buildBeanBasic(requestGPTBO,wordpressTaskBean,taskId);
+        }
+        if(wordpressTaskBean!=null && wordpressTaskBean.getPushStatus() == 0){
+            userPostsBO = this.successPush(requestGPTBO,wordpressTaskBean,taskId);
+        }
+        //Save data
+        userPostsHandler.insert(userPostsBO);
     }
+
+    private UserPostsBO failSave(RequestGPTBO requestGPTBO,Long taskId){
+        UserPostsBO userPostsBO = new UserPostsBO();
+        userPostsBO.setUserId(requestGPTBO.getUserId());
+        userPostsBO.setUserTaskId(taskId);
+        userPostsBO.setPostTitle(requestGPTBO.getKeySentence());
+        userPostsBO.setPushStatus(1);
+        userPostsBO.setRepeatNumber(0);
+        return userPostsBO;
+
+    }
+
+    private UserPostsBO buildBeanBasic(RequestGPTBO requestGPTBO, WordpressTaskBean wordpressTaskBean, Long taskId){
+        UserPostsBO userPostsBO = new UserPostsBO();
+        userPostsBO.setUserId(requestGPTBO.getUserId());
+        userPostsBO.setUserTaskId(taskId);
+        userPostsBO.setPostDate(DateUtil.strToDate(wordpressTaskBean.getDate()));
+        userPostsBO.setPostDateGmt(DateUtil.strToDate(wordpressTaskBean.getDate_gmt()));
+        userPostsBO.setPostContent(wordpressTaskBean.getContent());
+        userPostsBO.setPostTitle(requestGPTBO.getKeySentence());
+        userPostsBO.setPostExcerpt(wordpressTaskBean.getExcerpt());
+        userPostsBO.setPostStatus(wordpressTaskBean.getStatus());
+        userPostsBO.setCommentStatus(wordpressTaskBean.getComment_status());
+        userPostsBO.setPostName("");
+        userPostsBO.setPostPassword("");
+        userPostsBO.setPostContentFiltered("");
+        userPostsBO.setPostParent(0L);
+        userPostsBO.setGuid("");
+        userPostsBO.setMenuOrder(0);
+        userPostsBO.setPostMimeType("");
+//        userPostsBO.setChatStatus();
+        userPostsBO.setPushStatus(0);
+        userPostsBO.setRepeatNumber(0);
+        userPostsBO.setFormat(wordpressTaskBean.getFormat());
+        userPostsBO.setMeta(wordpressTaskBean.getMeta());
+
+        String categories = Arrays.stream(wordpressTaskBean.getCategories())
+                .mapToObj(String::valueOf)
+                .collect(Collectors.joining(","));
+
+        userPostsBO.setCategories(categories);
+        userPostsBO.setFeaturedMedia(wordpressTaskBean.getFeatured_media());
+        return userPostsBO;
+    }
+
+
+
+    private UserPostsBO successPush(RequestGPTBO requestGPTBO,WordpressTaskBean wordpressTaskBean,Long taskId){
+        UserPostsBO userPostsBO = this.buildBeanBasic( requestGPTBO, wordpressTaskBean,taskId);
+//        userPostsBO.setPostContent("-");
+        userPostsBO.setPostTitle("-");
+        return userPostsBO;
+    }
+
 
 
     public ChatResponseBO requestGPT(RequestGPTBO requestGPTBO){

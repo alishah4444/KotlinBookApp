@@ -21,4 +21,5 @@ public class WordpressTaskBean implements Serializable {
     private String format;
     private String meta;
     private int[] categories;
+    private Integer pushStatus;//0 success.
 }

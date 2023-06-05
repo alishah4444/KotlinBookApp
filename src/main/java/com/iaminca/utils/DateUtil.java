@@ -854,7 +854,7 @@ public class DateUtil {
 			return null;
 		}
 		try {
-			return strToDate(dateStr, DATE_FORMAT_PATTERN);
+			return strToDate(dateStr, DATETIME_FORMAT_PATTERN);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

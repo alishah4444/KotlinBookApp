@@ -37,7 +37,12 @@ public class ChatClient {
      */
     public ChatCompletionResult createChatCompletion(ChatCompletionRequest request){
         log.info("create Chat Completion request : {}", Constants.GSON.toJson(request));
-        ChatCompletionResult chatCompletion = openAiService.createChatCompletion(request);
+        ChatCompletionResult chatCompletion = null;
+        try{
+            chatCompletion = openAiService.createChatCompletion(request);
+        }catch (Exception e){
+            return null;
+        }
         log.info("create Chat Completion response : {}", Constants.GSON.toJson(chatCompletion));
         return chatCompletion;
     }

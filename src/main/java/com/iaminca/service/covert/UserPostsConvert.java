@@ -48,6 +48,10 @@ public class UserPostsConvert {
 		userPostsBO.setDelFlag(userPostsDO.getDelFlag());
 		userPostsBO.setCreateTime(userPostsDO.getCreateTime());
 		userPostsBO.setUpdateTime(userPostsDO.getUpdateTime());
+		userPostsBO.setFeaturedMedia(userPostsDO.getFeaturedMedia());
+		userPostsBO.setCategories(userPostsDO.getCategories());
+		userPostsBO.setFormat(userPostsDO.getFormat());
+		userPostsBO.setMeta(userPostsDO.getMeta());
 		return userPostsBO;
 	}
 
@@ -82,6 +86,10 @@ public class UserPostsConvert {
 		userPostsDO.setDelFlag(userPostsBO.getDelFlag());
 		userPostsDO.setCreateTime(userPostsBO.getCreateTime());
 		userPostsDO.setUpdateTime(userPostsBO.getUpdateTime());
+		userPostsDO.setFeaturedMedia(userPostsBO.getFeaturedMedia());
+		userPostsDO.setCategories(userPostsBO.getCategories());
+		userPostsDO.setFormat(userPostsBO.getFormat());
+		userPostsDO.setMeta(userPostsBO.getMeta());
 		return userPostsDO;
 	}
 

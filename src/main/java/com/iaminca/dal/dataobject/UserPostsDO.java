@@ -2,6 +2,7 @@ package com.iaminca.dal.dataobject;
 
 import lombok.Data;
 
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -12,6 +13,7 @@ import java.util.Date;
  * @date 2023-06-02 01:03:34
  */
 @Data
+@Table(name = "user_posts")
 public class UserPostsDO {
 	private static final long serialVersionUID = 1L;
 
@@ -67,4 +69,10 @@ public class UserPostsDO {
 	private Date createTime;
 	/***/
 	private Date updateTime;
+
+	private Integer featuredMedia;
+
+	private String categories;
+	private String format;
+	private String meta;
 }

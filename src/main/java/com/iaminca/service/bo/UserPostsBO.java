@@ -67,4 +67,11 @@ public class UserPostsBO {
 	private Date createTime;
 	/***/
 	private Date updateTime;
+
+	private Integer featuredMedia;
+
+	private String categories;
+	private String format;
+	private String meta;
+
 }
