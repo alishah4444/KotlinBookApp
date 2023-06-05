@@ -3,6 +3,7 @@ package com.iaminca.service.bo;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -42,4 +43,6 @@ public class ChatResponseBO{
 	private Date createTime;
 	/***/
 	private Date updateTime;
+
+	private List<ChatResponseChoicesBO> chatResponseChoicesList;
 }

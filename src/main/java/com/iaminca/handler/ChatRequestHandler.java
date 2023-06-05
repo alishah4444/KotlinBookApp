@@ -24,7 +24,7 @@ public class ChatRequestHandler {
     private final ChatRequestService chatRequestService;
     private final ChatRequestMessagesHandler chatRequestMessagesHandler;
 
-    public void addChatRequest(ChatRequestBO chatRequestBO){
+    public ChatRequestBO addChatRequest(ChatRequestBO chatRequestBO){
         log.info("Add Chat request: {}", Constants.GSON.toJson(chatRequestBO));
         chatRequestBO.setDelFlag(DelFlagEnum.NOT_DEL.getCode());
         ChatRequestBO requestBO = chatRequestService.add(chatRequestBO);
@@ -32,6 +32,7 @@ public class ChatRequestHandler {
             chatRequestMessageBO.setChatRequestId(requestBO.getId());
         }
         chatRequestMessagesHandler.addChatRequestMessage(chatRequestBO.getMessages());
+        return requestBO;
     }
 
 }

@@ -25,14 +25,15 @@ public class ChatResponseHandler {
     private final ChatResponseService chatResponseService;
     private final ChatResponseChoicesHandler chatResponseChoicesHandler;
 
-    public void addChatRequest(ChatResponseBO chatResponseBO, List<ChatResponseChoicesBO> chatResponseChoicesList){
+    public ChatResponseBO addChatRequest(ChatResponseBO chatResponseBO, List<ChatResponseChoicesBO> chatResponseChoicesList){
         log.info("Add Chat response: {}", Constants.GSON.toJson(chatResponseBO));
         ChatResponseBO chatResponseNew = chatResponseService.add(chatResponseBO);
         for(ChatResponseChoicesBO chatResponseChoicesBO :chatResponseChoicesList){
             chatResponseChoicesBO.setResponseId(chatResponseNew.getId());
         }
-
+        chatResponseNew.setChatResponseChoicesList(chatResponseChoicesList);
         chatResponseChoicesHandler.addChatRequestChoicesList(chatResponseChoicesList);
+        return chatResponseNew;
     }
 
 }

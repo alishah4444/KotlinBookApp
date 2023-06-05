@@ -60,19 +60,19 @@ public class PushPostHandler{
         requestGPTBO.setUserId(userKeywords.getUserId());
         requestGPTBO.setGptKey(userKeywords.getUserKey());
         requestGPTBO.setKeySentence(componentKeywords);
-        ChatCompletionResult chatCompletionResult = this.requestGPT(requestGPTBO);
+        ChatResponseBO chatResponseBO = this.requestGPT(requestGPTBO);
         //Push post
         pushPosts.executePush(userKeywords.getPushUrl(),
                 userKeywords.getAuthUsername(),
                 userKeywords.getAuthPassword(),
                 componentKeywords,
-                chatCompletionResult.getChoices().get(0).getMessage().getContent(),
+                chatResponseBO.getChatResponseChoicesList().get(0).getMessageContent(),
                 null
                 );
     }
 
 
-    public ChatCompletionResult requestGPT(RequestGPTBO requestGPTBO){
+    public ChatResponseBO requestGPT(RequestGPTBO requestGPTBO){
         ChatRequestBO request = new ChatRequestBO();
         request.setModel(Constants.GPT_CHAT_MODEL);
         request.setN(1);
@@ -86,7 +86,7 @@ public class PushPostHandler{
         messageList.add(chatMessage);
         request.setMessages(messageList);
 
-        return chatHandler.createChatCompletion(request);
+        return chatHandler.createChatCompletion2(request);
     }
 
     public UserTaskInfoBO pushProcess(Long taskId){
