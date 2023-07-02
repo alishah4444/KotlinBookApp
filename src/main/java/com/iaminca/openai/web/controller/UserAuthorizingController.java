@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 @RequiredArgsConstructor
 @RequestMapping("/auto")
 @Slf4j
-public class UserBindSiteController extends UserBaseController {
+public class UserAuthorizingController extends UserBaseController {
 
     @Resource
     private UserKeywordsHandler userKeyWordsHandler;
