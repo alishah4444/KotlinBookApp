@@ -41,7 +41,7 @@ public class UserKeywordsHandler {
     public void authorizing(UserKeywordsBO userKeywordsBO){
         UserKeywordsBO insertBO = new UserKeywordsBO();
         insertBO.setUserId(userKeywordsBO.getUserId());
-        insertBO.setPushUrl(userKeywordsBO.getPushUrl() + Constants.WORDPRESS_JSON_AUTHORIZE_URL);
+        insertBO.setPushUrl(userKeywordsBO.getPushUrl());
         insertBO.setAuthUsername(userKeywordsBO.getAuthUsername());
         insertBO.setAuthPassword(userKeywordsBO.getAuthPassword());
 

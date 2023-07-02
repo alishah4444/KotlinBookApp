@@ -29,7 +29,7 @@ public class WordPressHandlerTest extends OpenaiApplicationTests {
 
         UserKeywordsBO insertBO = new UserKeywordsBO();
         insertBO.setUserId(1L);
-        insertBO.setPushUrl("https://wp.martian.tk" + Constants.WORDPRESS_JSON_AUTHORIZE_URL);
+        insertBO.setPushUrl("https://wp.martian.tk");
         insertBO.setAuthUsername("martian");
         insertBO.setAuthPassword("kLyaeEqSU7ZkDgdbCUjh");
 
@@ -58,7 +58,7 @@ public class WordPressHandlerTest extends OpenaiApplicationTests {
 
         UserKeywordsBO insertBO = new UserKeywordsBO();
         insertBO.setUserId(1L);
-        insertBO.setPushUrl("https://wp.martian.tk" + Constants.WORDPRESS_JSON_AUTHORIZE_URL);
+        insertBO.setPushUrl("https://wp.martian.tk");
         insertBO.setAuthUsername("martian");
         insertBO.setAuthPassword("kLyaeEqSU7ZkDgdbCUjh");
 

@@ -13,9 +13,8 @@ public class Constants {
     public static String GPT_CHAT_ROLE = "user";
     public static Integer GPT_CHAT_N = 1;
     public static Integer GPT_CHAT_MAX_TOKENS = 2048;
-    public static String WORDPRESS_JSON_AUTHORIZE_URL = "/wp-json";
     public final static String CHART_TYPE = "utf-8";
 
-    public static String WORDPRESS_JSON_POSTS_URL = "/wp/v2/posts";
+    public static String WORDPRESS_JSON_POSTS_URL =  "/wp-json/wp/v2/posts";
 
 }
