@@ -42,7 +42,7 @@ public class UserKeywordsHandlerTest extends OpenaiApplicationTests {
         userBO.setMaxLength(500);
         userBO.setCompletionTemplate("2023{0}夏天的旅游攻略");
         userBO.setPushUrl("https://wp.martian.tk/wp-json/wp/v2/posts");
-        userKeywordsHandler.insert(userBO);
+        userKeywordsHandler.authorizing(userBO);
         System.out.println("DONE.");
     }
 

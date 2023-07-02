@@ -26,6 +26,8 @@ public enum ErrorCode implements ErrorCodeService {
 	RECHARGE_BALANCE_ERROR(12002, "金额有误，最小1元"),
 	GPT_KEY_CONFIG_ERROR(12003, "GPT key 配置有误"),
 
+	//WordPress Module
+	AUTHORIZE_ERROR(13000, " 授权失败！"),
 
 
 

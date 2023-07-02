@@ -1,0 +1,10 @@
+###
+POST http://localhost:18080/auto/authorizing
+Content-Type: application/json
+token: 1B8C1246A00A47BB904C8D3A96EA2EB4
+
+{
+  "pushUrl":"https://wp.martian.tk",
+  "authUsername": "martian",
+  "authPassword": "kLyaeEqSU7ZkDgdbCUjh"
+}

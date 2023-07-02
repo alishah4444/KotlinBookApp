@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
@@ -133,6 +134,26 @@ public class HttpUtil {
             stringEntity.setContentType("application/json");
             httpPost.setEntity(stringEntity);
             HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity responseData = response.getEntity();
+            result = EntityUtils.toString(responseData, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    /**
+     * 发送Delete 请求
+     *
+     * @param url
+     * @return
+     */
+    public static String sendDelete(String url, Map<String, Object> headers) {
+        String result = null;
+        try {
+            HttpDelete httpDelete = new HttpDelete(url);
+            headers.put("Content-Type","application/json");
+            setHeaders(headers, httpDelete);
+            HttpResponse response = httpClient.execute(httpDelete);
             HttpEntity responseData = response.getEntity();
             result = EntityUtils.toString(responseData, StandardCharsets.UTF_8);
         } catch (IOException e) {

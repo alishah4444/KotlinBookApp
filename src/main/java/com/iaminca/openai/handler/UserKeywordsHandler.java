@@ -1,17 +1,23 @@
 package com.iaminca.openai.handler;
 
+import com.iaminca.openai.common.Constants;
+import com.iaminca.openai.common.ErrorCode;
 import com.iaminca.openai.common.model.PageListResult;
+import com.iaminca.openai.exception.BusinessException;
 import com.iaminca.openai.query.UserKeywordsQuery;
 import com.iaminca.openai.service.UserKeywordsService;
 import com.iaminca.openai.service.bo.UserKeywordsBO;
+import com.iaminca.openai.service.bo.WordpressDeleteResponseBean;
+import com.iaminca.openai.service.bo.WordpressPostResponseBean;
+import com.iaminca.openai.utils.DateUtil;
+import com.iaminca.openai.wordpress.beans.WordpressTaskBean;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,16 +32,42 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserKeywordsHandler {
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-    @Resource
-    private RedisTemplate<String,Integer> redisTemplateIntegerValue;
     @Resource
     private UserKeywordsService userKeywordsService;
+    @Resource
+    private WordPressHandler wordPressHandler;
 
 
-    public void insert(UserKeywordsBO userKeywordsBO){
-        userKeywordsService.add(userKeywordsBO);
+    public void authorizing(UserKeywordsBO userKeywordsBO){
+        UserKeywordsBO insertBO = new UserKeywordsBO();
+        insertBO.setUserId(userKeywordsBO.getUserId());
+        insertBO.setPushUrl(userKeywordsBO.getPushUrl() + Constants.WORDPRESS_JSON_AUTHORIZE_URL);
+        insertBO.setAuthUsername(userKeywordsBO.getAuthUsername());
+        insertBO.setAuthPassword(userKeywordsBO.getAuthPassword());
+
+        WordpressTaskBean wordpressTaskBean = new WordpressTaskBean();
+        wordpressTaskBean.setDate(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
+        wordpressTaskBean.setDate_gmt(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
+        wordpressTaskBean.setSlug("aiPost");
+        wordpressTaskBean.setStatus("publish");
+        wordpressTaskBean.setTitle("AI 自动托管授权");
+        wordpressTaskBean.setContent("AI 自动托管授权");
+        wordpressTaskBean.setComment_status("closed");
+        wordpressTaskBean.setFeatured_media(1);
+        wordpressTaskBean.setPing_status("open");
+        wordpressTaskBean.setFormat("standard");
+
+        WordpressPostResponseBean pushPostResult = wordPressHandler.pushPost(insertBO.getPushUrl(), insertBO.getAuthUsername(), insertBO.getAuthPassword(), wordpressTaskBean);
+        if(pushPostResult == null || ObjectUtils.isEmpty(pushPostResult.getId())){
+            throw new BusinessException(ErrorCode.AUTHORIZE_ERROR);
+        }
+        WordpressDeleteResponseBean delPostResult = wordPressHandler.deletePost(insertBO.getPushUrl(), insertBO.getAuthUsername(), insertBO.getAuthPassword(), pushPostResult.getId());
+        if(delPostResult == null || ObjectUtils.isEmpty(pushPostResult.getId())){
+            throw new BusinessException(ErrorCode.AUTHORIZE_ERROR);
+        }
+        userKeywordsService.add(insertBO);
+
+
     }
 
     public void updateById(UserKeywordsBO userKeywordsBO){
