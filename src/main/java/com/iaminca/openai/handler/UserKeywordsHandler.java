@@ -49,6 +49,7 @@ public class UserKeywordsHandler {
         insertBO.setPushUrl(userKeywordsBO.getPushUrl());
         insertBO.setAuthUsername(userKeywordsBO.getAuthUsername());
         insertBO.setAuthPassword(userKeywordsBO.getAuthPassword());
+        insertBO.setAuthorizeStatus(AuthorizeStatusEnum.AUTHORIZING.getCode());
 
         WordpressTaskBean wordpressTaskBean = new WordpressTaskBean();
         wordpressTaskBean.setDate(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
