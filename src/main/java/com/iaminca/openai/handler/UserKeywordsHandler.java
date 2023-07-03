@@ -52,10 +52,10 @@ public class UserKeywordsHandler {
         insertBO.setAuthorizeStatus(AuthorizeStatusEnum.AUTHORIZING.getCode());
 
         WordpressTaskBean wordpressTaskBean = new WordpressTaskBean();
-        wordpressTaskBean.setDate(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
-        wordpressTaskBean.setDate_gmt(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
+        wordpressTaskBean.setDate(DateUtil.formDate(DateUtil.addMonths(new Date(),-3),DateUtil.DATETIME_FORMAT_PATTERN));
+        wordpressTaskBean.setDate_gmt(DateUtil.formDate(DateUtil.addMonths(new Date(),-3),DateUtil.DATETIME_FORMAT_PATTERN));
         wordpressTaskBean.setSlug("aiPost");
-        wordpressTaskBean.setStatus("draft");
+        wordpressTaskBean.setStatus("private");
         wordpressTaskBean.setTitle("AI 自动托管授权");
         wordpressTaskBean.setContent("AI 自动托管授权");
         wordpressTaskBean.setComment_status("closed");
