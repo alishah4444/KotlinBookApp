@@ -22,5 +22,5 @@ upload:
 
 
 python:
-  url:
-    root: /home/twoapi/src/spider
+    url:
+     root: /home/twoapi/src/spider

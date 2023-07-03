@@ -16,5 +16,5 @@ upload:
     path: /tmp
 
 python:
-  url:
-    root: "/Users/juzi/Project/Shawn/spider/"
+    url:
+     root: "/Users/juzi/Project/Shawn/spider/"
