@@ -2,6 +2,7 @@ package com.iaminca.openai.dal.dataobject;
 
 import lombok.Data;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -16,6 +17,7 @@ public class UserKeywordsDO {
     private static final long serialVersionUID = 1L;
 
     /***/
+    @Id
     private Long id;
     /***/
     private Long userId;

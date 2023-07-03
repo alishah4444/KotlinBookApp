@@ -1,11 +1,16 @@
 package com.iaminca.openai.handler;
 
+import com.iaminca.openai.common.DelFlagEnum;
+import com.iaminca.openai.common.ErrorCode;
+import com.iaminca.openai.common.model.PageListResult;
+import com.iaminca.openai.exception.BusinessException;
 import com.iaminca.openai.query.UserTaskInfoQuery;
 import com.iaminca.openai.service.UserTaskInfoService;
 import com.iaminca.openai.service.bo.UserTaskInfoBO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -27,13 +32,39 @@ public class UserTasksInfoHandler {
 
 
     public void insert(UserTaskInfoBO userTaskInfoBO){
+        userTaskInfoBO.setProcessNumber(0);
         userTaskInfoService.add(userTaskInfoBO);
     }
 
     public void updateById(UserTaskInfoBO userTaskInfoBO){
-        userTaskInfoService.update(userTaskInfoBO);
+        UserTaskInfoQuery query = new UserTaskInfoQuery();
+        query.setId(userTaskInfoBO.getId());
+        query.setUserId(userTaskInfoBO.getUserId());
+        List<UserTaskInfoBO> taskInfoBOS = findList(query);
+        if(CollectionUtils.isEmpty(taskInfoBOS)){
+            throw new BusinessException(ErrorCode.DATA_IS_EMPTY_ERROR);
+        }
+        UserTaskInfoBO updateBO = new UserTaskInfoBO();
+        updateBO.setId(userTaskInfoBO.getId());
+        updateBO.setUserKeywordsId(userTaskInfoBO.getUserKeywordsId());
+        updateBO.setCron(userTaskInfoBO.getCron());
+        userTaskInfoService.update(updateBO);
     }
 
+
+    public void delById(UserTaskInfoBO userTaskInfoBO){
+        UserTaskInfoQuery query = new UserTaskInfoQuery();
+        query.setId(userTaskInfoBO.getId());
+        query.setUserId(userTaskInfoBO.getUserId());
+        List<UserTaskInfoBO> taskInfoBOS = findList(query);
+        if(CollectionUtils.isEmpty(taskInfoBOS)){
+            throw new BusinessException(ErrorCode.DATA_IS_EMPTY_ERROR);
+        }
+        UserTaskInfoBO updateBO = new UserTaskInfoBO();
+        updateBO.setId(userTaskInfoBO.getId());
+        updateBO.setDelFlag(DelFlagEnum.DEL.getCode());
+        userTaskInfoService.update(updateBO);
+    }
     public List<UserTaskInfoBO> findList(UserTaskInfoQuery query){
         List<UserTaskInfoBO> list = userTaskInfoService.findList(query);
         return list;
@@ -42,6 +73,9 @@ public class UserTasksInfoHandler {
         UserTaskInfoBO infoServiceOne = userTaskInfoService.findOne(query);
         return infoServiceOne;
     }
-
+    public PageListResult<UserTaskInfoBO> findPage(UserTaskInfoQuery query){
+        PageListResult<UserTaskInfoBO> list = userTaskInfoService.findPage(query);
+        return list;
+    }
 
 }

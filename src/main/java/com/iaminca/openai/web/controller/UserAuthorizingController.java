@@ -91,4 +91,20 @@ public class UserAuthorizingController extends UserBaseController {
     }
 
 
+    /**
+     * Authorize to auto system for pushing.
+     * @param token
+     * @param userKeywordsDTO
+     * @return
+     */
+    @PostMapping("/delAuthorizing")
+    public ResultModel delAuthorizing(@RequestHeader(name = "token")String token,@RequestBody UserKeywordsDTO userKeywordsDTO) {
+        Long userID = getUserID(token);
+        userKeywordsDTO.setUserId(userID);
+        userKeywordsDTO.setId(userKeywordsDTO.getId());
+        userKeyWordsHandler.delAuthorizing(UserKeywordsConvert.toBO(userKeywordsDTO));
+        return new ResultModel();
+    }
+
+
 }

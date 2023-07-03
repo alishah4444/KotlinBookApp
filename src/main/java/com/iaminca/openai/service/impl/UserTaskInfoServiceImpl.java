@@ -83,6 +83,7 @@ public class UserTaskInfoServiceImpl implements UserTaskInfoService {
     private Example convertExample(UserTaskInfoQuery userTaskInfoQuery) {
         Example example = new Example(UserTaskInfoDO.class);
         Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("delFlag", DelFlagEnum.NOT_DEL.getCode());
         if (!ObjectUtils.isEmpty(userTaskInfoQuery.getId())) {
             criteria.andEqualTo("id", userTaskInfoQuery.getId());
         }

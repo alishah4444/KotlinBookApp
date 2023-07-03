@@ -97,6 +97,7 @@ public class UserKeywordsServiceImpl implements UserKeywordsService {
     private Example convertListExample(UserKeywordsQuery userKeywordsQuery) {
         Example example = new Example(UserKeywordsListDO.class);
         Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("delFlag", DelFlagEnum.NOT_DEL.getCode());
         if (!ObjectUtils.isEmpty(userKeywordsQuery.getId())) {
             criteria.andEqualTo("id", userKeywordsQuery.getId());
         }

@@ -1,6 +1,8 @@
 package com.iaminca.openai.handler;
 
+import com.iaminca.openai.common.AuthorizeStatusEnum;
 import com.iaminca.openai.common.Constants;
+import com.iaminca.openai.common.DelFlagEnum;
 import com.iaminca.openai.common.ErrorCode;
 import com.iaminca.openai.common.model.PageListResult;
 import com.iaminca.openai.exception.BusinessException;
@@ -92,7 +94,27 @@ public class UserKeywordsHandler {
         insertBO.setUserKey(userKeyById.getUserKey());
         insertBO.setKeywords(userKeywordsBO.getKeywords());
         insertBO.setKeywordNumber(0);
+        insertBO.setAuthorizeStatus(AuthorizeStatusEnum.AUTHORIZED_PUSH.getCode());
 
+        userKeywordsService.update(insertBO);
+    }
+
+
+    /**
+     * Utilizing ID to Delete the data
+     * @param userKeywordsBO
+     */
+    public void delAuthorizing(UserKeywordsBO userKeywordsBO){
+        UserKeywordsQuery query = new UserKeywordsQuery();
+        query.setId(userKeywordsBO.getId());
+        query.setUserId(userKeywordsBO.getUserId());
+        UserKeywordsBO byId = this.findOne(query);
+        if(ObjectUtils.isEmpty(byId)){
+            throw new BusinessException(ErrorCode.DATA_IS_EMPTY_ERROR);
+        }
+        UserKeywordsBO insertBO = new UserKeywordsBO();
+        insertBO.setId(userKeywordsBO.getId());
+        insertBO.setDelFlag(DelFlagEnum.DEL.getCode());
         userKeywordsService.update(insertBO);
     }
 
