@@ -33,7 +33,7 @@ public class PushPosts {
         WordpressTaskBean wordpressTaskBean = new WordpressTaskBean();
         wordpressTaskBean.setDate(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
         wordpressTaskBean.setDate_gmt(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
-        wordpressTaskBean.setSlug("my-post");
+        wordpressTaskBean.setSlug("AiAUto");
         wordpressTaskBean.setStatus("publish");
 //        wordpressTaskBean.setPassword();
         wordpressTaskBean.setTitle(title);
