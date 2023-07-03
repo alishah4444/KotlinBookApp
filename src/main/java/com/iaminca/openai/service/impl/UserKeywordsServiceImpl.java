@@ -100,6 +100,9 @@ public class UserKeywordsServiceImpl implements UserKeywordsService {
         if (!ObjectUtils.isEmpty(userKeywordsQuery.getId())) {
             criteria.andEqualTo("id", userKeywordsQuery.getId());
         }
+        if (!ObjectUtils.isEmpty(userKeywordsQuery.getUserId())) {
+            criteria.andEqualTo("userId", userKeywordsQuery.getUserId());
+        }
 
         return example;
     }

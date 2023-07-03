@@ -37,6 +37,7 @@ public class UserKeywordsConvert {
 		userKeywordsBO.setDelFlag(userKeywordsDTO.getDelFlag());
 		userKeywordsBO.setCreateTime(userKeywordsDTO.getCreateTime());
 		userKeywordsBO.setUpdateTime(userKeywordsDTO.getUpdateTime());
+		userKeywordsBO.setAuthorizeStatus(userKeywordsDTO.getAuthorizeStatus());
 		return userKeywordsBO;
 	}
 
@@ -60,6 +61,7 @@ public class UserKeywordsConvert {
 		userKeywordsDTO.setDelFlag(userKeywordsBO.getDelFlag());
 		userKeywordsDTO.setCreateTime(userKeywordsBO.getCreateTime());
 		userKeywordsDTO.setUpdateTime(userKeywordsBO.getUpdateTime());
+		userKeywordsDTO.setAuthorizeStatus(userKeywordsBO.getAuthorizeStatus());
 		return userKeywordsDTO;
 	}
 

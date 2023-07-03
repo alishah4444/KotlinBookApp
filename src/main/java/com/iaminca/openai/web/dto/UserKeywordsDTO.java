@@ -45,4 +45,5 @@ public class UserKeywordsDTO {
 	private Date createTime;
 	/***/
 	private Date updateTime;
+	private Integer authorizeStatus;
 }

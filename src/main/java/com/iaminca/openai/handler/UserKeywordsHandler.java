@@ -6,6 +6,7 @@ import com.iaminca.openai.common.model.PageListResult;
 import com.iaminca.openai.exception.BusinessException;
 import com.iaminca.openai.query.UserKeywordsQuery;
 import com.iaminca.openai.service.UserKeywordsService;
+import com.iaminca.openai.service.bo.UserKeyBO;
 import com.iaminca.openai.service.bo.UserKeywordsBO;
 import com.iaminca.openai.service.bo.WordpressDeleteResponseBean;
 import com.iaminca.openai.service.bo.WordpressPostResponseBean;
@@ -36,6 +37,8 @@ public class UserKeywordsHandler {
     private UserKeywordsService userKeywordsService;
     @Resource
     private WordPressHandler wordPressHandler;
+    @Resource
+    private UserKeyHandler userKeyHandler;
 
 
     public void authorizing(UserKeywordsBO userKeywordsBO){
@@ -66,9 +69,33 @@ public class UserKeywordsHandler {
             throw new BusinessException(ErrorCode.AUTHORIZE_ERROR);
         }
         userKeywordsService.add(insertBO);
-
-
     }
+
+
+    public void authorizingForPushing(UserKeywordsBO userKeywordsBO){
+        UserKeywordsQuery query = new UserKeywordsQuery();
+        query.setId(userKeywordsBO.getId());
+        query.setUserId(userKeywordsBO.getUserId());
+        UserKeywordsBO byId = this.findOne(query);
+        if(ObjectUtils.isEmpty(byId)){
+            throw new BusinessException(ErrorCode.DATA_IS_EMPTY_ERROR);
+        }
+        UserKeyBO userKeyById = userKeyHandler.findUserKeyById(userKeywordsBO.getApiKeyId());
+        if(ObjectUtils.isEmpty(userKeyById)){
+            throw new BusinessException(ErrorCode.GPT_KEY_ERROR);
+        }
+
+
+        UserKeywordsBO insertBO = new UserKeywordsBO();
+        insertBO.setId(userKeywordsBO.getId());
+        insertBO.setApiKeyId(userKeywordsBO.getApiKeyId());
+        insertBO.setUserKey(userKeyById.getUserKey());
+        insertBO.setKeywords(userKeywordsBO.getKeywords());
+        insertBO.setKeywordNumber(0);
+
+        userKeywordsService.update(insertBO);
+    }
+
 
     public void updateById(UserKeywordsBO userKeywordsBO){
         userKeywordsService.update(userKeywordsBO);
@@ -86,6 +113,15 @@ public class UserKeywordsHandler {
 
     public UserKeywordsBO findOne(UserKeywordsQuery query){
         UserKeywordsBO serviceOne = userKeywordsService.findOne(query);
+        return serviceOne;
+    }
+    public UserKeywordsBO findById(Long id){
+        if(id == null){
+            return null;
+        }
+        UserKeywordsQuery query = new UserKeywordsQuery();
+        query.setId( id);
+        UserKeywordsBO serviceOne = this.findOne(query);
         return serviceOne;
     }
 

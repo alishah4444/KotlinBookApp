@@ -41,7 +41,6 @@ public class UserKeywordsDO {
     private Integer maxLength;
     /**the template for key words sentence, will replace the holdpplace*/
     private String completionTemplate;
-
     /**
      * delete flag: 0 false, 1 true
      */
@@ -50,4 +49,5 @@ public class UserKeywordsDO {
     private Date createTime;
     /***/
     private Date updateTime;
+    private Integer authorizeStatus;
 }

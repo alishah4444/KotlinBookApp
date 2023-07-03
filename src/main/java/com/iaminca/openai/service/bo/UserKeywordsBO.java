@@ -47,4 +47,6 @@ public class UserKeywordsBO {
 	private Date createTime;
 	/***/
 	private Date updateTime;
+
+	private Integer authorizeStatus;
 }

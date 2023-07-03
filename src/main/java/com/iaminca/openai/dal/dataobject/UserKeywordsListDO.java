@@ -46,4 +46,5 @@ public class UserKeywordsListDO {
     private Date createTime;
     /***/
     private Date updateTime;
+    private Integer authorizeStatus;
 }

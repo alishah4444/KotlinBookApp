@@ -35,6 +35,7 @@ public class UserKeywordsListConvert {
 		userKeywordsBO.setDelFlag(userKeywordsListDO.getDelFlag());
 		userKeywordsBO.setCreateTime(userKeywordsListDO.getCreateTime());
 		userKeywordsBO.setUpdateTime(userKeywordsListDO.getUpdateTime());
+		userKeywordsBO.setAuthorizeStatus(userKeywordsListDO.getAuthorizeStatus());
 		return userKeywordsBO;
 	}
 
