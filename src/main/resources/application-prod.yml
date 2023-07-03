@@ -18,4 +18,9 @@ spring:
 
 upload:
   recharge:
-    path: /home/twoapi/upload-files/recharge/spider
+    path: /home/twoapi/upload-files/recharge
+
+
+python:
+  url:
+    root: /home/twoapi/src/spider
