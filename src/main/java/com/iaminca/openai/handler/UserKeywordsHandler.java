@@ -55,7 +55,7 @@ public class UserKeywordsHandler {
         wordpressTaskBean.setDate(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
         wordpressTaskBean.setDate_gmt(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
         wordpressTaskBean.setSlug("aiPost");
-        wordpressTaskBean.setStatus("publish");
+        wordpressTaskBean.setStatus("draft");
         wordpressTaskBean.setTitle("AI 自动托管授权");
         wordpressTaskBean.setContent("AI 自动托管授权");
         wordpressTaskBean.setComment_status("closed");
