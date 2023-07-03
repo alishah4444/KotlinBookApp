@@ -14,3 +14,7 @@ spring:
 upload:
   recharge:
     path: /tmp
+
+python:
+  url:
+    root: "/Users/juzi/Project/Shawn/spider/"

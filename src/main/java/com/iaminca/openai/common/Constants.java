@@ -17,4 +17,7 @@ public class Constants {
 
     public static String WORDPRESS_JSON_POSTS_URL =  "/wp-json/wp/v2/posts";
 
+
+    public static String PYTHON_INSPECTION_URL = "/Twoapi/siteInspector.py";
+
 }
