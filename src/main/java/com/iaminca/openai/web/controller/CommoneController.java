@@ -23,14 +23,14 @@ public class CommoneController extends UserBaseController {
     private PythonInspectionHandler pythonInspectionHandler;
 
 
-    @PostMapping("/downloadFilw")
-    public ResultModel applyKey(@RequestHeader(name = "token")String token) {
+    @PostMapping("/downloadFile")
+    public ResultModel downloadFile(@RequestHeader(name = "token")String token) {
         getUserID(token);
         return new ResultModel(Constants.WORDPRESS_FILE_URL);
     }
 
-    @PostMapping("/downloadSQLFilw")
-    public ResultModel applyKey(@RequestHeader(name = "token")String token) {
+    @PostMapping("/downloadSQLFile")
+    public ResultModel downloadSQLFile(@RequestHeader(name = "token")String token) {
         getUserID(token);
         return new ResultModel(Constants.WORDPRESS_SQL_FILE_URL);
     }
