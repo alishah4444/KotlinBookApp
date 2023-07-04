@@ -20,4 +20,10 @@ public class Constants {
 
     public static String PYTHON_INSPECTION_URL = "/Twoapi/siteInspector.py";
 
+    //https://img.twoapi.com/files/twoapi-wordpress.zip
+    public static String WORDPRESS_FILE_URL = "https://img.twoapi.com/files/twoapi-wordpress.zip";
+
+    public static Syting WORDPRESS_SQL_FILE_URL="https://img.twoapi.com/files/Twoapi-DataScription2022.zip"
+
+
 }

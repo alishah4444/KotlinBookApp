@@ -39,6 +39,7 @@ public class WordPressHandler {
         if(result == null){
             throw new BusinessException(ErrorCode.AUTHORIZE_ERROR);
         }
+        Constants.GSON.toJson(result);
         return Constants.GSON.fromJson(result, WordpressPostResponseBean.class);
     }
 

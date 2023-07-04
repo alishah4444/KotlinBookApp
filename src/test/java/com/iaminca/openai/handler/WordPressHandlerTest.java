@@ -29,9 +29,12 @@ public class WordPressHandlerTest extends OpenaiApplicationTests {
 
         UserKeywordsBO insertBO = new UserKeywordsBO();
         insertBO.setUserId(1L);
-        insertBO.setPushUrl("https://wp.martian.tk");
-        insertBO.setAuthUsername("martian");
-        insertBO.setAuthPassword("kLyaeEqSU7ZkDgdbCUjh");
+//        insertBO.setPushUrl("https://wp.martian.tk");
+//        insertBO.setAuthUsername("martian");
+//        insertBO.setAuthPassword("kLyaeEqSU7ZkDgdbCUjh");
+        insertBO.setPushUrl("http://127.0.0.1/twoapi-wordpress");
+        insertBO.setAuthUsername("twoapi.com");
+        insertBO.setAuthPassword("twoapi888");
 
         WordpressTaskBean wordpressTaskBean = new WordpressTaskBean();
         wordpressTaskBean.setDate(DateUtil.formDate(new Date(),DateUtil.DATETIME_FORMAT_PATTERN));
@@ -58,9 +61,9 @@ public class WordPressHandlerTest extends OpenaiApplicationTests {
 
         UserKeywordsBO insertBO = new UserKeywordsBO();
         insertBO.setUserId(1L);
-        insertBO.setPushUrl("https://wp.martian.tk");
-        insertBO.setAuthUsername("martian");
-        insertBO.setAuthPassword("kLyaeEqSU7ZkDgdbCUjh");
+        insertBO.setPushUrl("http://localhost/twoapi-wordpress");
+        insertBO.setAuthUsername("twoapi.com");
+        insertBO.setAuthPassword("twoapi888");
 
 
         WordpressDeleteResponseBean wordpressPostResponseBean = wordPressHandler.deletePost(insertBO.getPushUrl(), insertBO.getAuthUsername(), insertBO.getAuthPassword(), 4540);
