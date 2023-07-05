@@ -32,7 +32,7 @@ public class WordPressHandlerTest extends OpenaiApplicationTests {
 //        insertBO.setPushUrl("https://wp.martian.tk");
 //        insertBO.setAuthUsername("martian");
 //        insertBO.setAuthPassword("kLyaeEqSU7ZkDgdbCUjh");
-        insertBO.setPushUrl("http://127.0.0.1/twoapi-wordpress");
+        insertBO.setPushUrl("http://104.249.156.179");
         insertBO.setAuthUsername("twoapi.com");
         insertBO.setAuthPassword("twoapi888");
 

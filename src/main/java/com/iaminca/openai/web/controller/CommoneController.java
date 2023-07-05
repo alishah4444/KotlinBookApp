@@ -2,16 +2,13 @@ package com.iaminca.openai.web.controller;
 
 import com.iaminca.openai.common.Constants;
 import com.iaminca.openai.common.ResultModel;
-import com.iaminca.openai.handler.PythonInspectionHandler;
-import com.iaminca.openai.service.bo.PythonInspectionResponseBO;
 import com.iaminca.openai.web.controller.base.UserBaseController;
-import com.iaminca.openai.web.dto.InspectionRequestDTO;
-import com.iaminca.openai.web.dto.InspectionResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,8 +16,6 @@ import javax.annotation.Resource;
 @Slf4j
 public class CommoneController extends UserBaseController {
 
-    @Resource
-    private PythonInspectionHandler pythonInspectionHandler;
 
 
     @PostMapping("/downloadFile")
