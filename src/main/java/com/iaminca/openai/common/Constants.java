@@ -23,9 +23,7 @@ public class Constants {
     //https://img.twoapi.com/files/twoapi-wordpress.zip
     public static String WORDPRESS_FILE_URL = "https://img.twoapi.com/files/twoapi-wordpress-1.2.0.zip";
 
-    public static String WORDPRESS_SQL_FILE_URL="https://img.twoapi.com/files/twoapi-wordpress-sql-1.2.0.zip" +
-            "" +
-            "";
+    public static String WORDPRESS_SQL_FILE_URL="https://img.twoapi.com/files/twoapi-wordpress-sql-1.2.0.zip";
 
 
 }
