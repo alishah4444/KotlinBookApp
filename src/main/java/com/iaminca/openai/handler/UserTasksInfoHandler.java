@@ -33,7 +33,7 @@ public class UserTasksInfoHandler {
 
 
     public void insert(UserTaskInfoInsertBO userTaskInfoInsertBO){
-        String cron = "20 * * * * ?";
+        String cron = "20 * * * ?";
         // TODO 从参数里解析CRON表达式，并赋值给cron。
 
         UserTaskInfoBO UserTaskInfoBO = new UserTaskInfoBO();

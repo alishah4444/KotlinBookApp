@@ -7,6 +7,7 @@ import com.iaminca.openai.query.UserKeywordsQuery;
 import com.iaminca.openai.query.UserTaskInfoQuery;
 import com.iaminca.openai.service.bo.UserKeywordsBO;
 import com.iaminca.openai.service.bo.UserTaskInfoBO;
+import com.iaminca.openai.service.bo.UserTaskInfoInsertBO;
 import com.iaminca.openai.wordpress.handlers.PushPostHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -75,11 +76,8 @@ public class UserKeywordsHandlerTest extends OpenaiApplicationTests {
 
     @Test
     public void addUserTaskInfo() {
-        UserTaskInfoBO userBO = new UserTaskInfoBO();
+        UserTaskInfoInsertBO userBO = new UserTaskInfoInsertBO();
         userBO.setUserId(5015L);
-        userBO.setCron("10 * * * ?");
-        userBO.setTaskStatus(1);
-        userBO.setProcessNumber(0);
         userBO.setUserKeywordsId(1L);
         userTasksInfoHandler.insert(userBO);
         System.out.println("DONE.");
