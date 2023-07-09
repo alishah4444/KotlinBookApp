@@ -34,7 +34,7 @@ public class UserTasksInfoHandler {
 
     public void insert(UserTaskInfoInsertBO userTaskInfoInsertBO){
         String cron = "20 * * * ?";
-        // TODO 从参数里解析CRON表达式，并赋值给cron。
+        // TODO 从参数里转换成CRON表达式，并赋值给cron。 再写一个解析cron成年月日的
 
         UserTaskInfoBO UserTaskInfoBO = new UserTaskInfoBO();
         UserTaskInfoBO.setProcessNumber(0);
