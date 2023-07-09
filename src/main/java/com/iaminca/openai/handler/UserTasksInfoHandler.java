@@ -7,6 +7,7 @@ import com.iaminca.openai.exception.BusinessException;
 import com.iaminca.openai.query.UserTaskInfoQuery;
 import com.iaminca.openai.service.UserTaskInfoService;
 import com.iaminca.openai.service.bo.UserTaskInfoBO;
+import com.iaminca.openai.service.bo.UserTaskInfoInsertBO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -31,9 +32,14 @@ public class UserTasksInfoHandler {
     private UserTaskInfoService userTaskInfoService;
 
 
-    public void insert(UserTaskInfoBO userTaskInfoBO){
-        userTaskInfoBO.setProcessNumber(0);
-        userTaskInfoService.add(userTaskInfoBO);
+    public void insert(UserTaskInfoInsertBO userTaskInfoInsertBO){
+        String cron = "";
+        // TODO 从参数里解析CRON表达式，并赋值给cron。
+
+        UserTaskInfoBO UserTaskInfoBO = new UserTaskInfoBO();
+        UserTaskInfoBO.setProcessNumber(0);
+        UserTaskInfoBO.setCron(cron);
+        userTaskInfoService.add(UserTaskInfoBO);
     }
 
     public void updateById(UserTaskInfoBO userTaskInfoBO){
@@ -77,5 +83,6 @@ public class UserTasksInfoHandler {
         PageListResult<UserTaskInfoBO> list = userTaskInfoService.findPage(query);
         return list;
     }
+
 
 }

@@ -8,6 +8,7 @@ import com.iaminca.openai.service.bo.UserTaskInfoBO;
 import com.iaminca.openai.web.controller.base.UserBaseController;
 import com.iaminca.openai.web.convert.UserTaskInfoConvert;
 import com.iaminca.openai.web.dto.UserTaskInfoDTO;
+import com.iaminca.openai.web.dto.UserTaskInfoInsertDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
@@ -65,7 +66,7 @@ public class UserTaskController extends UserBaseController {
      * @return
      */
     @PostMapping("/add")
-    public ResultModel add(@RequestHeader(name = "token")String token,@RequestBody UserTaskInfoDTO userTaskInfoDTO) {
+    public ResultModel add(@RequestHeader(name = "token")String token,@RequestBody UserTaskInfoInsertDTO userTaskInfoDTO) {
         Long userID = getUserID(token);
         userTaskInfoDTO.setUserId(userID);
         userTasksInfoHandler.insert(UserTaskInfoConvert.toBO(userTaskInfoDTO));

@@ -2,10 +2,13 @@ package com.iaminca.openai.handler;
 
 import com.iaminca.openai.client.PythonInspectSiteClint;
 import com.iaminca.openai.common.Constants;
+import com.iaminca.openai.common.ErrorCode;
+import com.iaminca.openai.exception.BusinessException;
 import com.iaminca.openai.service.bo.PythonInspectionResponseBO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 
@@ -26,9 +29,17 @@ public class PythonInspectionHandler {
     private PythonInspectSiteClint pythonInspectSiteClint;
 
     public PythonInspectionResponseBO inspection(String siteUrl){
+        if(StringUtils.isEmpty(siteUrl)){
+            throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
+        }
+        siteUrl = "https://" + siteUrl;
         String url = pythonUrlRoot+ Constants.PYTHON_INSPECTION_URL;
 //        String siteUrl= "https://www.twoapi.com";
-        return pythonInspectSiteClint.inspection(url, siteUrl);
+        PythonInspectionResponseBO inspection = pythonInspectSiteClint.inspection(url, siteUrl);
+        if(inspection == null){
+            throw new BusinessException(ErrorCode.SITE_URL_ERROR);
+        }
+       return inspection;
     }
 
 }

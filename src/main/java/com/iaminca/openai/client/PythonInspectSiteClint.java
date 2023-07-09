@@ -16,7 +16,7 @@ public class PythonInspectSiteClint {
      */
     public PythonInspectionResponseBO inspection(String url,String siteUrl){
         String execute = PythonExecutor.execute(url,siteUrl);
-        log.info(execute);
+        log.info("execute : {}",execute);
         return Constants.GSON.fromJson(execute, PythonInspectionResponseBO.class);
     }
 }

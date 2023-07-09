@@ -29,6 +29,9 @@ public enum ErrorCode implements ErrorCodeService {
 	//WordPress Module
 	AUTHORIZE_ERROR(13000, " 授权失败！"),
 
+	//Python Module
+	SITE_URL_ERROR(14000, "  网站地址有误，或者非HTTPS加密网站"),
+
 
 
 	//权限模块 15500

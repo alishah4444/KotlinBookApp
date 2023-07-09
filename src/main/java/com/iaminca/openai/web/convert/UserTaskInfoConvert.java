@@ -2,7 +2,9 @@ package com.iaminca.openai.web.convert;
 
 import com.google.common.collect.Lists;
 import com.iaminca.openai.service.bo.UserTaskInfoBO;
+import com.iaminca.openai.service.bo.UserTaskInfoInsertBO;
 import com.iaminca.openai.web.dto.UserTaskInfoDTO;
+import com.iaminca.openai.web.dto.UserTaskInfoInsertDTO;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
@@ -32,6 +34,22 @@ public class UserTaskInfoConvert {
 		userTaskInfoBO.setCreateTime(userTaskInfoDTO.getCreateTime());
 		userTaskInfoBO.setUpdateTime(userTaskInfoDTO.getUpdateTime());
 		return userTaskInfoBO;
+	}
+
+	public static UserTaskInfoInsertBO toBO(UserTaskInfoInsertDTO dto) {
+		if (dto == null) {
+			return null;
+		}
+		UserTaskInfoInsertBO userTaskInfoInsertBO = new UserTaskInfoInsertBO();
+		userTaskInfoInsertBO.setUserId(dto.getUserId());
+		userTaskInfoInsertBO.setUserKeywordsId(dto.getUserKeywordsId());
+		userTaskInfoInsertBO.setYear(dto.getYear());
+		userTaskInfoInsertBO.setMonth(dto.getMonth());
+		userTaskInfoInsertBO.setDay(dto.getDay());
+		userTaskInfoInsertBO.setHour(dto.getHour());
+		userTaskInfoInsertBO.setMinute(dto.getMinute());
+		userTaskInfoInsertBO.setSecond(dto.getSecond());
+		return userTaskInfoInsertBO;
 	}
 
 	public static UserTaskInfoDTO toDTO(UserTaskInfoBO userTaskInfoBO) {
