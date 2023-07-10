@@ -4,6 +4,7 @@ import com.iaminca.openai.client.PythonInspectSiteClint;
 import com.iaminca.openai.common.Constants;
 import com.iaminca.openai.common.ErrorCode;
 import com.iaminca.openai.exception.BusinessException;
+import com.iaminca.openai.service.bo.HttpsCertificatePythonBO;
 import com.iaminca.openai.service.bo.PythonInspectionResponseBO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,23 +50,23 @@ public class PythonInspectionHandler {
         }
         siteUrl = "https://_acme-challenge." + siteUrl;
         String url = pythonUrlRoot+ Constants.PYTHON_INSPECTION_URL;
-//        PythonInspectionResponseBO inspection = pythonInspectSiteClint.checkCname(url, siteUrl);
-//        if(inspection == null){
-//            throw new BusinessException(ErrorCode.CNAME_CHECK_ERROR);
-//        }
+        HttpsCertificatePythonBO inspection = pythonInspectSiteClint.checkCname(url, siteUrl);
+        if(inspection == null){
+            throw new BusinessException(ErrorCode.CNAME_CHECK_ERROR);
+        }
     }
 
 
-    public void applyCertificate(String siteUrl){
+    public HttpsCertificatePythonBO applyCertificate(String siteUrl){
         if(StringUtils.isEmpty(siteUrl)){
             throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
         }
         String url = pythonUrlRoot+ Constants.PYTHON_INSPECTION_URL;
-//        String siteUrl= "https://www.twoapi.com";
-//        PythonInspectionResponseBO inspection = pythonInspectSiteClint.applyCertificate(url, siteUrl);
-//        if(inspection == null){
-//            throw new BusinessException(ErrorCode.SITE_URL_ERROR);
-//        }
+        HttpsCertificatePythonBO httpsCertificatePythonBO = pythonInspectSiteClint.applyCertificate(url, siteUrl);
+        if(httpsCertificatePythonBO == null){
+            throw new BusinessException(ErrorCode.SITE_URL_ERROR);
+        }
+        return httpsCertificatePythonBO;
     }
 
 }

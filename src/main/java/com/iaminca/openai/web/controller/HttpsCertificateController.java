@@ -1,6 +1,7 @@
 package com.iaminca.openai.web.controller;
 
 import com.iaminca.openai.common.ResultModel;
+import com.iaminca.openai.handler.HttpsCertificateHandler;
 import com.iaminca.openai.handler.PythonInspectionHandler;
 import com.iaminca.openai.service.bo.PythonInspectionResponseBO;
 import com.iaminca.openai.web.controller.base.UserBaseController;
@@ -20,6 +21,8 @@ public class HttpsCertificateController extends UserBaseController {
 
     @Resource
     private PythonInspectionHandler pythonInspectionHandler;
+    @Resource
+    private HttpsCertificateHandler httpsCertificateHandler;
 
 
 
