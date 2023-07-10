@@ -14,15 +14,15 @@ class PersonAdapter(private val personList: MutableList<Book>) : RecyclerView.Ad
     inner class PersonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtName: TextView = itemView.findViewById(R.id.txtName)
         val txtRole: TextView = itemView.findViewById(R.id.txtRole)
-//        val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        val imageView: ImageView = itemView.findViewById(R.id.imageView)
 
         fun bind(Book: Book) {
             txtName.text = Book.title
             txtRole.text = Book.author
             // Load the photo image using Glide
-//            Glide.with(itemView)
-//                .load(person.photo)
-//                .into(imageView)
+            Glide.with(itemView)
+                .load(Book.imageLink)
+                .into(imageView)
         }
     }
 

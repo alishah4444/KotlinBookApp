@@ -1,6 +1,8 @@
 package com.example.lab1_kotlinapp
 
 import PersonAdapter
+
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +12,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lab1_kotlinapp.databinding.ActivityMainBinding
@@ -26,12 +30,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var personAdapter: PersonAdapter
     private lateinit var dbRef: DatabaseReference
+    private lateinit var  textView:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        textView =findViewById(R.id.loginBtn);
+        textView?.setOnClickListener{
+            Toast.makeText(this@MainActivity,
+            "Welcome Back", Toast.LENGTH_LONG).show()
+            val intent = Intent(this@MainActivity, Login::class.java)
+            intent.putExtra("key", "Kotlin")
+            startActivity(intent)
 
+        }
 
         dbRef = FirebaseDatabase.getInstance().getReference("Book")
 
@@ -44,7 +57,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         fetchDataFromDatabase()
+
     }
+
+
+
 
     private fun fetchDataFromDatabase() {
         dbRef.addValueEventListener(object : ValueEventListener {
