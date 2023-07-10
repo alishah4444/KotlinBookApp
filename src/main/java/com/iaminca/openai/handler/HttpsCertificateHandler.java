@@ -35,6 +35,9 @@ public class HttpsCertificateHandler {
             throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
         }
 
+        //Check the CNAME
+        pythonInspectionHandler.checkCname(httpsCertificateBO.getSiteUrl());
+
         HttpsCertificatePythonBO httpsCertificatePythonBO = pythonInspectionHandler.applyCertificate(httpsCertificateBO.getSiteUrl());
         if(httpsCertificatePythonBO == null){
             throw new BusinessException(ErrorCode.SITE_URL_ERROR);
