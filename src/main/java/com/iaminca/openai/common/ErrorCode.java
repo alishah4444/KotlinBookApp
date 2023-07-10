@@ -31,6 +31,7 @@ public enum ErrorCode implements ErrorCodeService {
 
 	//Python Module
 	SITE_URL_ERROR(14000, "  网站地址有误，或者非HTTPS加密网站"),
+	CNAME_CHECK_ERROR(14001, "CNAME 检测失败！请检查DNS配置，如需协助，请联系客服！"),
 
 
 

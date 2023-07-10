@@ -23,12 +23,11 @@ public class PythonController extends UserBaseController {
 
 
     @PostMapping("/checkSite")
-    public ResultModel applyKey(@RequestHeader(name = "token")String token,@RequestBody InspectionRequestDTO inspectionRequestDTO) {
+    public ResultModel checkSite(@RequestHeader(name = "token")String token,@RequestBody InspectionRequestDTO inspectionRequestDTO) {
         PythonInspectionResponseBO inspection = pythonInspectionHandler.inspection(inspectionRequestDTO.getSiteUrl());
         InspectionResponseDTO responseDTO = new InspectionResponseDTO();
         responseDTO.setTotalTime(inspection.getTotalTime());
         return new ResultModel(responseDTO);
     }
-
 
 }

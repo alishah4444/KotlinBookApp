@@ -42,4 +42,30 @@ public class PythonInspectionHandler {
        return inspection;
     }
 
+
+    public void checkCname(String siteUrl){
+        if(StringUtils.isEmpty(siteUrl)){
+            throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
+        }
+        siteUrl = "https://_acme-challenge." + siteUrl;
+        String url = pythonUrlRoot+ Constants.PYTHON_INSPECTION_URL;
+//        PythonInspectionResponseBO inspection = pythonInspectSiteClint.checkCname(url, siteUrl);
+//        if(inspection == null){
+//            throw new BusinessException(ErrorCode.CNAME_CHECK_ERROR);
+//        }
+    }
+
+
+    public void applyCertificate(String siteUrl){
+        if(StringUtils.isEmpty(siteUrl)){
+            throw new BusinessException(ErrorCode.PARAM_IS_ERROR);
+        }
+        String url = pythonUrlRoot+ Constants.PYTHON_INSPECTION_URL;
+//        String siteUrl= "https://www.twoapi.com";
+//        PythonInspectionResponseBO inspection = pythonInspectSiteClint.applyCertificate(url, siteUrl);
+//        if(inspection == null){
+//            throw new BusinessException(ErrorCode.SITE_URL_ERROR);
+//        }
+    }
+
 }
