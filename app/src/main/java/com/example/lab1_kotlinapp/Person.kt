@@ -1,9 +1,10 @@
 package com.example.lab1_kotlinapp
 
 data class Person(
-    val name: String = "",
-    val role: String = "",
-    val photo:String =""
+    val firstName: String = "",
+    val lastName: String = "",
+    val email: String = "",
+    val password: String = ""
 ) {
-    constructor() : this("", "","")
+    constructor() : this("", "","","")
 }

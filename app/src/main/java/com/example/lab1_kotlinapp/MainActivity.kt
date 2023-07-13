@@ -1,6 +1,7 @@
 package com.example.lab1_kotlinapp
 
 import PersonAdapter
+import android.content.Context
 
 import android.content.Intent
 import android.os.Bundle
@@ -24,6 +25,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,14 +39,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         textView =findViewById(R.id.loginBtn);
-        textView?.setOnClickListener{
-            Toast.makeText(this@MainActivity,
-            "Welcome Back", Toast.LENGTH_LONG).show()
-            val intent = Intent(this@MainActivity, Login::class.java)
-            intent.putExtra("key", "Kotlin")
-            startActivity(intent)
 
-        }
+
+
+
+
+
 
         dbRef = FirebaseDatabase.getInstance().getReference("Book")
 
@@ -56,12 +56,46 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        val sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
+        val  userId = sharedPreferences.getString("userId", null)
+        val userEmail = sharedPreferences.getString("userEmail", null)
+//        val isLoggedIn = sharedPreferences.getString("isLoggedIn", null)
+
+        // Check if the user data is available
+        if (userId != null && userEmail != null  ) {
+            // Use the user data as needed
+            println("User ID: $userId")
+            println("User Email: $userEmail")
+
+            textView.text=userEmail;
+            Toast.makeText(this,"Welcome back $userEmail",Toast.LENGTH_LONG).show()
+
+
+        } 
+
+        textView?.setOnClickListener{
+
+
+            if (userId != null && userEmail != null  ) {
+
+
+                val intent = Intent(this@MainActivity, Profile::class.java)
+                startActivity(intent)
+
+            } else{
+
+                Toast.makeText(
+                    this@MainActivity,
+                    "Login", Toast.LENGTH_LONG
+                ).show()
+                val intent = Intent(this@MainActivity, Login::class.java)
+                startActivity(intent)
+            }
+        }
+
         fetchDataFromDatabase()
 
     }
-
-
-
 
     private fun fetchDataFromDatabase() {
         dbRef.addValueEventListener(object : ValueEventListener {
@@ -83,4 +117,15 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun clearUserData() {
+        val sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
 }
+
+
+
+
