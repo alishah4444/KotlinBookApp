@@ -3,6 +3,7 @@ package com.example.lab1_kotlinapp
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ class BookDisplayActivity : AppCompatActivity() {
         var pageCountView : TextView = findViewById(R.id.pageCount);
         var authorView : TextView = findViewById(R.id.author);
         var publishYearView : TextView = findViewById(R.id.publishYear);
+        var btnBuy : Button = findViewById(R.id.buttonBuy);
 
         var intent:Intent = getIntent();
         val name = intent.getStringExtra("name")
@@ -46,6 +48,8 @@ class BookDisplayActivity : AppCompatActivity() {
 //                .load(bookImage)
 //                .into(bookImage)
 
+        btnBuy.setOnClickListener{
 
+        }
     }
 }

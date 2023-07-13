@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/bookImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@drawable/image_wings_of_fire"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="322dp"
+        android:layout_height="422dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/image_wings_of_fire" />
 
     <TextView
         android:id="@+id/name"
@@ -106,12 +106,11 @@
         android:id="@+id/buttonBuy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Buy Now"
+        android:layout_marginTop="10dp"
         android:onClick="loadOrderForm"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="650dp"
+        android:text="Add to Cart"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/publishYear"
-        />
+        app:layout_constraintTop_toBottomOf="@id/publishYear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
