@@ -14,7 +14,7 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/ImageView"
             android:layout_width="150dp"
             android:layout_height="150dp"
 

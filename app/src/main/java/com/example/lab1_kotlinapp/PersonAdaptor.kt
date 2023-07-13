@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab1_kotlinapp.Book
-import com.example.lab1_kotlinapp.Person
 import com.example.lab1_kotlinapp.R
 
 class PersonAdapter(private val personList: MutableList<Book>) : RecyclerView.Adapter<PersonAdapter.PersonViewHolder>() {
@@ -14,7 +13,7 @@ class PersonAdapter(private val personList: MutableList<Book>) : RecyclerView.Ad
     inner class PersonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtName: TextView = itemView.findViewById(R.id.txtName)
         val txtRole: TextView = itemView.findViewById(R.id.txtRole)
-        val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        val imageView: ImageView = itemView.findViewById(R.id.ImageView)
 
         fun bind(Book: Book) {
             txtName.text = Book.title
