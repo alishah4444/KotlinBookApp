@@ -103,6 +103,8 @@ class MainActivity : AppCompatActivity() {
                 for (snapshot in dataSnapshot.children) {
                     val person = snapshot.getValue(Book::class.java)
                     person?.let {
+
+
                         personList.add(it)
                     }
                 }
