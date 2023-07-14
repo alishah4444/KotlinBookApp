@@ -40,8 +40,6 @@ class BookDisplayActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val book = dataSnapshot.getValue(Book::class.java)
                 if (book != null) {
-                    // 在这里处理获取到的 Book 对象的值
-
                     authorView.text = book.author;
                     titleView.text = book.title;
                     countryView.text = book.country;
@@ -53,23 +51,14 @@ class BookDisplayActivity : AppCompatActivity() {
                     Glide.with(this)
                         .load(book.imageLink)
                         .into(imgView)
-                } else {
-                    // 数据为空或转换失败的处理逻辑
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // 处理取消事件的逻辑
-                // 在出错时，可使用 databaseError.message 获取错误信息
+                // cancel events
             }
         }
 
         bookSign.addListenerForSingleValueEvent(valueEventListener)
-
-//        Glide.with(imgView)
-//                .load(bookImage)
-//                .into(bookImage)
-
-
     }
 }
