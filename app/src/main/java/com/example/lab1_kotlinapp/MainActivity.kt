@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,12 +41,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         textView =findViewById(R.id.loginBtn);
 
-
-
-
-
-
-
         dbRef = FirebaseDatabase.getInstance().getReference("Book")
 
         println(dbRef)
@@ -59,7 +54,10 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
         val  userId = sharedPreferences.getString("userId", null)
         val userEmail = sharedPreferences.getString("userEmail", null)
-//        val isLoggedIn = sharedPreferences.getString("isLoggedIn", null)
+
+
+
+
 
         // Check if the user data is available
         if (userId != null && userEmail != null  ) {
@@ -118,12 +116,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun clearUserData() {
-        val sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply()
-    }
+
 }
 
 

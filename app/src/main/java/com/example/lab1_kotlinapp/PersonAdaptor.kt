@@ -3,6 +3,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lab1_kotlinapp.Book
@@ -16,6 +17,21 @@ class PersonAdapter(private val personList: MutableList<Book>) : RecyclerView.Ad
         val txtRole: TextView = itemView.findViewById(R.id.txtRole)
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
 
+
+        init {
+            // Set click listener for the imageView
+            imageView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val clickedItem = personList[position]
+                    // Handle the click event for the image here
+                    // For example, you can show a toast message with the clicked item's title
+                    Toast.makeText(itemView.context, "Clicked: ${clickedItem.title}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
         fun bind(Book: Book) {
             txtName.text = Book.title
             txtRole.text = Book.author
@@ -24,6 +40,8 @@ class PersonAdapter(private val personList: MutableList<Book>) : RecyclerView.Ad
                 .load(Book.imageLink)
                 .into(imageView)
         }
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
@@ -45,4 +63,6 @@ class PersonAdapter(private val personList: MutableList<Book>) : RecyclerView.Ad
         personList.addAll(newPersonList)
         notifyDataSetChanged()
     }
+
+
 }
