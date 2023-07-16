@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/thankYouImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logo"
+        android:layout_centerInParent="true"
+        android:contentDescription="Thank You" />
+
+    <TextView
+        android:id="@+id/thankYouText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/thankYouImage"
+        android:text="Thank You!"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_marginTop="16dp"
+        tools:ignore="UnknownId" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/thankYouText"
+        android:text="Your order has been placed successfully."
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_marginTop="8dp"
+        tools:ignore="UnknownId" />
+
+    <Button
+        android:id="@+id/continueShoppingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue Shopping"
+        android:textSize="18sp"
+        android:background="#000"
+        android:textColor="#FFF"
+        android:padding="12dp"
+        android:layout_below="@id/thankYouText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp" />
+
+</LinearLayout>
