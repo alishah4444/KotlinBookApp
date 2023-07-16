@@ -96,7 +96,7 @@ class Login : AppCompatActivity()  {
                                     if (task.isSuccessful) {
                                         // Authentication successful
                                         val user = firebaseAuth.currentUser
-                                        saveUserData(user?.uid, user?.email)
+                                        saveUserData(user?.uid, user?.email,)
                                         setLoginStatus(true)
 
                                     } else {

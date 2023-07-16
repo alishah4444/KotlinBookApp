@@ -1,0 +1,122 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+
+    <!-- Shipping address form -->
+    <LinearLayout
+        android:id="@+id/shippingAddressFormLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/addressLine1EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address Line 1"
+            android:textSize="18sp"
+            android:background="#D3D3D3"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/addressLine2EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address Line 2"
+            android:textSize="18sp"
+            android:background="#D3D3D3"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/cityEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="City"
+            android:textSize="18sp"
+            android:background="#D3D3D3"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/stateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="State"
+            android:textSize="18sp"
+            android:background="#D3D3D3"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/zipCodeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Zip Code"
+            android:textSize="18sp"
+            android:background="#D3D3D3"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
+
+
+        <TextView
+            android:id="@+id/city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Payment Details"
+            android:textSize="18sp" />
+
+
+        <EditText
+            android:id="@+id/Cardname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Account Name"
+            android:textSize="18sp"
+            android:background="#D3D3D3"
+            android:padding="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/AccountNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Credit Card Number"
+            android:textSize="18sp"
+            android:background="#D3D3D3"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/AccountExpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Account Expiry date"
+            android:textSize="18sp"
+            android:background="#D3D3D3"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
+
+
+
+        <Button
+            android:id="@+id/saveAddressButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Address"
+            android:textSize="18sp"
+            android:background="#000"
+            android:textColor="#FFF"
+            android:padding="12dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

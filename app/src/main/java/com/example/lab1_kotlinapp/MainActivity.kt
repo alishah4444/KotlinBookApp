@@ -51,9 +51,14 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+
+
+
         val sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
         val  userId = sharedPreferences.getString("userId", null)
         val userEmail = sharedPreferences.getString("userEmail", null)
+
+
 
 
 

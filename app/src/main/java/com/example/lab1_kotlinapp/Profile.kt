@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class Profile: AppCompatActivity() {
 
@@ -35,9 +36,33 @@ class Profile: AppCompatActivity() {
             val editor = sharedPreferences.edit()
             editor.clear()
             editor.apply()
+            firebaseAuth.signOut()
+
+            val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+            val shippingAddressRef: DatabaseReference = database.reference.child("ShippingAddress")
+            val sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
+            val  userId = sharedPreferences.getString("userId", null)
+
+            // Query the shipping address using the user ID
+            shippingAddressRef.orderByChild("userId").equalTo(userId).addListenerForSingleValueEvent(object :
+                ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (snapshot in dataSnapshot.children) {
+                        // Remove the shipping address from the database
+                        snapshot.ref.removeValue()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
 
             // Sign out from Firebase Authentication
-            firebaseAuth.signOut()
+
+
+
+
 
             // Redirect to login screen
             val intent = Intent(this, MainActivity::class.java)
