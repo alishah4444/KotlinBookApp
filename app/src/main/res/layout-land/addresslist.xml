@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="#D3D3D3"
+        app:contentPadding="15dp"
+        app:cardMaxElevation="17dp"
+
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/shippingAddressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/addressLine1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Shipping Address Line 1"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/addressLine2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Shipping Address Line 2"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="State"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/zipCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zip Code"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <Button
+        android:id="@+id/payButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pay"
+        android:textSize="18sp"
+        android:background="#000"
+        android:textColor="#FFF"
+        android:padding="12dp"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>
